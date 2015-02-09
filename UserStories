@@ -1,0 +1,45 @@
+Jacob, Heather, Kali, Lucas
+Seating Chart Application User Stories
+
+Create a New Chart
+Allows a professor to create a new seating chart for a course.
+
+Specify Room Layout
+Allows a professor to create the seating arrangement for a seating chart as it is being created.
+
+Delete an Existing Seating Chart
+Allows a professor to remove a seating chart from their list of existing seating charts.
+
+Edit Room Layout
+Allows a professor to change and modify the layout of a seating chart after it has been created.
+
+Assign Seats
+Allows a professor to specify where students are sitting when creating a new seating chart.
+
+Add a Student to an Existing Seating Chart
+Allows a professor to add a student to an existing seating chart.
+
+Remove a Student from an Existing Seating Chart
+Allows a professor to remove a student from an existing seating chart.
+
+View an Existing Seating Chart
+Allows an user to interact with an existing seating chart to take attendance and view additional student information.
+
+View Student Information
+A professor will be able to view information such as major/minor, photo of the student extracurriculars, name, address, phone number, email, and attendance information (i.e. number and dates of absences).
+
+Send an Email
+Allows a professor to send an email to absent students. This email will contain information about the what the student has missed and other pertinent information.
+
+Take attendance
+Allows a user to mark each student in the class as absent or present.
+
+Specify Absence as. Excused 
+Allows a user to specify an absence as excused or not.
+
+Establish Room Layout Automatically
+Allows a professor to select a room to automatically import that room's layout for a seating chart.
+
+Add Elements to Room Layout
+Allows a professor to add aisles or specify unavailable seats within a seating chart either upon creation or after.
+
