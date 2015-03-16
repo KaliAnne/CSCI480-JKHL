@@ -1,0 +1,22 @@
+nav {
+	width: 300px;
+    border: 2px solid navy;
+	line-height:30px;
+    height:450px;
+    float:left;
+	padding: 5px;
+}
+
+section {
+    border-top: 2px solid navy;
+	padding-top: 5px;
+}
+
+div {
+    width:700px;
+    float:left;
+    border: 25px solid navy;
+	height:450px;
+	margin: 25px;
+}
+
