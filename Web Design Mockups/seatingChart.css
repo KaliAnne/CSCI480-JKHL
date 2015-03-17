@@ -2,21 +2,39 @@ nav {
 	width: 300px;
     border: 2px solid navy;
 	line-height:30px;
-    height:450px;
+    height:650px;
     float:left;
 	padding: 5px;
 }
 
+header {
+	text-align: center;
+}
+
 section {
     border-top: 2px solid navy;
-	padding-top: 5px;
+	padding-top: 20px;
 }
 
 div {
-    width:700px;
+    width:1000px;
     float:left;
     border: 25px solid navy;
-	height:450px;
+	height:650px;
 	margin: 25px;
 }
 
+img {
+	height: 100px;
+	width: 100px;
+}
+
+button {
+	height: 100px;
+	width: 100px;
+}
+
+.attenBtn {
+	width: 200px;
+	height: 50px;
+}
