@@ -5,7 +5,27 @@
 		<meta char="UTF-8" />
 		<link rel="stylesheet" type="text/css" href="seatingChart.css" />
 	</head>
+	<script>
+		function byId(e){return document.getElementById(e);}
 
+		window.addEventListener('load', mInit, false);
+
+		function mInit()
+		{
+			var tgt = byId('btnSeat1');
+    		tgt.secondSource = 'X.png';
+		}
+
+		function byId(e){return document.getElementById(e);}
+
+		function action2()
+		{
+			var tgt = byId('btnSeat1');
+			var tmp = tgt.src;
+			tgt.src = tgt.getAttribute('src2');
+			tgt.setAttribute('src2', tmp);
+		}
+	</script>
 	<body>
 	
 		<div align="center">
@@ -38,11 +58,11 @@
 			</nav>
 		
 			<section align="center">
-				<button class="attenBtn">Take Attendance</button>
+				<button class="attenBtn">Take Attendance</button>a
 				<hr/>
 				<br />
 				<br />
-				<button></button>
+				<button onClick="action2();"><img id='btnSeat1' src="Checkmark.png" src2='X.png'</button>
 				<button></button>
 				<button></button>
 				<br />
