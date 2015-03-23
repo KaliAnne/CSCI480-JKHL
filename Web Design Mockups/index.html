@@ -7,15 +7,40 @@
   <script>
   function byId(e){return document.getElementById(e);}
     window.addEventListener('load', mInit, false);
-  function mInit()
-  {
-    var tgt = byId('btnSeat1');
-    tgt.secondSource = 'X.png';
-  }
   function byId(e){return document.getElementById(e);}
-  function action2()
+  function SeatAttndSwap(btnClickedID)
   {
-    var tgt = byId('btnSeat1');
+	var seatImg = '';
+	switch (btnClickedID) {
+		case 'btnSeat1':
+			seatImg = 'imgSeat1';
+			break;
+		case 'btnSeat2':
+			seatImg = 'imgSeat2';
+			break;
+		case 'btnSeat3':
+			seatImg = 'imgSeat3';
+			break;
+		case 'btnSeat4':
+			seatImg = 'imgSeat4';
+			break;
+		case 'btnSeat5':
+			seatImg = 'imgSeat5';
+			break;
+		case 'btnSeat6':
+			seatImg = 'imgSeat6';
+			break;
+		case 'btnSeat7':
+			seatImg = 'imgSeat7';
+			break;
+		case 'btnSeat8':
+			seatImg = 'imgSeat8';
+			break;
+		case 'btnSeat9':
+			seatImg = 'imgSeat9';
+			break;
+	}
+    var tgt = byId(seatImg);
     var tmp = tgt.src;
     tgt.src = tgt.getAttribute('src2');
     tgt.setAttribute('src2', tmp);
@@ -105,17 +130,17 @@
   <hr/>
   <br />
   <br />
-    <button onClick="action2();"><img id='btnSeat1' src="Checkmark.png" src2='X.png'</button>
-    <button></button>
-    <button></button>
+    <button id='btnSeat1' onClick="SeatAttndSwap(this.id);"><img id='imgSeat1' src="Checkmark.png" src2='X.png'</button>
+    <button id='btnSeat2' onClick="SeatAttndSwap(this.id);"><img id='imgSeat2' src="Checkmark.png" src2='X.png'</button>
+    <button id='btnSeat3' onClick="SeatAttndSwap(this.id);"><img id='imgSeat3' src="Checkmark.png" src2='X.png'</button>
   <br />
-    <button></button>
-    <button></button>
-    <button></button>
+    <button id='btnSeat4' onClick="SeatAttndSwap(this.id);"><img id='imgSeat4' src="Checkmark.png" src2='X.png'</button>
+    <button id='btnSeat5' onClick="SeatAttndSwap(this.id);"><img id='imgSeat5' src="Checkmark.png" src2='X.png'</button>
+    <button id='btnSeat6' onClick="SeatAttndSwap(this.id);"><img id='imgSeat6' src="Checkmark.png" src2='X.png'</button>
   <br />
-    <button></button>
-    <button></button>
-    <button></button>
+    <button id='btnSeat7' onClick="SeatAttndSwap(this.id);"><img id='imgSeat7' src="Checkmark.png" src2='X.png'</button>
+    <button id='btnSeat8' onClick="SeatAttndSwap(this.id);"><img id='imgSeat8' src="Checkmark.png" src2='X.png'</button>
+    <button id='btnSeat9' onClick="SeatAttndSwap(this.id);"><img id='imgSeat9' src="Checkmark.png" src2='X.png'</button>
   <br />
   </section>
   </div>
