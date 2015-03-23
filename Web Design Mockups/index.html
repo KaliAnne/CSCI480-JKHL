@@ -70,7 +70,6 @@
   }
 
 //HB function to remove a student from the class
-//TODO: Actually remove from list
 //TODO: Confirmation data will be lost
 //TODO: Check whether professor or not
 //TODO: Connect changes to database entry of chart
@@ -81,17 +80,14 @@
   
     for (i=0; i<studentList.length; i++){
       if(studentList.options[i].text == studentToRemove){
-        //studentList.removeAttribute(options[i]);
+        studentList.remove(i);
         found = "true";
         alert(studentToRemove + " was removed");
         break;
       }
     }
   
-    var test3 = prompt("made it");
-  
     if (found == "false") {
-      var test2 = prompt("made it");
       alert("Student not found. Please try again.");
     }  
   }
@@ -101,7 +97,9 @@
     <nav align="left">
       <dt>Chart Name <input id="ChartName" readonly="true" value="Davis 196"></input></dt>
     <hr/>
-      <dt>Room Size <input id="RoomSize" readonly="true" value="3x3"></input></dt>
+      <dt>Room Size</dt>
+      <dt>Rows: <input id="RoomSize" readonly="true" value="3"></input></dt>
+      <dt>Columns: <input id="RoomSize" readonly="true" value="3"></input></dt>
       <dt><button id="EditRoom" class= "attenBtn" onclick= "activeEdit();">Edit Room</button></dt>
     <hr/>
   <dt>Students
@@ -123,7 +121,7 @@
     <dt><button class= "attenBtn">Add Student</button></dt>
     <dt><button class= "attenBtn" onclick="removeStudent();">Remove Student</button></dt>
     <dt><button class= "attenBtn">Add Aisle</button></dt>
-    <dt><button class= "attenBtn">View Student Attendance</button></dt>
+    <dt><button class= "attenBtn">View Past Seating Charts</button></dt>
   </nav>
   <section align="center">
     <button class="attenBtn">Take Attendance</button>
