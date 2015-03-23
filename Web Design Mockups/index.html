@@ -1,83 +1,125 @@
 <!DOCTYPE html>
 <html>
+<head align="center">
+<meta char="UTF-8" />
+<link rel="stylesheet" type="text/css" href="seatingChart.css" />
+</head>
+<script>
+function byId(e){return document.getElementById(e);}
+window.addEventListener('load', mInit, false);
+function mInit()
+{
+var tgt = byId('btnSeat1');
+tgt.secondSource = 'X.png';
+}
+function byId(e){return document.getElementById(e);}
+function action2()
+{
+var tgt = byId('btnSeat1');
+var tmp = tgt.src;
+tgt.src = tgt.getAttribute('src2');
+tgt.setAttribute('src2', tmp);
+}
+//HB function either makes the room information editable or not
+//TODO: check whether professor or not
+//TODO: confirmation that info will be lost
+//TODO: change # of "buttons" or seats based on saved changes
+//TODO: Connect changes to database entry of chart
+function activeEdit()
+{
+  var chartName = byId('ChartName');
+  var chartSize = byId('RoomSize');
+  var editBtn   = byId('EditRoom');
 
-	<head align="center">
-		<meta char="UTF-8" />
-		<link rel="stylesheet" type="text/css" href="seatingChart.css" />
-	</head>
-	<script>
-		function byId(e){return document.getElementById(e);}
+  
+  if (editBtn.innerHTML == "Save Changes") {
+  chartName.readOnly = true;
+  chartSize.readOnly = true;
+  editBtn.innerHTML = "Edit Room";
+  }
+  else {
+  chartName.readOnly = false;
+  chartSize.readOnly = false;
+  editBtn.innerHTML = "Save Changes";
+  }
+}
 
-		window.addEventListener('load', mInit, false);
+//HB function to remove a student from the class
+//TODO: Actually remove from list
+//TODO: Confirmation data will be lost
+//TODO: Check whether professor or not
+//TODO: Connect changes to database entry of chart
+function removeStudent() {
+  var studentList = byId('studentList');
+  var studentToRemove = prompt("Which student would you like to remove?");
+  var found = "false";
+  
+  for (i=0; i<studentList.length; i++){
+    if(studentList.options[i].text == studentToRemove){
+      //studentList.removeAttribute(options[i]);
+      found = "true";
+      var test = prompt("made it");
+      alert(studentToRemove + " was removed");
+      break;
+    }
+  }
+  
+  var test3 = prompt("made it");
+  
+  if (found == "false") {
+    var test2 = prompt("made it");
+    alert("Student not found. Please try again.");
+  }  
+}
 
-		function mInit()
-		{
-			var tgt = byId('btnSeat1');
-    		tgt.secondSource = 'X.png';
-		}
-
-		function byId(e){return document.getElementById(e);}
-
-		function action2()
-		{
-			var tgt = byId('btnSeat1');
-			var tmp = tgt.src;
-			tgt.src = tgt.getAttribute('src2');
-			tgt.setAttribute('src2', tmp);
-		}
-	</script>
-	<body>
-	
-		<div align="center">
-			<nav align="left">
-				<dt>Chart Name <input readonly="true" value="Davis 196"></input></dt>
-				<hr/>
-				<dt>Room Size <input readonly="true" value="3x3"></input></dt>
-				<hr/>
-				<dt>Students 
-					<select>
-						<option>Bob</option>
-						<option>Rick</option>
-						<option>Tim</option>
-						<option>Mary</option>
-						<option>Susan</option>
-						<option>Kali</option>
-						<option>Heather</option>
-						<option>Jacob</option>
-						<option>Lucas</option>
-					</select>
-				</dt>
-				<hr/>
-				<dt><a href="">Home</a></dt>
-				<dt><a href="">Edit Room</a></dt>
-				<dt><a href="">Delete Room</a></dt>
-				<dt><a href="">Add Student</a></dt>
-				<dt><a href="">Remove Student</a></dt>
-				<dt><a href="">Add Aisle</a></dt>
-				<dt><a href="">View Student Attendance</a></dt>
-			</nav>
-		
-			<section align="center">
-				<button class="attenBtn">Take Attendance</button>a
-				<hr/>
-				<br />
-				<br />
-				<button onClick="action2();"><img id='btnSeat1' src="Checkmark.png" src2='X.png'</button>
-				<button></button>
-				<button></button>
-				<br />
-				<button></button>
-				<button></button>
-				<button></button>
-				<br />
-				<button></button>
-				<button></button>
-				<button></button>
-				<br />
-			</section>
-		
-		</div>
-		
-	</body>
-	
+</script>
+<body>
+<div align="center">
+<nav align="left">
+<dt>Chart Name <input id="ChartName" readonly="true" value="Davis 196"></input></dt>
+<hr/>
+<dt>Room Size <input id="RoomSize" readonly="true" value="3x3"></input></dt>
+<dt><button id="EditRoom" class= "attenBtn" onclick= "activeEdit();">Edit Room</button></dt>
+<hr/>
+<dt>Students
+<select id="studentList">
+<option>Bob</option>
+<option>Rick</option>
+<option>Tim</option>
+<option>Mary</option>
+<option>Susan</option>
+<option>Kali</option>
+<option>Heather</option>
+<option>Jacob</option>
+<option>Lucas</option>
+</select>
+</dt>
+<hr/>
+<dt><button class= "attenBtn">Home</button></dt>
+<dt><button class= "attenBtn">Delete Room Chart</button></dt>
+<dt><button class= "attenBtn">Add Student</button></dt>
+<dt><button class= "attenBtn" onclick="removeStudent();">Remove Student</button></dt>
+<dt><button class= "attenBtn">Add Aisle</button></dt>
+<dt><button class= "attenBtn">View Student Attendance</button></dt>
+</nav>
+<section align="center">
+<button class="attenBtn">Take Attendance</button>
+<hr/>
+<br />
+<br />
+<button onClick="action2();"><img id='btnSeat1' src="Checkmark.png" src2='X.png'</button>
+<button></button>
+<button></button>
+<br />
+<button></button>
+<button></button>
+<button></button>
+<br />
+<button></button>
+<button></button>
+<button></button>
+<br />
+</section>
+</div>
+</body>
 </html>
