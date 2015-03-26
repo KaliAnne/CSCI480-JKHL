@@ -34,7 +34,7 @@ button {
 	
 }
 
-.attenBtn {
+button.attenBtn {
 	width: 200px;
 	height: 50px;
 }
