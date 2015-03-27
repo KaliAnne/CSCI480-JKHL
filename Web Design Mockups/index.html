@@ -181,24 +181,23 @@ function toggleAttend(button_id)
 //TODO: change # of "buttons" or seats based on saved changes
 //TODO: Connect changes to database entry of chart
 <!-- End Do list -->
-
   function activeEdit()
   {
     var chartName  = byId('ChartName');
-    var chartSize1 = byId('RoomSize1');
-    var chartSize2 = byId('RoomSize2');
+    var chartRows = byId('RoomRows');
+    var chartColumns = byId('RoomColumns');
     var editBtn    = byId('EditRoom');
 
     if (editBtn.innerHTML == "Save Changes") {
       chartName.readOnly = true;
-      chartSize1.readOnly = true;
-      chartSize2.readOnly = true;
+      chartRows.readOnly = true;
+      chartColumns.readOnly = true;
       editBtn.innerHTML = "Edit Room";
     }
     else {
       chartName.readOnly = false;
-      chartSize1.readOnly = false;
-      chartSize2.readOnly = false;
+      chartRows.readOnly = false;
+      chartColumns.readOnly = false;
       editBtn.innerHTML = "Save Changes";
     }
   }
@@ -248,10 +247,10 @@ function toggleAttend(button_id)
 	  
       <fieldset id="roominfo">
 		<legend><span>Room Size:</span></legend>
-			<dt>Rows: <br><input id="RoomSize1" readonly="true" placeholder="5"value=""></input></dt>
-			<dt>Columns: <br><input id="RoomSize2" readonly="true" placeholder="7"value=""></input></dt>
+			<dt>Rows: <br><input id="RoomRows" readonly="true" placeholder="5"value=""></input></dt>
+			<dt>Columns: <br><input id="RoomColumns" readonly="true" placeholder="7"value=""></input></dt>
 			<br>
-			<button id="EditRoom" type= "button" onClick="activeEdit();">Edit Room</button>
+			<button id="EditRoom" type="Button" class ="attenBtn" onClick="activeEdit();">Edit Room</button>
 	  </fieldset>
 	  
 	  <br>
@@ -277,12 +276,12 @@ function toggleAttend(button_id)
 		
       <fieldset id="extrainfo">
 		<legend><span>Help Menu</span></legend>		
-			<button class= "attenBtn">Home</button>
-			<button class= "attenBtn">Delete Room Chart</button>
-			<button class= "attenBtn">Add Student</button>
-			<button type="button" onClick="removeStudent();">Remove Student</button>
-			<button class= "attenBtn">Add Aisle</button>
-			<button class= "attenBtn">View Past Seating Charts</button>
+			<button type="Button" class ="attenBtn">Home</button>
+			<button type="Button" class ="attenBtn">Delete Room Chart</button>
+			<button type="Button" class ="attenBtn">Add Student</button>
+			<button type="Button" class ="attenBtn" onClick="removeStudent();">Remove Student</button>
+			<button type="Button" class ="attenBtn">Add Aisle</button>
+			<button type="Button" class ="attenBtn">View Past Seating Charts</button>
 	   </fieldset>
 	   
 	   <br>
@@ -326,6 +325,7 @@ function toggleAttend(button_id)
     	<button id='btnSeat0205' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0205' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 		<button id='btnSeat0206' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0206' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 		<button id='btnSeat0207' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0207' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+
 	</fieldset>
   <br>
   
@@ -339,7 +339,7 @@ function toggleAttend(button_id)
     	<button id='btnSeat0305' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0305' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 		<button id='btnSeat0306' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0306' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 		<button id='btnSeat0307' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0307' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    
+
 	</fieldset>
 	<br>
 	
@@ -353,19 +353,21 @@ function toggleAttend(button_id)
     	<button id='btnSeat0405' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0405' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 		<button id='btnSeat0406' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0406' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 		<button id='btnSeat0407' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0407' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+
 	</fieldset>
 	<br>
 	
 	<!-- Row 5 -->
 		<fieldset id="Row5">
 		<legend><span>Row 5</span></legend>
-    	<button id='btnSeat0501' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0501' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0502' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0502' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0503' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0503' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0504' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0504' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0505' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0505' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0506' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0506' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0507' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0507' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0501' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0501' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0502' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0502' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0503' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0503' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0504' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0504' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0505' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0505' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0506' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0506' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0507' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0507' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+
 	</fieldset>
 	<br>
 	<br>
