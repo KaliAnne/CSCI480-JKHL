@@ -141,8 +141,7 @@ function toggleAttend(button_id)
    var strCol = "1";
    var zero = "0";
    var seat = "imgSeat";
-   var seatID = "imgSeat0101"
-   var tmp = "";
+   var seatID = "imgSeat0101";
    if (btnText.innerHTML == "Take Attendance") 
    {
 	<!-- Toggles text and sets seats to checkmarks and allows them to be changed to take attendance -->
@@ -187,12 +186,44 @@ function toggleAttend(button_id)
     var chartRows = byId('RoomRows');
     var chartColumns = byId('RoomColumns');
     var editBtn    = byId('EditRoom');
-
+	var zero = "0";
+	var rows = chartRows.value;
+	var cols = chartColumns.value;
+	var strRow = "1";
+	var strCol = "1";
+	var seat = "btnSeat";
+	var seatID = "";
+	
     if (editBtn.innerHTML == "Save Changes") {
-      chartName.readOnly = true;
-      chartRows.readOnly = true;
-      chartColumns.readOnly = true;
-      editBtn.innerHTML = "Edit Room";
+		if (rows > 0 && rows < 6){
+			if (cols > 0 && cols < 8){
+				for (i = 1; i < 6; i++){
+					strRow = i.toString();
+					for (j = 1; j < 8; j++){
+						strCol = j.toString();
+						seatID = seat.concat(zero, strRow, zero, strCol);
+						if (i <= rows && j <= cols){
+							byId(seatID).style.visibility = "visible";
+						}
+						else{
+							byId(seatID).style.visibility = "hidden";
+						}
+						seat = "btnSeat";
+					}
+				}
+				chartName.readOnly = true;
+				chartRows.readOnly = true;
+				chartColumns.readOnly = true;
+				editBtn.innerHTML = "Edit Room";
+				
+			}
+			else{
+				alert("There can only be up to 7 columns");
+			}
+		}
+		else{
+			alert("There can only be up to 5 rows");
+		}
     }
     else {
       chartName.readOnly = false;
@@ -201,6 +232,7 @@ function toggleAttend(button_id)
       editBtn.innerHTML = "Save Changes";
     }
   }
+  
 <!-- Heather's to do list -->
 //HB function to remove a student from the class
 //TODO: Confirmation data will be lost
@@ -247,8 +279,8 @@ function toggleAttend(button_id)
 	  
       <fieldset id="roominfo">
 		<legend><span>Room Size:</span></legend>
-			<dt>Rows: <br><input id="RoomRows" readonly="true" placeholder="5"value=""></input></dt>
-			<dt>Columns: <br><input id="RoomColumns" readonly="true" placeholder="7"value=""></input></dt>
+			<dt>Rows: <br><input id="RoomRows" readonly="true" placeholder="5" value=""></input></dt>
+			<dt>Columns: <br><input id="RoomColumns" readonly="true" placeholder="7" value=""></input></dt>
 			<br>
 			<button id="EditRoom" type="Button" class ="attenBtn" onClick="activeEdit();">Edit Room</button>
 	  </fieldset>
@@ -353,7 +385,7 @@ function toggleAttend(button_id)
     	<button id='btnSeat0405' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0405' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 		<button id='btnSeat0406' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0406' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 		<button id='btnSeat0407' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0407' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-
+ 
 	</fieldset>
 	<br>
 	
