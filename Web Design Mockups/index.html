@@ -257,6 +257,26 @@ function toggleAttend(button_id)
       alert("Student not found. Please try again.");
     }  
   }
+  
+  function addStudent() {
+	var studentList = byId('studentList');
+	var studentToAdd = prompt("Please enter the name of the student.");
+	var alreadyListed = "false";
+	for (i=0; i<studentList.length; i++){
+		if (studentList.options[i].text == studentToAdd){
+			alreadyListed = "true";
+		}
+	}
+	if (alreadyListed == "false"){
+		var newStudent = document.createElement("option");
+		newStudent.text = studentToAdd;
+		studentList.add(newStudent);
+		alert(studentToAdd + " was added to the student list.");
+	}
+	else{
+		alert("This student is already on the list!");
+	}
+  }
   </script>
   <!-- End script -->
   
@@ -310,7 +330,7 @@ function toggleAttend(button_id)
 		<legend><span>Help Menu</span></legend>		
 			<button type="Button" class ="attenBtn">Home</button>
 			<button type="Button" class ="attenBtn">Delete Room Chart</button>
-			<button type="Button" class ="attenBtn">Add Student</button>
+			<button type="Button" class ="attenBtn" onClick="addStudent();">Add Student</button>
 			<button type="Button" class ="attenBtn" onClick="removeStudent();">Remove Student</button>
 			<button type="Button" class ="attenBtn">Add Aisle</button>
 			<button type="Button" class ="attenBtn">View Past Seating Charts</button>
