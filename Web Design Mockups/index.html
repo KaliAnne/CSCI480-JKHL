@@ -176,8 +176,6 @@ function toggleAttend(button_id)
 <!-- Heather's to do list -->
 //HB function either makes the room information editable or not
 //TODO: check whether professor or not
-//TODO: confirmation that info will be lost
-//TODO: change # of "buttons" or seats based on saved changes
 //TODO: Connect changes to database entry of chart
 <!-- End Do list -->
   function activeEdit()
@@ -195,6 +193,7 @@ function toggleAttend(button_id)
 	var seatID = "";
 	
     if (editBtn.innerHTML == "Save Changes") {
+      alert("Information might be lost. Seats are deleted from the bottom and right; please reposition students if necessary.");
 		if (rows > 0 && rows < 6){
 			if (cols > 0 && cols < 8){
 				for (i = 1; i < 6; i++){
@@ -235,7 +234,6 @@ function toggleAttend(button_id)
   
 <!-- Heather's to do list -->
 //HB function to remove a student from the class
-//TODO: Confirmation data will be lost
 //TODO: Check whether professor or not
 //TODO: Connect changes to database entry of chart
 <!-- End Do list -->
@@ -244,18 +242,23 @@ function toggleAttend(button_id)
     var studentToRemove = prompt("Which student would you like to remove?");
     var found = "false";
   
-    for (i=0; i<studentList.length; i++){
-      if(studentList.options[i].text == studentToRemove){
-        studentList.remove(i);
-        found = "true";
-        alert(studentToRemove + " was removed");
-        break;
+    if(confirm("Information will be lost. Are you sure you want to remove this student?")){
+      for (i=0; i<studentList.length; i++){
+	if(studentList.options[i].text.toUpperCase() == studentToRemove.toUpperCase()){
+	  studentList.remove(i);
+	  found = "true";
+	  alert(studentToRemove + " was removed");
+	  break;
+	}
       }
-    }
   
-    if (found == "false") {
-      alert("Student not found. Please try again.");
-    }  
+      if (found == "false") {
+        alert("Student not found. Please try again.");
+      }  
+    }
+    else{
+      alert("No student removed.");
+    }
   }
   
   function addStudent() {
