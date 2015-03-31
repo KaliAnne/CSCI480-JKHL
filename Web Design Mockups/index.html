@@ -13,16 +13,16 @@
   //Initialize student list and load it into the dropdown of student names
   var students = [];
   function OnLoad(){
-	  students.push(new studentInfo("None", "None", "None", "None", "None", true)); //Dummy student to take index 0
-	  students.push(new studentInfo("Bob", "bob@email", "Premed", "Spanish", "None", true));
-	  students.push(new studentInfo("Rick", "rick@email", "English", "Math", "None", true));
-	  students.push(new studentInfo("Tim", "tim@email", "Equestrian", "Pre-vet", "None", true));
-	  students.push(new studentInfo("Mary", "mary@email", "English", "Theatre", "None", true));
-	  students.push(new studentInfo("Susan", "susan@email", "Math", "English", "None", true));
-	  students.push(new studentInfo("Kali", "dumpertk@findlay.edu", "Computer Science", "None", "None", true));
-	  students.push(new studentInfo("Heather", "beckh@findlay.edu", "Computer Science, Math", "None", "None", true));
-	  students.push(new studentInfo("Jacob", "babionej@findlay.edu", "Computer Science, Math", "None", "Findlay, OH", true));
-	  students.push(new studentInfo("Lucas", "kelleykiefferl@findlay.edu", "Computer Science", "None", "Findlay, OH", true));
+	  students.push(new studentInfo("None", "None", "None", "None", "None", false)); //Dummy student to take index 0
+	  students.push(new studentInfo("Bob", "bob@email", "Premed", "Spanish", "None", false));
+	  students.push(new studentInfo("Rick", "rick@email", "English", "Math", "None", false));
+	  students.push(new studentInfo("Tim", "tim@email", "Equestrian", "Pre-vet", "None", false));
+	  students.push(new studentInfo("Mary", "mary@email", "English", "Theatre", "None", false));
+	  students.push(new studentInfo("Susan", "susan@email", "Math", "English", "None", false));
+	  students.push(new studentInfo("Kali", "dumpertk@findlay.edu", "Computer Science", "None", "None", false));
+	  students.push(new studentInfo("Heather", "beckh@findlay.edu", "Computer Science, Math", "None", "None", false));
+	  students.push(new studentInfo("Jacob", "babionej@findlay.edu", "Computer Science, Math", "None", "Findlay, OH", false));
+	  students.push(new studentInfo("Lucas", "kelleykiefferl@findlay.edu", "Computer Science", "None", "Findlay, OH", false));
 	  
 	  //Adds each student's name to the list
 	  for(i = 1; i < students.length; i++){
@@ -499,9 +499,9 @@ function toggleAttend(button_id) {
 	<!-- Row 1 -->
 		<fieldset id="Row1">
 		<legend><span>Row 1</span></legend>
-		<button id='btnSeat0101' assigned=1 onClick="SeatClicked(this.id);"><img id='imgSeat0101' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0102' assigned=2 onClick="SeatClicked(this.id);"><img id='imgSeat0102' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0103' assigned=3 onClick="SeatClicked(this.id);"><img id='imgSeat0103' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0101' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0101' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0102' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0102' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0103' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0103' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 		<button id='btnSeat0104' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0104' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 		<button id='btnSeat0105' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0105' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 		<button id='btnSeat0106' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0106' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
@@ -512,9 +512,9 @@ function toggleAttend(button_id) {
     <!-- Row 2 -->
 		<fieldset id="Row2">
 		<legend><span>Row 2</span></legend>
-    	<button id='btnSeat0201' assigned=4 onClick="SeatClicked(this.id);"><img id='imgSeat0201' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0202' assigned=5 onClick="SeatClicked(this.id);"><img id='imgSeat0202' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0203' assigned=6 onClick="SeatClicked(this.id);"><img id='imgSeat0203' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0201' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0201' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0202' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0202' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0203' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0203' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
     	<button id='btnSeat0204' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0204' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
     	<button id='btnSeat0205' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0205' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 		<button id='btnSeat0206' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0206' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
@@ -526,9 +526,9 @@ function toggleAttend(button_id) {
 	<!-- Row 3 -->
 		<fieldset id="Row3">
 		<legend><span>Row 3</span></legend>
-    	<button id='btnSeat0301' assigned=7 onClick="SeatClicked(this.id);"><img id='imgSeat0301' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0302' assigned=8 onClick="SeatClicked(this.id);"><img id='imgSeat0302' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0303' assigned=9 onClick="SeatClicked(this.id);"><img id='imgSeat0303' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0301' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0301' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0302' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0302' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0303' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0303' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
     	<button id='btnSeat0304' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0304' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
     	<button id='btnSeat0305' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0305' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 		<button id='btnSeat0306' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0306' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
