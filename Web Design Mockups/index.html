@@ -10,11 +10,106 @@
   <!-- End header -->
   <!--Script for the buttons to work correctly -->
   <script>
+  //Initialize student list and load it into the dropdown of student names
+  var students = [];
+  function OnLoad(){
+	  students.push(new studentInfo("None", "None", "None", "None", "None")); //Dummy student to take index 0
+	  students.push(new studentInfo("Bob", "bob@email", "Premed", "Spanish", "None"));
+	  students.push(new studentInfo("Rick", "rick@email", "English", "Math", "None"));
+	  students.push(new studentInfo("Tim", "tim@email", "Equestrian", "Pre-vet", "None"));
+	  students.push(new studentInfo("Mary", "mary@email", "English", "Theatre", "None"));
+	  students.push(new studentInfo("Susan", "susan@email", "Math", "English", "None"));
+	  students.push(new studentInfo("Kali", "dumpertk@findlay.edu", "Computer Science", "None", "None"));
+	  students.push(new studentInfo("Heather", "beckh@findlay.edu", "Computer Science, Math", "None", "None"));
+	  students.push(new studentInfo("Jacob", "babionej@findlay.edu", "Computer Science, Math", "None", "Findlay, OH"));
+	  students.push(new studentInfo("Lucas", "kelleykiefferl@findlay.edu", "Computer Science", "None", "Findlay, OH"));
+	  
+	  //Adds each student's name to the list
+	  for(i = 1; i < students.length; i++){
+		var studentOpt = document.createElement("option");
+		studentOpt.text = students[i].name;
+		byId("studentList").add(studentOpt);
+	  }
+  }
+  
   function byId(e){return document.getElementById(e);}
-    window.addEventListener('load', mInit, false);
+    window.addEventListener("load", mInit, false);
   function byId(e){return document.getElementById(e);}
-  function SeatAttndSwap(btnClickedID)
-  {
+  
+  //Handles functions for clicking seats; if not assigned and taking attendance, can swap between check/X, otherwise opens student info
+  function SeatClicked(btnClickedID){
+	if (byId("btnAttend").innerHTML == "Save Attendance"){
+		SeatAttndSwap(btnClickedID);
+	}
+	else{
+		ShowSeatInfo(btnClickedID);
+	}	
+  }
+  
+  //Handles assigning seats and showing the info of the student assigned to the given seat
+  function ShowSeatInfo(btnClickedID){
+	var studentID = byId(btnClickedID).getAttribute("assigned");
+	var name = students[studentID].name;
+	
+	//If the someone is assigned to the seat and btnAssign has not been toggled, displays student info
+	
+	if (byId("btnAssign").innerHTML == "Assign Seats"){
+		if (studentID == 0){
+			alert("No student has been assigned this seat.")
+		}	
+		else{
+			var email = students[studentID].email;	
+			var majors = students[studentID].majors;
+			var minors = students[studentID].minors;
+			var home = students[studentID].home;
+			alert("Name:         " + name + "\nEmail:          " + email + "\nMajor:         " + majors + "\nMinor:         " + minors + "\nHometown: " + home);
+		}
+	}
+	else{
+		//if no student is assigned the seat and the user is assigning seats, requests the name of the student to put here
+		if (byId(btnClickedID).getAttribute("assigned") == 0){
+			var studentToAssign = prompt("Enter the name of the student who will sit here.");
+			var studentIndex = 0;
+			
+			for (i = 1; i < students.length; i++){
+				if (students[i].name == studentToAssign){
+					studentIndex = i;
+				}
+			}
+			
+			if (studentIndex != 0){
+				byId(btnClickedID).setAttribute("assigned", studentIndex);
+				alert(studentToAssign + " has been assigned to the selected seat.");
+			}
+			
+			else{
+				alert("This student is not on the list of students.  To add them to the list, click the 'Add Student' button.");
+			}
+		}
+
+		//If a student is already assigned to this seat, asks if the user would like to remove the student from the seat		
+		else{
+			var unassign = confirm("Would you like to remove " + name + " from this seat?  WARNING: Attendance data may be lost!");
+			if (unassign){
+				byId(btnClickedID).setAttribute("assigned", 0);
+				alert("This seat is now available.");
+			}
+		}
+	}
+  }
+  
+  //Toggles between assigning seats and normal mode
+  function AssignSeats(){
+	if (byId("btnAssign").innerHTML == "Assign Seats"){
+		byId("btnAssign").innerHTML = "Save Seats";
+	}
+	else{
+		byId("btnAssign").innerHTML = "Assign Seats";
+	}
+  }
+  
+  //Handles swapping between checkmarks and X's if taking attendance
+  function SeatAttndSwap(btnClickedID){
 	var seatImg = "";
 	switch (btnClickedID) {
 		case 'btnSeat0101':
@@ -125,17 +220,18 @@
 			
 	}
     var tgt = byId(seatImg);
-	if (tgt.getAttribute("src")== tgt.getAttribute("src1")){
+	if (tgt.getAttribute("src") == tgt.getAttribute("src1")){
 		tgt.src = tgt.getAttribute("src2");
 	}
-	else if (tgt.getAttribute("src") == tgt.getAttribute("src2")  && btnAttend.innerHTML == "Save Attendance"){
-		tgt.src = tgt.getAttribute("src1")
+	else if (tgt.getAttribute("src") == tgt.getAttribute("src2") && btnAttend.innerHTML == "Save Attendance"){
+		tgt.src = tgt.getAttribute("src1");
 	}
 		
   }
 <!-- End Script Button -->
-function toggleAttend(button_id) 
-{
+
+//Swaps between viewing the seats and taking attendance
+function toggleAttend(button_id) {
    var btnText = byId(button_id);
    var strRow = "1";
    var strCol = "1";
@@ -180,12 +276,13 @@ function toggleAttend(button_id)
 //TODO: change # of "buttons" or seats based on saved changes
 //TODO: Connect changes to database entry of chart
 <!-- End Do list -->
-  function activeEdit()
-  {
-    var chartName  = byId('ChartName');
-    var chartRows = byId('RoomRows');
-    var chartColumns = byId('RoomColumns');
-    var editBtn    = byId('EditRoom');
+
+//Handles changing the available seats based on the entered dimensions for the room layout
+  function activeEdit(){
+    var chartName  = byId("ChartName");
+    var chartRows = byId("RoomRows");
+    var chartColumns = byId("RoomColumns");
+    var editBtn    = byId("EditRoom");
 	var zero = "0";
 	var rows = chartRows.value;
 	var cols = chartColumns.value;
@@ -194,6 +291,7 @@ function toggleAttend(button_id)
 	var seat = "btnSeat";
 	var seatID = "";
 	
+	//If the user clicks to save the changes, it checks for valid dimensions before adjusting the layout
     if (editBtn.innerHTML == "Save Changes") {
 		if (rows > 0 && rows < 6){
 			if (cols > 0 && cols < 8){
@@ -225,6 +323,7 @@ function toggleAttend(button_id)
 			alert("There can only be up to 5 rows");
 		}
     }
+	//Makes the textboxes editable and changes the button's text
     else {
       chartName.readOnly = false;
       chartRows.readOnly = false;
@@ -239,14 +338,32 @@ function toggleAttend(button_id)
 //TODO: Check whether professor or not
 //TODO: Connect changes to database entry of chart
 <!-- End Do list -->
+
+//Handles creation of new students and their information; can be expanded further to include absences or something
+  function studentInfo(fullname, studemail, major, minor, hometown){
+	this.name = fullname;
+	this.email = studemail;
+	this.majors = major;
+	this.minors = minor;
+	this.home = hometown;
+  }
+  
+  //Remove student from the studentList dropdown
   function removeStudent() {
-    var studentList = byId('studentList');
+    var studentList = byId("studentList");
     var studentToRemove = prompt("Which student would you like to remove?");
     var found = "false";
   
+	//Looks for the requested name
     for (i=0; i<studentList.length; i++){
+	  //Removes the name from the dropdown and from the students array
       if(studentList.options[i].text == studentToRemove){
         studentList.remove(i);
+		for (j = 1; j < students.length; j++){
+			if (studentToRemove == students[j].name){
+				students.splice(j, 1);
+			}
+		}
         found = "true";
         alert(studentToRemove + " was removed");
         break;
@@ -258,21 +375,34 @@ function toggleAttend(button_id)
     }  
   }
   
+  //Add student to studentList dropdown; cannot add duplicate student names
   function addStudent() {
 	var studentList = byId('studentList');
 	var studentToAdd = prompt("Please enter the name of the student.");
 	var alreadyListed = "false";
+	
+	//Checks to see if the name is already in the list
 	for (i=0; i<studentList.length; i++){
 		if (studentList.options[i].text == studentToAdd){
 			alreadyListed = "true";
 		}
 	}
+	
+	//Only asks for further information if the name is unique
 	if (alreadyListed == "false"){
+		var studentEmail = prompt("Please enter the student's email address.");
+		var studentMajors = prompt("Please enter the student's major(s).");
+		var studentMinors = prompt("Please enter the student's minor(s).");
+		var studentHometown = prompt("Please enter the student's hometown.");		
 		var newStudent = document.createElement("option");
+		
 		newStudent.text = studentToAdd;
 		studentList.add(newStudent);
+		students[students.length] = new studentInfo(studentToAdd, studentEmail, studentMajors, studentMinors, studentHometown);
 		alert(studentToAdd + " was added to the student list.");
 	}
+	
+	//Shows an alert if the name was not unique
 	else{
 		alert("This student is already on the list!");
 	}
@@ -280,7 +410,7 @@ function toggleAttend(button_id)
   </script>
   <!-- End script -->
   
-  <body>
+  <body onload="OnLoad();">
     <div align="center">
     <nav align="center"> <!--Start left nav bar -->
 	  <form> <!--Form Start-->
@@ -309,17 +439,8 @@ function toggleAttend(button_id)
       
 	  <fieldset id="studentinfo">
 		<legend><span>Student Information</span></legend>
-		<dt>Please select a student:  
+		<dt>Please select a student:
 			<select  id="studentList">
-			<option>Bob</option>
-			<option>Rick</option>
-			<option>Tim</option>
-			<option>Mary</option>
-			<option>Susan</option>
-			<option>Kali</option>
-			<option>Heather</option>
-			<option>Jacob</option>
-			<option>Lucas</option>
 			</select>
 	
 	  </fieldset>
@@ -332,7 +453,7 @@ function toggleAttend(button_id)
 			<button type="Button" class ="attenBtn">Delete Room Chart</button>
 			<button type="Button" class ="attenBtn" onClick="addStudent();">Add Student</button>
 			<button type="Button" class ="attenBtn" onClick="removeStudent();">Remove Student</button>
-			<button type="Button" class ="attenBtn">Add Aisle</button>
+			<button type="Button" class ="attenBtn" id="btnAssign" onClick="AssignSeats();">Assign Seats</button>
 			<button type="Button" class ="attenBtn">View Past Seating Charts</button>
 	   </fieldset>
 	   
@@ -357,26 +478,26 @@ function toggleAttend(button_id)
 	<!-- Row 1 -->
 		<fieldset id="Row1">
 		<legend><span>Row 1</span></legend>
-		<button id='btnSeat0101' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0101' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0102' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0102' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0103' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0103' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0104' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0104' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0105' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0105' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0106' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0106' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0107' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0107' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0101' assigned=1 onClick="SeatClicked(this.id);"><img id='imgSeat0101' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0102' assigned=2 onClick="SeatClicked(this.id);"><img id='imgSeat0102' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0103' assigned=3 onClick="SeatClicked(this.id);"><img id='imgSeat0103' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0104' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0104' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0105' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0105' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0106' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0106' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0107' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0107' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 	</fieldset>
   <br>
   
     <!-- Row 2 -->
 		<fieldset id="Row2">
 		<legend><span>Row 2</span></legend>
-    	<button id='btnSeat0201' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0201' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0202' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0202' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0203' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0203' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0204' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0204' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0205' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0205' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0206' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0206' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0207' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0207' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0201' assigned=4 onClick="SeatClicked(this.id);"><img id='imgSeat0201' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0202' assigned=5 onClick="SeatClicked(this.id);"><img id='imgSeat0202' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0203' assigned=6 onClick="SeatClicked(this.id);"><img id='imgSeat0203' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0204' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0204' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0205' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0205' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0206' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0206' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0207' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0207' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 
 	</fieldset>
   <br>
@@ -384,13 +505,13 @@ function toggleAttend(button_id)
 	<!-- Row 3 -->
 		<fieldset id="Row3">
 		<legend><span>Row 3</span></legend>
-    	<button id='btnSeat0301' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0301' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0302' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0302' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0303' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0303' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0304' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0304' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0305' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0305' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0306' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0306' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0307' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0307' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0301' assigned=7 onClick="SeatClicked(this.id);"><img id='imgSeat0301' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0302' assigned=8 onClick="SeatClicked(this.id);"><img id='imgSeat0302' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0303' assigned=9 onClick="SeatClicked(this.id);"><img id='imgSeat0303' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0304' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0304' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0305' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0305' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0306' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0306' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0307' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0307' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 
 	</fieldset>
 	<br>
@@ -398,13 +519,13 @@ function toggleAttend(button_id)
 	<!-- Row 4 -->
 		<fieldset id="Row4">
 		<legend><span>Row 4</span></legend>
-    	<button id='btnSeat0401' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0401' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0402' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0402' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0403' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0403' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0404' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0404' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0405' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0405' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0406' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0406' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0407' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0407' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0401' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0401' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0402' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0402' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0403' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0403' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0404' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0404' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0405' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0405' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0406' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0406' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0407' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0407' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
  
 	</fieldset>
 	<br>
@@ -412,13 +533,13 @@ function toggleAttend(button_id)
 	<!-- Row 5 -->
 		<fieldset id="Row5">
 		<legend><span>Row 5</span></legend>
-    	<button id='btnSeat0501' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0501' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0502' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0502' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-    	<button id='btnSeat0503' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0503' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0504' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0504' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0505' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0505' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0506' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0506' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
-		<button id='btnSeat0507' onClick="SeatAttndSwap(this.id);"><img id='imgSeat0507' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0501' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0501' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0502' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0502' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+    	<button id='btnSeat0503' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0503' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0504' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0504' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0505' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0505' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0506' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0506' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
+		<button id='btnSeat0507' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0507' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 
 	</fieldset>
 	<br>
