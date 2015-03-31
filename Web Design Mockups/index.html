@@ -272,8 +272,6 @@ function toggleAttend(button_id) {
 <!-- Heather's to do list -->
 //HB function either makes the room information editable or not
 //TODO: check whether professor or not
-//TODO: confirmation that info will be lost
-//TODO: change # of "buttons" or seats based on saved changes
 //TODO: Connect changes to database entry of chart
 <!-- End Do list -->
 
@@ -293,6 +291,7 @@ function toggleAttend(button_id) {
 	
 	//If the user clicks to save the changes, it checks for valid dimensions before adjusting the layout
     if (editBtn.innerHTML == "Save Changes") {
+      alert("Information might be lost. Seats are deleted from the bottom and right; please reposition students if necessary.");
 		if (rows > 0 && rows < 6){
 			if (cols > 0 && cols < 8){
 				for (i = 1; i < 6; i++){
@@ -334,7 +333,6 @@ function toggleAttend(button_id) {
   
 <!-- Heather's to do list -->
 //HB function to remove a student from the class
-//TODO: Confirmation data will be lost
 //TODO: Check whether professor or not
 //TODO: Connect changes to database entry of chart
 <!-- End Do list -->
@@ -353,26 +351,30 @@ function toggleAttend(button_id) {
     var studentList = byId("studentList");
     var studentToRemove = prompt("Which student would you like to remove?");
     var found = "false";
-  
-	//Looks for the requested name
-    for (i=0; i<studentList.length; i++){
-	  //Removes the name from the dropdown and from the students array
-      if(studentList.options[i].text == studentToRemove){
-        studentList.remove(i);
-		for (j = 1; j < students.length; j++){
-			if (studentToRemove == students[j].name){
-				students.splice(j, 1);
+	//Looks for the requested name after confirming that the user would like to remove the student
+    if(confirm("Information will be lost. Are you sure you want to remove this student?")){
+		for (i=0; i<studentList.length; i++){
+			//Removes the name from the dropdown and from the students array
+			if(studentList.options[i].text.toUpperCase() == studentToRemove.toUpperCase()){
+				studentList.remove(i);
+				for (j = 1; j < students.length; j++){
+					if (studentToRemove.toUpperCase() == students[j].name.toUpperCase()){
+						students.splice(j, 1);
+					}
+				}
+				found = "true";
+				alert(studentToRemove + " was removed");
+				break;
 			}
 		}
-        found = "true";
-        alert(studentToRemove + " was removed");
-        break;
-      }
-    }
   
-    if (found == "false") {
-      alert("Student not found. Please try again.");
-    }  
+		if (found == "false") {
+			alert("Student not found. Please try again.");
+		}	  
+    }
+    else{
+      alert("No student removed.");
+    }
   }
   
   //Add student to studentList dropdown; cannot add duplicate student names
@@ -429,8 +431,8 @@ function toggleAttend(button_id) {
 	  
       <fieldset id="roominfo">
 		<legend><span>Room Size:</span></legend>
-			<dt>Rows: <br><input id="RoomRows" readonly="true" placeholder="5" value=""></input></dt>
-			<dt>Columns: <br><input id="RoomColumns" readonly="true" placeholder="7" value=""></input></dt>
+			<dt>Rows: <br><input id="RoomRows" readonly="true" placeholder="5" value="5"></input></dt>
+			<dt>Columns: <br><input id="RoomColumns" readonly="true" placeholder="7" value="7"></input></dt>
 			<br>
 			<button id="EditRoom" type="Button" class ="attenBtn" onClick="activeEdit();">Edit Room</button>
 	  </fieldset>
@@ -449,7 +451,7 @@ function toggleAttend(button_id) {
 		
       <fieldset id="extrainfo">
 		<legend><span>Help Menu</span></legend>		
-			<button type="Button" class ="attenBtn">Home</button>
+			<button type="Button" class ="attenBtn" onclick="location.href='home.html'">Home</button>
 			<button type="Button" class ="attenBtn">Delete Room Chart</button>
 			<button type="Button" class ="attenBtn" onClick="addStudent();">Add Student</button>
 			<button type="Button" class ="attenBtn" onClick="removeStudent();">Remove Student</button>
