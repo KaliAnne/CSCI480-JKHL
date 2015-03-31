@@ -1,3 +1,8 @@
+/*
+Iteration 1 code for seating chart application.
+Created and revised by JHKL 3/31/2015
+ */
+
  //Initialize student list and load it into the dropdown of student names
   var students = [];
   function OnLoad(){
