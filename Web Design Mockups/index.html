@@ -44,7 +44,7 @@
 	  <fieldset id="studentinfo">
 		<legend><span>Student Information</span></legend>
 		<dt>Please select a student:
-			<select  id="studentList" onchange="ViewStudentInfo(this.value)"></select>
+			<select  id="studentList" onmousedown="this.value = ''"; onchange="ViewStudentInfo(this.value)"></select>
 	
 	  </fieldset>
 	  
