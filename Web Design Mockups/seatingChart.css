@@ -1,3 +1,10 @@
+/*
+Iteration 1 code for seating chart application.
+Created and revised by JHKL 3/31/2015
+ */
+
+
+/* "Navigation bar"; found on left hand side. Important note that hiding scroll bar x.*/
 nav {
 	width: 300px;
 	line-height:30px;
@@ -8,14 +15,17 @@ nav {
 	overflow-x:hidden;
 }
 
+/* Header; title and such viewed on browser tab */
 header {
 	text-align: center;
 }
 
+/* Section; Main area with buttons for students, this is encapsulated inside of div */
 section {
 	padding-top: 20px;
 }
 
+/* div; Main area with buttons for students, */
 div {
     width:1300px;
     float:left;
@@ -26,11 +36,13 @@ div {
 	overflow-x:hidden;
 }
 
+/* img; CSS styling for img elements used in website, defaulted to 100x100px. */
 img {
 	height: 100px;
 	width: 100px;
 }
 
+/* button; Main class which is used in the home page*/
 button {
 	height: 100px;
 	width: 125px;
@@ -38,11 +50,13 @@ button {
 	
 }
 
+/* attenBtn; Long buttons used for menu options and take attendance*/
 button.attenBtn {
 	width: 200px;
 	height: 50px;
 }
 
+/* editBtn; Small square buttons used to edit and delete on viewexisting.html*/
 button.editBtn {
 	width:  50px;
 	height: 50px;
@@ -51,3 +65,4 @@ button.editBtn {
     display:inline-block;
 }
 
+/* foo; bar */

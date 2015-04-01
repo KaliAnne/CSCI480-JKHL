@@ -1,16 +1,21 @@
+/*
+Iteration 1 code for seating chart application.
+Created and revised by JHKL 3/31/2015
+ */
+
  //Initialize student list and load it into the dropdown of student names
   var students = [];
   function OnLoad(){
-	  students.push(new studentInfo("None", "None", "None", "None", "None", true)); //Dummy student to take index 0
-	  students.push(new studentInfo("Bob", "bob@email", "Premed", "Spanish", "None", true));
-	  students.push(new studentInfo("Rick", "rick@email", "English", "Math", "None", true));
-	  students.push(new studentInfo("Tim", "tim@email", "Equestrian", "Pre-vet", "None", true));
-	  students.push(new studentInfo("Mary", "mary@email", "English", "Theatre", "None", true));
-	  students.push(new studentInfo("Susan", "susan@email", "Math", "English", "None", true));
-	  students.push(new studentInfo("Kali", "dumpertk@findlay.edu", "Computer Science", "None", "None", true));
-	  students.push(new studentInfo("Heather", "beckh@findlay.edu", "Computer Science, Math", "None", "None", true));
-	  students.push(new studentInfo("Jacob", "babionej@findlay.edu", "Computer Science, Math", "None", "Findlay, OH", true));
-	  students.push(new studentInfo("Lucas", "kelleykiefferl@findlay.edu", "Computer Science", "None", "Findlay, OH", true));
+	  students.push(new studentInfo("None", "None", "None", "None", "None", false)); //Dummy student to take index 0
+	  students.push(new studentInfo("Bob", "bob@email", "Premed", "Spanish", "None", false));
+	  students.push(new studentInfo("Rick", "rick@email", "English", "Math", "None", false));
+	  students.push(new studentInfo("Tim", "tim@email", "Equestrian", "Pre-vet", "None", false));
+	  students.push(new studentInfo("Mary", "mary@email", "English", "Theatre", "None", false));
+	  students.push(new studentInfo("Susan", "susan@email", "Math", "English", "None", false));
+	  students.push(new studentInfo("Kali", "dumpertk@findlay.edu", "Computer Science", "None", "None", false));
+	  students.push(new studentInfo("Heather", "beckh@findlay.edu", "Computer Science, Math", "None", "None", false));
+	  students.push(new studentInfo("Jacob", "babionej@findlay.edu", "Computer Science, Math", "None", "Findlay, OH", false));
+	  students.push(new studentInfo("Lucas", "kelleykiefferl@findlay.edu", "Computer Science", "None", "Findlay, OH", false));
 	  
 	  //Adds each student's name to the list
 	  for(i = 1; i < students.length; i++){
@@ -92,10 +97,14 @@
   //Toggles between assigning seats and normal mode
   function AssignSeats(){
 	if (byId("btnAssign").innerHTML == "Assign Seats"){
+		byId("btnAttend").disabled = true;
+		byId("EditRoom").disabled = true;
 		byId("btnAssign").innerHTML = "Save Seats";
 	}
 	else{
 		byId("btnAssign").innerHTML = "Assign Seats";
+		byId("btnAttend").disabled = false;
+		byId("EditRoom").disabled = false;
 	}
   }
   
@@ -219,7 +228,7 @@
 	}
 		
   }
-<!-- End Script Button -->
+
 
 //Swaps between viewing the seats and taking attendance
 function toggleAttend(button_id) {
@@ -231,8 +240,10 @@ function toggleAttend(button_id) {
    var seatID = "imgSeat0101";
    if (btnText.innerHTML == "Take Attendance") 
    {
-	<!-- Toggles text and sets seats to checkmarks and allows them to be changed to take attendance -->
+	//Toggles text and sets seats to checkmarks and allows them to be changed to take attendance
      btnText.innerHTML = "Save Attendance";
+	 byId("EditRoom").disabled = true;
+	 byId("btnAssign").disabled = true;
 	 for (i = 1; i < 6; i++) { 
 		strRow = i.toString();
 		for (j = 1; j < 8; j++){
@@ -243,28 +254,42 @@ function toggleAttend(button_id) {
 		}
 	 }
    }
-   else 
-   {
-   <!-- Toggles text and sets seat to Misc. icons if previously a checkmark, but leaves them as X if absent -->
-     btnText.innerHTML = "Take Attendance";
-	  for (i = 1; i < 6; i++) { 
-		strRow = i.toString();
-		for (j = 1; j < 8; j++){
-			strCol = j.toString();
-			seatID = seat.concat(zero, strRow, zero, strCol);
-			if (byId(seatID).getAttribute("src") == byId(seatID).getAttribute("src1")){
-				byId(seatID).src = byId(seatID).getAttribute("src3");
+   else{
+	//Toggles text and sets seat to Misc. icons if previously a checkmark, but leaves them as X if absent
+	var saveAttend = confirm("Would you like to save the attendance as shown currently?");
+	if (saveAttend){
+		btnText.innerHTML = "Take Attendance";
+		byId("EditRoom").disabled = false;
+		byId("btnAssign").disabled = false;
+		var curdate = new Date();
+		for (i = 1; i < 6; i++) { 
+			strRow = i.toString();
+			
+			for (j = 1; j < 8; j++){
+				strCol = j.toString();
+				seatID = seat.concat(zero, strRow, zero, strCol);
+				
+				//If the student is marked present [checkmarked], switches back to normal icon, if marked absent, saves the absent date
+				if (byId(seatID).getAttribute("src") == byId(seatID).getAttribute("src1")){
+					byId(seatID).src = byId(seatID).getAttribute("src3");
+				}
+				else{
+					var btnSeat = "btnSeat";
+					seatID = btnSeat.concat(zero, strRow, zero, strCol);
+					var studentID = byId(seatID).getAttribute("assigned");
+					students[studentID].absences[students[studentID].absences.length] = (curdate.getMonth() + 1).toString()  + "/" + (curdate.getDate()).toString() + "/" + (curdate.getFullYear()).toString();
+				}
+				seat = "imgSeat";
 			}
-			seat = "imgSeat";
 		}
-	 }
-   }
+	}
+  }
 }
-<!-- Heather's to do list -->
+//Heather's to do list -->
 //HB function either makes the room information editable or not
 //TODO: check whether professor or not
 //TODO: Connect changes to database entry of chart
-<!-- End Do list -->
+//End Do list -->
 
 //Handles changing the available seats based on the entered dimensions for the room layout
   function activeEdit(){
@@ -302,6 +327,8 @@ function toggleAttend(button_id) {
 				chartName.readOnly = true;
 				chartRows.readOnly = true;
 				chartColumns.readOnly = true;
+				byId("btnAttend").disabled = false;
+				byId("btnAssign").disabled = false;
 				editBtn.innerHTML = "Edit Room";
 				
 			}
@@ -315,6 +342,8 @@ function toggleAttend(button_id) {
     }
 	//Makes the textboxes editable and changes the button's text
     else {
+	  byId("btnAttend").disabled = true;
+	  byId("btnAssign").disabled = true;
       chartName.readOnly = false;
       chartRows.readOnly = false;
       chartColumns.readOnly = false;
@@ -322,11 +351,10 @@ function toggleAttend(button_id) {
     }
   }
   
-<!-- Heather's to do list -->
+
 //HB function to remove a student from the class
 //TODO: Check whether professor or not
 //TODO: Connect changes to database entry of chart
-<!-- End Do list -->
 
 //Handles creation of new students and their information; can be expanded further to include absences or something
   function studentInfo(fullname, studemail, major, minor, hometown, seat){
@@ -336,6 +364,7 @@ function toggleAttend(button_id) {
 	this.minors = minor;
 	this.home = hometown;
 	this.seated = seat;
+	this.absences = [];
   }
   
   //Brings up an alert to view a student's information, given their name
@@ -350,7 +379,20 @@ function toggleAttend(button_id) {
 	var majors = students[studentID].majors;
 	var minors = students[studentID].minors;
 	var home = students[studentID].home;
-	alert("Name:         " + name + "\nEmail:          " + email + "\nMajor:         " + majors + "\nMinor:         " + minors + "\nHometown: " + home);
+	var absences = students[studentID].absences.length;
+	var absenceList = "\nAbsences:    ";
+	
+	//Shows dates absent, if any
+	if (absences > 0){
+		absenceList = absenceList + absences;
+		for (i = 0; i < absences; i++){
+			absenceList = absenceList + "\n                    " + students[studentID].absences[i];
+		}
+	}
+	else{
+		absenceList = absenceList + "No days missed!";
+	}
+	alert("Name:         " + name + "\nEmail:          " + email + "\nMajor:         " + majors + "\nMinor:         " + minors + "\nHometown: " + home + absenceList);
   }
   
   //Remove student from the studentList dropdown

@@ -1,3 +1,8 @@
+<!-- Iteration 1 code for seating chart application. -->
+<!-- Created and revised by JHKL 3/31/2015 -->
+<!-- The purpose of this program is to have the availability for a client to store multiple charts on a website, and be able to pull data from them for in-class use. -->
+<!-- Input: From standard input:: Button clicking, typing, form evaluation: From database:: seating chart data-->
+
 <!DOCTYPE html>
 <html>
   <!-- Start header -->
@@ -8,27 +13,24 @@
     <link rel="stylesheet" type="text/css" href="seatingChart.css" />
 	<script src="indexjs.js"> </script>   
   </head>
-  <!-- End header -->
-  <!--Script for the buttons to work correctly -->
 
-  <!-- End script -->
-  
   <body onload="OnLoad();">
     <div align="center">
-    <nav align="center"> <!--Start left nav bar -->
-	  <form> <!--Form Start-->
+    <nav align="center">
+		<!--Start left nav bar -->
+	  <form> 
+		<!--Form Start-->
 	  
 	  <fieldset id="menuopt">
-			<legend><span>Menu Options</span></legend>
-		
+		<!-- Creates menu options, to change the option to scroll, please see CSS -->
+			<legend><span>Menu Options</span></legend>		
 		<br>
 	  
 	  <fieldset id="chartinfo">
 			<legend><span>Chart Name</span></legend>
 				<dt><input id="ChartName" readonly="true" placeholder="(This is placeholder text)" value=""></input></dt>
-	  </fieldset>
-	  
-	  <br>
+	  </fieldset>	  
+		<br>
 	  
       <fieldset id="roominfo">
 		<legend><span>Room Size:</span></legend>
@@ -36,15 +38,13 @@
 			<dt>Columns: <br><input id="RoomColumns" readonly="true" placeholder="7" value="7"></input></dt>
 			<br>
 			<button id="EditRoom" type="Button" class ="attenBtn" onClick="activeEdit();">Edit Room</button>
-	  </fieldset>
-	  
-	  <br>
+	  </fieldset>	  
+		<br>
       
 	  <fieldset id="studentinfo">
 		<legend><span>Student Information</span></legend>
 		<dt>Please select a student:
-			<select  id="studentList" onchange="ViewStudentInfo(this.value)">
-			</select>
+			<select  id="studentList" onchange="ViewStudentInfo(this.value)"></select>
 	
 	  </fieldset>
 	  
@@ -64,9 +64,12 @@
 	   <br>
 
 		 
-	   </fieldset> <!--End menuopt-->
-	  </form> <!-- End Form -->
-  </nav> <!--End left nav bar-->
+	   </fieldset>
+			<!--End menuopt-->
+	  </form>
+			<!-- End Form -->
+	</nav> 	
+			<!--End left nav bar-->
    
   <section align="center">
 	<fieldset id="atteninfo">
@@ -89,7 +92,7 @@
 		<button id='btnSeat0106' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0106' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 		<button id='btnSeat0107' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0107' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 	</fieldset>
-  <br>
+	<br>
   
     <!-- Row 2 -->
 		<fieldset id="Row2">
@@ -103,7 +106,7 @@
 		<button id='btnSeat0207' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0207' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'</button>
 
 	</fieldset>
-  <br>
+	<br>
   
 	<!-- Row 3 -->
 		<fieldset id="Row3">
@@ -148,9 +151,6 @@
 	</fieldset>
 	<br>
 	<br>
-
-
-	
   </section>
   </fieldset>
   </div>
