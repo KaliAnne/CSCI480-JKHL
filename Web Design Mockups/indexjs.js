@@ -13,9 +13,9 @@ Created and revised by JHKL 3/31/2015
 	  students.push(new studentInfo("Mary", "mary@email", "English", "Theatre", "None", false));
 	  students.push(new studentInfo("Susan", "susan@email", "Math", "English", "None", false));
 	  students.push(new studentInfo("Kali", "dumpertk@findlay.edu", "Computer Science", "None", "None", false));
-	  students.push(new studentInfo("Heather", "beckh@findlay.edu", "Computer Science, Math", "None", "None", false));
-	  students.push(new studentInfo("Jacob", "babionej@findlay.edu", "Computer Science, Math", "None", "Findlay, OH", false));
-	  students.push(new studentInfo("Lucas", "kelleykiefferl@findlay.edu", "Computer Science", "None", "Findlay, OH", false));
+	  students.push(new studentInfo("Heather", "beckh@findlay.edu", "Computer Science, Math", "None", "ACM", false));
+	  students.push(new studentInfo("Jacob", "babionej@findlay.edu", "Computer Science, Math", "None", "ACM, TAG", false));
+	  students.push(new studentInfo("Lucas", "kelleykiefferl@findlay.edu", "Computer Science", "None", "None", false));
 	  
 	  //Adds each student's name to the list
 	  for(i = 1; i < students.length; i++){
@@ -74,6 +74,8 @@ Created and revised by JHKL 3/31/2015
 					byId(btnClickedID).setAttribute("assigned", studentIndex);
 					alert(studentToAssign + " has been assigned to the selected seat.");
 					students[studentIndex].seated = true;
+					var lblSeat = "lbl" + btnClickedID.substring(3, 11);
+					byId(lblSeat).innerHTML = studentToAssign;
 				}
 			}
 			
@@ -88,7 +90,10 @@ Created and revised by JHKL 3/31/2015
 			if (unassign){
 				byId(btnClickedID).setAttribute("assigned", 0);
 				students[studentID].seated = false;
+				var lblSeat = "lbl" + btnClickedID.substring(3, 11);
+				byId(lblSeat).innerHTML = "Vacant Seat";
 				alert("This seat is now available.");
+				
 			}
 		}
 	}
@@ -302,26 +307,31 @@ function toggleAttend(button_id) {
 	var cols = chartColumns.value;
 	var strRow = "1";
 	var strCol = "1";
-	var seat = "btnSeat";
-	var seatID = "";
+	var btnSeat = "btnSeat";
+	var lblSeat = "lblSeat";
+	var btnSeatID = "";
+	var lblSeatID = "";
 	
 	//If the user clicks to save the changes, it checks for valid dimensions before adjusting the layout
     if (editBtn.innerHTML == "Save Changes") {
-      alert("Information might be lost. Seats are deleted from the bottom and right; please reposition students if necessary.");
+		alert("Information might be lost. Seats are deleted from the bottom and right; please reposition students if necessary.");
 		if (rows > 0 && rows < 6){
 			if (cols > 0 && cols < 8){
 				for (i = 1; i < 6; i++){
 					strRow = i.toString();
 					for (j = 1; j < 8; j++){
 						strCol = j.toString();
-						seatID = seat.concat(zero, strRow, zero, strCol);
+						btnSeatID = btnSeat.concat(zero, strRow, zero, strCol);
+						lblSeatID = lblSeat.concat(zero, strRow, zero, strCol);
 						if (i <= rows && j <= cols){
-							byId(seatID).style.visibility = "visible";
+							byId(btnSeatID).style.visibility = "visible";
+							byId(lblSeatID).style.visibility = "visible";
 						}
 						else{
-							byId(seatID).style.visibility = "hidden";
+							byId(btnSeatID).style.visibility = "hidden";
+							byId(lblSeatID).style.visibility = "hidden";
 						}
-						seat = "btnSeat";
+						seat = "Seat";
 					}
 				}
 				chartName.readOnly = true;
@@ -357,12 +367,12 @@ function toggleAttend(button_id) {
 //TODO: Connect changes to database entry of chart
 
 //Handles creation of new students and their information; can be expanded further to include absences or something
-  function studentInfo(fullname, studemail, major, minor, hometown, seat){
+  function studentInfo(fullname, studemail, major, minor, extra, seat){
 	this.name = fullname;
 	this.email = studemail;
 	this.majors = major;
 	this.minors = minor;
-	this.home = hometown;
+	this.extras = extra;
 	this.seated = seat;
 	this.absences = [];
   }
@@ -378,7 +388,7 @@ function toggleAttend(button_id) {
 	var email = students[studentID].email;	
 	var majors = students[studentID].majors;
 	var minors = students[studentID].minors;
-	var home = students[studentID].home;
+	var home = students[studentID].extras;
 	var absences = students[studentID].absences.length;
 	var absenceList = "\nAbsences:    ";
 	
@@ -392,7 +402,7 @@ function toggleAttend(button_id) {
 	else{
 		absenceList = absenceList + "No days missed!";
 	}
-	alert("Name:         " + name + "\nEmail:          " + email + "\nMajor:         " + majors + "\nMinor:         " + minors + "\nHometown: " + home + absenceList);
+	alert("Name:         " + name + "\nEmail:          " + email + "\nMajor:         " + majors + "\nMinor:         " + minors + "\nExtracurriculars: " + home + absenceList);
   }
   
   //Remove student from the studentList dropdown
@@ -444,12 +454,12 @@ function toggleAttend(button_id) {
 		var studentEmail = prompt("Please enter the student's email address.");
 		var studentMajors = prompt("Please enter the student's major(s).");
 		var studentMinors = prompt("Please enter the student's minor(s).");
-		var studentHometown = prompt("Please enter the student's hometown.");		
+		var studentExtra = prompt("Please enter the student's extracurricular activities.");		
 		var newStudent = document.createElement("option");
 		
 		newStudent.text = studentToAdd;
 		studentList.add(newStudent);
-		students[students.length] = new studentInfo(studentToAdd, studentEmail, studentMajors, studentMinors, studentHometown, false);
+		students[students.length] = new studentInfo(studentToAdd, studentEmail, studentMajors, studentMinors, studentExtra, false);
 		alert(studentToAdd + " was added to the student list.");
 	}
 	

@@ -65,4 +65,12 @@ button.editBtn {
     display:inline-block;
 }
 
+/* seatLbl */
+label.seatLbl {
+	width: 100px;
+	height: 15px;
+	padding: 10px;
+	margin: 15px;
+}
+
 /* foo; bar */
