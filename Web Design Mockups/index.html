@@ -10,20 +10,35 @@
     <meta charset="UTF-8" />
 	<title>Seating Chart Application</title>
 	<link rel="shortcut icon" type="image/png" href="images/favicon/apple.png"/>
-    <link rel="stylesheet" type="text/css" href="seatingChart.css" />
-	<script src="indexjs.js"> </script>   
+    <link rel="stylesheet"  href="css/seatingChartnew.css" />
+	<script src="js/indexjs.js"> </script>
   </head>
-
+  <header>
+  <nav id="nav">
+						<ul>
+							<li class="current"><a href="home.html">Home</a></li>
+							<li><a href="">Dropdown</a></li>
+							<li><a href="">Left Sidebar</a></li>
+							<li><a href="">Right Sidebar</a></li>
+							<li><a href="">Two Sidebar</a></li>
+							<li><a href="">No Sidebar</a></li>
+						</ul>
+					</nav>
+					<br>
+					<br>
+</header>
   <body onload="OnLoad();">
+  
     <div align="center">
-    <nav align="center">
+	
+    <section align="center" class="left">
 		<!--Start left nav bar -->
 	  <form> 
 		<!--Form Start-->
 	  
 	  <fieldset id="menuopt">
 		<!-- Creates menu options, to change the option to scroll, please see CSS -->
-			<legend><span>Menu Options</span></legend>		
+			<legend><span><h2>Menu Options</h2></span></legend>		
 		<br>
 	  
 	  <fieldset id="chartinfo">
@@ -68,12 +83,12 @@
 			<!--End menuopt-->
 	  </form>
 			<!-- End Form -->
-	</nav> 	
+	</section> 	
 			<!--End left nav bar-->
    
   <section align="center">
-	<fieldset id="atteninfo">
-	<legend><span>Attendance</span></legend>	
+	<fieldset id="atteninfo" align="center">
+	<legend><span><h2>Attendance</h2></span></legend>	
 	<br>
 
     <button type="Button" class ="attenBtn" id="btnAttend" onClick="toggleAttend(this.id);">Take Attendance</button>
@@ -84,11 +99,55 @@
 	<!-- Row 5 -->
 	<fieldset id="Row5">
 		<legend><span>Row 5</span></legend>
-    	<button id='btnSeat0501' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0501' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
+		 
+		<section class="picture">
+		<button id='btnSeat0501' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0501' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
+    			<br>
+		<label type="label" class="seatLbl" id="lblSeat0501" for="btnSeat0501">Vacant Seat</label>
+		</section>
+		
+		<section class="picture">
+		<button id='btnSeat0502' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0502' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
+    	<br>
+		<label type="label" class="seatLbl" id="lblSeat0502" for="btnSeat0502">Vacant Seat</label>
+		</section>
+
+		<section class="picture">
+		<button id='btnSeat0503' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0503' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
+		<br>
+		<label type="label" class="seatLbl" id="lblSeat0503" for="btnSeat0503">Vacant Seat</label>
+		</section>
+		
+		<section class="picture">
+		<button id='btnSeat0504' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0504' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
+		<br>
+		<label type="label" class="seatLbl" id="lblSeat0504" for="btnSeat0504">Vacant Seat</label>
+		</section>
+		
+		<section class="picture">
+		<button id='btnSeat0505' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0505' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
+		<br>
+		<label type="label" class="seatLbl" id="lblSeat0505" for="btnSeat0505">Vacant Seat</label>
+		</section>
+		
+		<section class="picture">
+		<button id='btnSeat0506' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0506' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
+		<br>
+		<label type="label" class="seatLbl" id="lblSeat0506" for="btnSeat0506">Vacant Seat</label>
+		</section>
+		
+		<section class="picture">
+		<button id='btnSeat0507' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0507' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
+        <br>
+		<label type="label" class="seatLbl" id="lblSeat0507" for="btnSeat0507">Vacant Seat</label>
+		</section>
+		
+		<!-- Lucas is working on this
+		<button id='btnSeat0501' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0501' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
     	<button id='btnSeat0502' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0502' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
     	<button id='btnSeat0503' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0503' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
-		<button id='btnSeat0504' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0504' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
-		<button id='btnSeat0505' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0505' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
+    	<button id='btnSeat0504' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0504' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
+    	<button id='btnSeat0505' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0505' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
 		<button id='btnSeat0506' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0506' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
 		<button id='btnSeat0507' assigned=0 onClick="SeatClicked(this.id);"><img id='imgSeat0507' src="images/icon_png/MiscStudent.png" src3="images/icon_png/MiscStudent.png" src1="images/icon_png/Checkmark.png" src2='images/icon_png/X.png'></button>
 		<br>
@@ -99,6 +158,10 @@
 		<label type="label" class="seatLbl" id="lblSeat0505" for="btnSeat0505">Vacant Seat</label>
 		<label type="label" class="seatLbl" id="lblSeat0506" for="btnSeat0506">Vacant Seat</label>
 		<label type="label" class="seatLbl" id="lblSeat0507" for="btnSeat0507">Vacant Seat</label>
+		-->
+		
+		
+		
 	</fieldset>
 	
 	<br>
@@ -192,6 +255,8 @@
 	<br>
   </section>
   </fieldset>
+   
   </div>
   </body>
+
 </html>
