@@ -5,8 +5,8 @@ Created and revised by JHKL 3/31/2015
 
  //Initialize student list and load it into the dropdown of student names
   var students = [];
-  var NUM_ROWS = 5;
-  var NUM_COLS = 7;
+  var NUM_ROWS = 8;  //Number of rows + 1	 
+  var NUM_COLS = 11; //Number of columns + 1
   function OnLoad(){
 	  students.push(new studentInfo("None", "None", "None", "None", "None", false)); //Dummy student to take index 0
 	  students.push(new studentInfo("Bob", "bob@email", "Premed", "Spanish", "None", false));
@@ -117,115 +117,7 @@ Created and revised by JHKL 3/31/2015
   
   //Handles swapping between checkmarks and X's if taking attendance
   function SeatAttndSwap(btnClickedID){
-	var seatImg = "";
-	switch (btnClickedID) {
-		case 'btnSeat0101':
-			seatImg = 'imgSeat0101';
-			break;
-		case 'btnSeat0102':
-			seatImg = 'imgSeat0102';
-			break;
-		case 'btnSeat0103':
-			seatImg = 'imgSeat0103';
-			break;
-		case 'btnSeat0104':
-			seatImg = 'imgSeat0104';
-			break;
-		case 'btnSeat0105':
-			seatImg = 'imgSeat0105';
-			break;
-		case 'btnSeat0106':
-			seatImg = 'imgSeat0106';
-			break;
-		case 'btnSeat0107':
-			seatImg = 'imgSeat0107';
-			break;
-		case 'btnSeat0201':
-			seatImg = 'imgSeat0201';
-			break;
-		case 'btnSeat0202':
-			seatImg = 'imgSeat0202';
-			break;
-		case 'btnSeat0203':
-			seatImg = 'imgSeat0203';
-			break;
-		case 'btnSeat0204':
-			seatImg = 'imgSeat0204';
-			break;
-		case 'btnSeat0205':
-			seatImg = 'imgSeat0205';
-			break;
-		case 'btnSeat0206':
-			seatImg = 'imgSeat0206';
-			break;
-		case 'btnSeat0207':
-			seatImg = 'imgSeat0207';
-			break;
-		case 'btnSeat0301':
-			seatImg = 'imgSeat0301';
-			break;
-		case 'btnSeat0302':
-			seatImg = 'imgSeat0302';
-			break;
-		case 'btnSeat0303':
-			seatImg = 'imgSeat0303';
-			break;
-		case 'btnSeat0304':
-			seatImg = 'imgSeat0304';
-			break;
-		case 'btnSeat0305':
-			seatImg = 'imgSeat0305';
-			break;
-		case 'btnSeat0306':
-			seatImg = 'imgSeat0306';
-			break;
-		case 'btnSeat0307':
-			seatImg = 'imgSeat0307';
-			break;
-		case 'btnSeat0401':
-			seatImg = 'imgSeat0401';
-			break;
-		case 'btnSeat0402':
-			seatImg = 'imgSeat0402';
-			break;
-		case 'btnSeat0403':
-			seatImg = 'imgSeat0403';
-			break;
-		case 'btnSeat0404':
-			seatImg = 'imgSeat0404';
-			break;
-		case 'btnSeat0405':
-			seatImg = 'imgSeat0405';
-			break;
-		case 'btnSeat0406':
-			seatImg = 'imgSeat0406';
-			break;
-		case 'btnSeat0407':
-			seatImg = 'imgSeat0407';
-			break;
-		case 'btnSeat0501':
-			seatImg = 'imgSeat0501';
-			break;
-		case 'btnSeat0502':
-			seatImg = 'imgSeat0502';
-			break;
-		case 'btnSeat0503':
-			seatImg = 'imgSeat0503';
-			break;
-		case 'btnSeat0504':
-			seatImg = 'imgSeat0504';
-			break;
-		case 'btnSeat0505':
-			seatImg = 'imgSeat0505';
-			break;
-		case 'btnSeat0506':
-			seatImg = 'imgSeat0506';
-			break;
-		case 'btnSeat0507':
-			seatImg = 'imgSeat0507';
-			break;
-			
-	}
+	var seatImg = "img" + btnClickedID.substring(3, 11);
     var tgt = byId(seatImg);
 	if (tgt.getAttribute("src") == tgt.getAttribute("src1")){
 		tgt.src = tgt.getAttribute("src2");
@@ -251,11 +143,16 @@ function toggleAttend(button_id) {
      btnText.innerHTML = "Save Attendance";
 	 byId("EditRoom").disabled = true;
 	 byId("btnAssign").disabled = true;
-	 for (i = 1; i < NUM_ROWS + 1; i++) { 
+	 for (i = 1; i < NUM_ROWS; i++) { 
 		strRow = i.toString();
-		for (j = 1; j < NUM_COLS + 1; j++){
+		for (j = 1; j < NUM_COLS; j++){
 			strCol = j.toString();
-			seatID = seat.concat(zero, strRow, zero, strCol);
+			if (strCol < 10){
+				seatID = seat.concat(zero, strRow, zero, strCol);				
+			}
+			else{
+				seatID = seat.concat(zero, strRow, strCol);
+			}
 			byId(seatID).src = byId(seatID).getAttribute("src1");
 			seat = "imgSeat";
 		}
@@ -269,12 +166,17 @@ function toggleAttend(button_id) {
 		byId("EditRoom").disabled = false;
 		byId("btnAssign").disabled = false;
 		var curdate = new Date();
-		for (i = 1; i < NUM_ROWS + 1; i++) { 
+		for (i = 1; i < NUM_ROWS; i++) { 
 			strRow = i.toString();
 			
-			for (j = 1; j < NUM_COLS + 1; j++){
+			for (j = 1; j < NUM_COLS; j++){
 				strCol = j.toString();
-				seatID = seat.concat(zero, strRow, zero, strCol);
+				if (strCol < 10){
+					seatID = seat.concat(zero, strRow, zero, strCol);				
+				}
+				else{
+					seatID = seat.concat(zero, strRow, strCol);
+				}
 				
 				//If the student is marked present [checkmarked], switches back to normal icon, if marked absent, saves the absent date
 				if (byId(seatID).getAttribute("src") == byId(seatID).getAttribute("src1")){
@@ -282,7 +184,12 @@ function toggleAttend(button_id) {
 				}
 				else{
 					var btnSeat = "btnSeat";
-					seatID = btnSeat.concat(zero, strRow, zero, strCol);
+					if (strCol < 10){
+						seatID = btnSeat.concat(zero, strRow, zero, strCol);				
+					}
+					else{
+						seatID = btnSeat.concat(zero, strRow, strCol);
+					}
 					var studentID = byId(seatID).getAttribute("assigned");
 					students[studentID].absences[students[studentID].absences.length] = (curdate.getMonth() + 1).toString()  + "/" + (curdate.getDate()).toString() + "/" + (curdate.getFullYear()).toString();
 				}
@@ -317,14 +224,21 @@ function toggleAttend(button_id) {
 	//If the user clicks to save the changes, it checks for valid dimensions before adjusting the layout
     if (editBtn.innerHTML == "Save Changes") {
 		alert("Information might be lost. Seats are deleted from the bottom and right; please reposition students if necessary.");
-		if (rows > 0 && rows < NUM_ROWS + 1){
-			if (cols > 0 && cols < NUM_COLS + 1){
-				for (i = 1; i < NUM_ROWS + 1; i++){
+		if (rows > 0 && rows < NUM_ROWS){
+			if (cols > 0 && cols < NUM_COLS){
+				for (i = 1; i < NUM_ROWS; i++){
 					strRow = i.toString();
-					for (j = 1; j < NUM_COLS + 1; j++){
+					for (j = 1; j < NUM_COLS; j++){
 						strCol = j.toString();
-						btnSeatID = btnSeat.concat(zero, strRow, zero, strCol);
-						lblSeatID = lblSeat.concat(zero, strRow, zero, strCol);
+						if (strCol < 10){
+							btnSeatID = btnSeat.concat(zero, strRow, zero, strCol);
+							lblSeatID = lblSeat.concat(zero, strRow, zero, strCol);				
+						}
+						else{
+							btnSeatID = btnSeat.concat(zero, strRow, strCol);
+							lblSeatID = lblSeat.concat(zero, strRow, strCol);
+						}
+						
 						if (i <= rows && j <= cols){
 							byId(btnSeatID).style.visibility = "visible";
 							byId(lblSeatID).style.visibility = "visible";
