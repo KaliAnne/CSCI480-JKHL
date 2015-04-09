@@ -5,6 +5,8 @@ Created and revised by JHKL 3/31/2015
 
  //Initialize student list and load it into the dropdown of student names
   var students = [];
+  var NUM_ROWS = 5;
+  var NUM_COLS = 7;
   function OnLoad(){
 	  students.push(new studentInfo("None", "None", "None", "None", "None", false)); //Dummy student to take index 0
 	  students.push(new studentInfo("Bob", "bob@email", "Premed", "Spanish", "None", false));
@@ -249,9 +251,9 @@ function toggleAttend(button_id) {
      btnText.innerHTML = "Save Attendance";
 	 byId("EditRoom").disabled = true;
 	 byId("btnAssign").disabled = true;
-	 for (i = 1; i < 6; i++) { 
+	 for (i = 1; i < NUM_ROWS + 1; i++) { 
 		strRow = i.toString();
-		for (j = 1; j < 8; j++){
+		for (j = 1; j < NUM_COLS + 1; j++){
 			strCol = j.toString();
 			seatID = seat.concat(zero, strRow, zero, strCol);
 			byId(seatID).src = byId(seatID).getAttribute("src1");
@@ -267,10 +269,10 @@ function toggleAttend(button_id) {
 		byId("EditRoom").disabled = false;
 		byId("btnAssign").disabled = false;
 		var curdate = new Date();
-		for (i = 1; i < 6; i++) { 
+		for (i = 1; i < NUM_ROWS + 1; i++) { 
 			strRow = i.toString();
 			
-			for (j = 1; j < 8; j++){
+			for (j = 1; j < NUM_COLS + 1; j++){
 				strCol = j.toString();
 				seatID = seat.concat(zero, strRow, zero, strCol);
 				
@@ -315,11 +317,11 @@ function toggleAttend(button_id) {
 	//If the user clicks to save the changes, it checks for valid dimensions before adjusting the layout
     if (editBtn.innerHTML == "Save Changes") {
 		alert("Information might be lost. Seats are deleted from the bottom and right; please reposition students if necessary.");
-		if (rows > 0 && rows < 6){
-			if (cols > 0 && cols < 8){
-				for (i = 1; i < 6; i++){
+		if (rows > 0 && rows < NUM_ROWS + 1){
+			if (cols > 0 && cols < NUM_COLS + 1){
+				for (i = 1; i < NUM_ROWS + 1; i++){
 					strRow = i.toString();
-					for (j = 1; j < 8; j++){
+					for (j = 1; j < NUM_COLS + 1; j++){
 						strCol = j.toString();
 						btnSeatID = btnSeat.concat(zero, strRow, zero, strCol);
 						lblSeatID = lblSeat.concat(zero, strRow, zero, strCol);
