@@ -4,6 +4,8 @@ Created and revised by JHKL 3/31/2015
  */
 
 body{
+margin-left: auto;
+margin-right: auto;
 position: relative;
 background: #2e2c2d url("images/bg01.png");
 }
@@ -97,7 +99,7 @@ background: #2e2c2d url("images/bg01.png");
 
 /* Header; top page with redundant navigation bar */
 header {
-position: relative;
+	position: relative;
     margin-left: auto;
     margin-right: auto;
 	text-align: center;
@@ -113,19 +115,16 @@ section {
   display: inline-block;
   float: left;
   height: 150px;
-  margin: 4px;
-  padding: 5px;
+  padding: 1px;
   width: 150px;
 }
 /* This is the left bar with all your buttons */
 .left{
 	width: 300px;
 	line-height:30px;
-    height:1150px;
+    height:1550px;
     float:left;
 	padding: 5px;
-	overflow: scroll;
-	overflow-x:hidden;
 	background: #f47920 url("images/bg01.png");
 	border-radius: 25px;
 	position: relative;
@@ -133,12 +132,14 @@ section {
 
 /* div; Main area with buttons for students, */
 div {
-    width:1600px;
+	
+    width:2000px;
     border: 1px solid black;
 	height:1165px;
 	overflow: scroll;
 	background: #f7f7f7 url("images/bg01.png");
 	border-radius: 25px;
+	position: relative;
 }
 
 /* img; CSS styling for img elements used in website, defaulted to 100x100px. */
