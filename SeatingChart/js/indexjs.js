@@ -8,22 +8,27 @@ Created and revised by JHKL 3/31/2015
   var NUM_ROWS = 8;  //Number of rows + 1	 
   var NUM_COLS = 11; //Number of columns + 1
   function OnLoad(){
-	  students.push(new studentInfo("None", "None", "None", "None", "None", false)); //Dummy student to take index 0
-	  students.push(new studentInfo("Bob", "bob@email", "Premed", "Spanish", "None", false));
-	  students.push(new studentInfo("Rick", "rick@email", "English", "Math", "None", false));
-	  students.push(new studentInfo("Tim", "tim@email", "Equestrian", "Pre-vet", "None", false));
-	  students.push(new studentInfo("Mary", "mary@email", "English", "Theatre", "None", false));
-	  students.push(new studentInfo("Susan", "susan@email", "Math", "English", "None", false));
-	  students.push(new studentInfo("Kali", "dumpertk@findlay.edu", "Computer Science", "None", "None", false));
-	  students.push(new studentInfo("Heather", "beckh@findlay.edu", "Computer Science, Math", "None", "ACM", false));
-	  students.push(new studentInfo("Jacob", "babionej@findlay.edu", "Computer Science, Math", "None", "ACM, TAG", false));
-	  students.push(new studentInfo("Lucas", "kelleykiefferl@findlay.edu", "Computer Science", "None", "None", false));
+	  students.push(new studentInfo("None", "None", "None", "None", "None", "0000")); //Dummy student to take index 0
+	  students.push(new studentInfo("Bob", "bob@email", "Premed", "Spanish", "None", "0201"));
+	  students.push(new studentInfo("Rick", "rick@email", "English", "Math", "None", "0102"));
+	  students.push(new studentInfo("Tim", "tim@email", "Equestrian", "Pre-vet", "None", "0000"));
+	  students.push(new studentInfo("Mary", "mary@email", "English", "Theatre", "None", "0000"));
+	  students.push(new studentInfo("Susan", "susan@email", "Math", "English", "None", "0000"));
+	  students.push(new studentInfo("Kali", "dumpertk@findlay.edu", "Computer Science", "None", "None", "0000"));
+	  students.push(new studentInfo("Heather", "beckh@findlay.edu", "Computer Science, Math", "None", "ACM", "0000"));
+	  students.push(new studentInfo("Jacob", "babionej@findlay.edu", "Computer Science, Math", "None", "ACM, TAG", "0000"));
+	  students.push(new studentInfo("Lucas", "kelleykiefferl@findlay.edu", "Computer Science", "None", "None", "0000"));
 	  
-	  //Adds each student's name to the list
+	  //Adds each student's name to the list, and assigns them to a seat if they were given one above or from the database
 	  for(i = 1; i < students.length; i++){
 		var studentOpt = document.createElement("option");
 		studentOpt.text = students[i].name;
 		byId("studentList").add(studentOpt);
+		
+		if (students[i].seated != "0000"){
+			var seatID = "btnSeat" + students[i].seated;
+			byId(seatID).setAttribute("assigned", i);
+		}
 	  }
   }
   
@@ -69,13 +74,13 @@ Created and revised by JHKL 3/31/2015
 			}
 			
 			if (studentIndex != 0){
-				if (students[studentIndex].seated){
+				if (students[studentIndex].seated != "0000"){
 					alert(studentToAssign + " is already assigned to a seat.");
 				}
 				else{
 					byId(btnClickedID).setAttribute("assigned", studentIndex);
 					alert(studentToAssign + " has been assigned to the selected seat.");
-					students[studentIndex].seated = true;
+					students[studentIndex].seated = btnClickedID.substring(7, 11);
 					var lblSeat = "lbl" + btnClickedID.substring(3, 11);
 					byId(lblSeat).innerHTML = studentToAssign;
 				}
@@ -91,7 +96,7 @@ Created and revised by JHKL 3/31/2015
 			var unassign = confirm("Would you like to remove " + name + " from this seat?  WARNING: Attendance data may be lost!");
 			if (unassign){
 				byId(btnClickedID).setAttribute("assigned", 0);
-				students[studentID].seated = false;
+				students[studentID].seated = "0000";
 				var lblSeat = "lbl" + btnClickedID.substring(3, 11);
 				byId(lblSeat).innerHTML = "Vacant Seat";
 				alert("This seat is now available.");
@@ -134,8 +139,6 @@ function toggleAttend(button_id) {
    var btnText = byId(button_id);
    var strRow = "1";
    var strCol = "1";
-   var zero = "0";
-   var seat = "imgSeat";
    var seatID = "imgSeat0101";
    if (btnText.innerHTML == "Take Attendance") 
    {
@@ -148,13 +151,12 @@ function toggleAttend(button_id) {
 		for (j = 1; j < NUM_COLS; j++){
 			strCol = j.toString();
 			if (strCol < 10){
-				seatID = seat.concat(zero, strRow, zero, strCol);				
+				seatID = "imgSeat0" + strRow + "0" + strCol;				
 			}
 			else{
-				seatID = seat.concat(zero, strRow, strCol);
+				seatID = "imgSeat0" + strRow + strCol;
 			}
 			byId(seatID).src = byId(seatID).getAttribute("src1");
-			seat = "imgSeat";
 		}
 	 }
    }
@@ -172,10 +174,10 @@ function toggleAttend(button_id) {
 			for (j = 1; j < NUM_COLS; j++){
 				strCol = j.toString();
 				if (strCol < 10){
-					seatID = seat.concat(zero, strRow, zero, strCol);				
+					seatID = "imgSeat0" + strRow + "0" + strCol;			
 				}
 				else{
-					seatID = seat.concat(zero, strRow, strCol);
+					seatID =  "imgSeat0" + strRow + strCol;
 				}
 				
 				//If the student is marked present [checkmarked], switches back to normal icon, if marked absent, saves the absent date
@@ -183,17 +185,15 @@ function toggleAttend(button_id) {
 					byId(seatID).src = byId(seatID).getAttribute("src3");
 				}
 				else{
-					var btnSeat = "btnSeat";
 					if (strCol < 10){
-						seatID = btnSeat.concat(zero, strRow, zero, strCol);				
+						seatID = "btnSeat0" + strRow + "0" + strCol;			
 					}
 					else{
-						seatID = btnSeat.concat(zero, strRow, strCol);
+						seatID = "btnSeat0" + strRow + strCol;
 					}
 					var studentID = byId(seatID).getAttribute("assigned");
-					students[studentID].absences[students[studentID].absences.length] = (curdate.getMonth() + 1).toString()  + "/" + (curdate.getDate()).toString() + "/" + (curdate.getFullYear()).toString();
+					students[studentID].absences.push((curdate.getMonth() + 1).toString()  + "/" + (curdate.getDate()).toString() + "/" + (curdate.getFullYear()).toString());
 				}
-				seat = "imgSeat";
 			}
 		}
 	}
@@ -211,13 +211,10 @@ function toggleAttend(button_id) {
     var chartRows = byId("RoomRows");
     var chartColumns = byId("RoomColumns");
     var editBtn    = byId("EditRoom");
-	var zero = "0";
 	var rows = chartRows.value;
 	var cols = chartColumns.value;
 	var strRow = "1";
 	var strCol = "1";
-	var btnSeat = "btnSeat";
-	var lblSeat = "lblSeat";
 	var btnSeatID = "";
 	var lblSeatID = "";
 	
@@ -231,12 +228,12 @@ function toggleAttend(button_id) {
 					for (j = 1; j < NUM_COLS; j++){
 						strCol = j.toString();
 						if (strCol < 10){
-							btnSeatID = btnSeat.concat(zero, strRow, zero, strCol);
-							lblSeatID = lblSeat.concat(zero, strRow, zero, strCol);				
+							btnSeatID = "btnSeat0" + strRow + "0" + strCol;
+							lblSeatID = "lblSeat0" + strRow + "0" + strCol;				
 						}
 						else{
-							btnSeatID = btnSeat.concat(zero, strRow, strCol);
-							lblSeatID = lblSeat.concat(zero, strRow, strCol);
+							btnSeatID = "btnSeat0" + strRow + strCol;
+							lblSeatID = "lblSeat0" + strRow + strCol;	
 						}
 						
 						if (i <= rows && j <= cols){
@@ -247,7 +244,6 @@ function toggleAttend(button_id) {
 							byId(btnSeatID).style.visibility = "hidden";
 							byId(lblSeatID).style.visibility = "hidden";
 						}
-						seat = "Seat";
 					}
 				}
 				chartName.readOnly = true;
