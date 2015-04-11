@@ -7,7 +7,7 @@ Created and revised by JHKL 3/31/2015
   var students = [];
   var NUM_ROWS = 8;  //Number of rows + 1	 
   var NUM_COLS = 11; //Number of columns + 1
-  function OnLoad(){
+  /*function OnLoad(){
 	  students.push(new studentInfo("None", "None", "None", "None", "None", "0000")); //Dummy student to take index 0
 	  students.push(new studentInfo("Bob", "bob@email", "Premed", "Spanish", "None", "0201"));
 	  students.push(new studentInfo("Rick", "rick@email", "English", "Math", "None", "0102"));
@@ -30,7 +30,7 @@ Created and revised by JHKL 3/31/2015
 			byId(seatID).setAttribute("assigned", i);
 		}
 	  }
-  }
+  }*/
   
   function byId(e){return document.getElementById(e);}
     window.addEventListener("load", mInit, false);

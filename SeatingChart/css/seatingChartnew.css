@@ -172,6 +172,10 @@ button.editBtn {
 	border-radius: 5px;
 }
 
-
+/*Needed to keep hidden items from displaying and messing up the CSS*/
+.aspNetHidden
+{
+    display:none;
+}
 
 /* foo; bar */
