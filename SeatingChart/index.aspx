@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="true" CodeFile="index.aspx.vb" Inherits="index" %>
+<%@ Page Language="VB" AutoEventWireup="true" CodeFile="index.aspx.vb" Inherits="index" %>
 
 <!-- Iteration 1 code for seating chart application. -->
 <!-- Created and revised by JHKL 3/31/2015 -->
@@ -15,11 +15,11 @@
         <link rel="stylesheet"  href="css/seatingChartnew.css" />
 	    <script src="js/indexjs.js"> </script>
     </head>
-
+    <body>
     <header>
         <nav id="nav">
 		    <ul>
-			    <li class="current"><a href="home.html">Home</a></li>
+			    <li class="current"><a href="home.aspx">Home</a></li>
 				<li><a href="">Placeholder</a></li>
 				<li><a href="">Placeholder</a></li>
 				<li><a href="">Placeholder</a></li>
@@ -33,7 +33,7 @@
 
     </header>
 
-    <body>
+   
   
         <div align="center">
 	
@@ -79,7 +79,7 @@
 		
                         <fieldset id="extrainfo">
 		                    <legend><span>Help Menu</span></legend>		
-			                    <button type="Button" class ="attenBtn" onclick="location.href='home.html'">Home</button>
+			                    <button type="Button" class ="attenBtn" onclick="location.href='home.aspx'">Home</button>
 			                    <button type="Button" class ="attenBtn">Delete Room Chart</button>
 			                    <button type="Button" class ="attenBtn" onclick="addStudent();">Add Student</button>
 			                    <button type="Button" class ="attenBtn" onclick="removeStudent();">Remove Student</button>
