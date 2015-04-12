@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="home.aspx.vb" Inherits="home" %>
+<%@ Page Language="VB" AutoEventWireup="false" CodeFile="home.aspx.vb" Inherits="home" %>
 
 <!-- Iteration 1 code for seating chart application. -->
 <!-- Created and revised by JHKL 3/31/2015 -->
@@ -18,7 +18,7 @@
     <header>
   <nav id="nav">
 						<ul>
-							<li class="current"><a href="home.html">Home</a></li>
+							<li class="current"><a href="home.aspx">Home</a></li>
 							<li><a href="">Dropdown</a></li>
 							<li><a href="">Left Sidebar</a></li>
 							<li><a href="">Right Sidebar</a></li>
@@ -32,8 +32,8 @@
 
   <body align="center">
 
-            <button id='btnCreateChart'onClick="location.href='index.html'">Create New Chart</button>
-            <button id='btnViewCharts' disabled="true">View Existing Chart</button>
+            <button id='btnCreateChart'onClick="location.href='index.aspx'">Create New Chart</button>
+            <button id='btnViewCharts'onClick="location.href='viewExisting.aspx'">View Existing Chart</button>
             <button id='btnSwitchMode' disabled="true">Switch Modes</button>
 
   </body>
