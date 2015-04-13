@@ -172,7 +172,7 @@ button.FormNav {
 }
 
 /* attenBtn; Long buttons used for menu options and take attendance*/
-button.attenBtn {
+.attenBtn {
 	width: 200px;
 	height: 50px;
 	border-radius: 15px;
