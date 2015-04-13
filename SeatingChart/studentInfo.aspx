@@ -15,60 +15,34 @@
     <link rel="stylesheet"  href="css/seatingChartnew.css" />
   </head>
   <!-- End header -->
-    <header>
-  <nav id="nav">
-						<ul>
-							<li class="current"><a href="home.html">Home</a></li>
-							<li><a href="">Dropdown</a></li>
-							<li><a href="">Left Sidebar</a></li>
-							<li><a href="">Right Sidebar</a></li>
-							<li><a href="">Two Sidebar</a></li>
-							<li><a href="">No Sidebar</a></li>
-						</ul>
-					</nav>
-					<br>
-					<br>
-</header>
+    
   <body>
-    <section align="center" class="left"> 
+    <section align="center" class="info"> 
 	<!--Start left nav bar -->
 	  <form> 
 	  <!--Form Start-->	  
-	  <fieldset id="menu">
-			<legend><span>Menu</span></legend>
-				<fieldset id="past1">
-					<legend id="legend01"><span><input  id="existingstudent1" readonly="true" placeholder="(Student Name)" value=""></input></span></legend>
-						
 						Name: <br>
-						<input  id="stufullname" readonly="true" placeholder="(This is placeholder text)" value=""></input>
+						<input  id="stuname" readonly="true" placeholder="John Doe" value=""></input>
 						<br>
 						Email: <br>
-						<input  id="stuemail" readonly="true" placeholder="(This is placeholder text)" value=""></input> :
+						<input  id="stuemail" readonly="true" placeholder="None" value=""></input> 
 						<br>
 						Major: <br>
-						<input  id="stumajor" readonly="true" placeholder="(This is placeholder text)" value=""></input> :
+						<input  id="stumajor" readonly="true" placeholder="None" value=""></input> 
 						<br>
 						Minor: <br>
-						<input  id="stuminor" readonly="true" placeholder="(This is placeholder text)" value=""></input> :
+						<input  id="stuminor" readonly="true" placeholder="None" value=""></input>
 						<br>
 						Extracurriculars:<br>
-						<input  id="stuextra" readonly="true" placeholder="(This is placeholder text)" value=""></input> :
+						<input  id="stuextra" readonly="true" placeholder="None" value=""></input>
 						<br>
-						Absences:<br>
-						<input  id="stuabse" readonly="true" placeholder="(This is placeholder text)" value=""></input> :
+						Picture:<br>   
+						<input  id="stupic" type="file" readonly="true" value="" accept="image/*"></input>
 						<br>
-						Dates missed:<br>
-						<input  id="studate" readonly="true" placeholder="(This is placeholder text)" value=""></input> :
 						<br>
-
-				</fieldset>
-				
-		 
-	   </fieldset> <!--End menu-->
+						<button type="submit" class="FormNav" value="Submit">Submit</button>
+						<button type="cancel" class="FormNav">Cancel</button>
 	  </form> <!-- End Form -->
 	</section> <!--End left nav bar-->
-   
-  <section align="center">
-	</section>
   </body>
 </html>

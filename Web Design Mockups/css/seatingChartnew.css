@@ -130,6 +130,19 @@ section {
 	position: relative;
 }
 
+/* Student Info Input Formatting */
+.info
+{
+	width: 300px;
+	line-height:30px;
+    height:425px;
+    float:left;
+	padding: 5px;
+	background: #f47920 url("images/bg01.png");
+	border-radius: 25px;
+	position: relative;
+}
+
 /* div; Main area with buttons for students, */
 div {
     width:1910px;
@@ -151,8 +164,11 @@ img {
 button {
 	height: 100px;
 	width: 125px;
-	
-	
+}
+
+button.FormNav {
+	height: 25px;
+	width: 100px;
 }
 
 /* attenBtn; Long buttons used for menu options and take attendance*/
