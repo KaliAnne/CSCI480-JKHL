@@ -111,7 +111,7 @@ Created and revised by JHKL 3/31/2015
 	if (byId("btnAssign").innerHTML == "Assign Seats"){
 		byId("btnAttend").disabled = true;
 		byId("EditRoom").disabled = true;
-		byId("btnAssign").innerHTML = "Save Seats";
+		byId("btnAssign").innerHTML = "Exit Assignment Mode";
 	}
 	else{
 		byId("btnAssign").innerHTML = "Assign Seats";
@@ -143,7 +143,7 @@ function toggleAttend(button_id) {
    if (btnText.innerHTML == "Take Attendance") 
    {
 	//Toggles text and sets seats to checkmarks and allows them to be changed to take attendance
-     btnText.innerHTML = "Save Attendance";
+     btnText.innerHTML = "Exit Attendance Mode";
 	 byId("EditRoom").disabled = true;
 	 byId("btnAssign").disabled = true;
 	 for (i = 1; i < NUM_ROWS; i++) { 
@@ -162,8 +162,8 @@ function toggleAttend(button_id) {
    }
    else{
 	//Toggles text and sets seat to Misc. icons if previously a checkmark, but leaves them as X if absent
-	var saveAttend = confirm("Would you like to save the attendance as shown currently?");
-	if (saveAttend){
+	//var saveAttend = confirm("Would you like to save the attendance as shown currently?");
+	//if (saveAttend){
 		btnText.innerHTML = "Take Attendance";
 		byId("EditRoom").disabled = false;
 		byId("btnAssign").disabled = false;
@@ -196,7 +196,7 @@ function toggleAttend(button_id) {
 				}
 			}
 		}
-	}
+	//}
   }
 }
 //Heather's to do list -->
@@ -219,7 +219,7 @@ function toggleAttend(button_id) {
 	var lblSeatID = "";
 	
 	//If the user clicks to save the changes, it checks for valid dimensions before adjusting the layout
-    if (editBtn.innerHTML == "Save Changes") {
+    if (editBtn.innerHTML == "Exit Edit Mode") {
 		alert("Information might be lost. Seats are deleted from the bottom and right; please reposition students if necessary.");
 		if (rows > 0 && rows < NUM_ROWS){
 			if (cols > 0 && cols < NUM_COLS){
@@ -269,7 +269,7 @@ function toggleAttend(button_id) {
       chartName.readOnly = false;
       chartRows.readOnly = false;
       chartColumns.readOnly = false;
-      editBtn.innerHTML = "Save Changes";
+      editBtn.innerHTML = "Exit Edit Mode";
     }
   }
   
