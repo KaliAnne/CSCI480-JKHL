@@ -62,7 +62,7 @@
 			
                             <br />
 
-                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" OnClientClick="SaveChart" />
+                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" />
 			                <button id="EditRoom" type="Button" class ="attenBtn" onclick="activeEdit();">Edit Room</button>
 	                    </fieldset>	  
 

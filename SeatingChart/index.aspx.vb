@@ -14,57 +14,59 @@ Partial Class index
     Inherits System.Web.UI.Page
 
     Sub Page_Load()
+        If Page.IsPostBack = False Then
+            Dim storedID As String = CType(Session.Item("storedID"), String)
 
-        Dim storedID As String = CType(Session.Item("storedID"), String)
+            'Dim getChartId As String = Session("sendID")
+            Dim getChartId As String = storedID
 
-        'Dim getChartId As String = Session("sendID")
-        Dim getChartId As String = storedID
+            'Start pulling information about the chart
+            Dim cmdChartName As SqlCommand = New SqlCommand("" _
+                & "SELECT Name, Rows, Columns " _
+                & "FROM   CHART " _
+                & "WHERE  ChartID = @chartID", _
+                New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                    & "User ID=480-JKHL;Password=1104ncory"))
 
-        'Start pulling information about the chart
-        Dim cmdChartName As SqlCommand = New SqlCommand("" _
-            & "SELECT Name, Rows, Columns " _
-            & "FROM   CHART " _
-            & "WHERE  ChartID = @chartID", _
-            New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
-                & "User ID=480-JKHL;Password=1104ncory"))
+            cmdChartName.Parameters.AddWithValue("@chartID", getChartId)
 
-        cmdChartName.Parameters.AddWithValue("@chartID", getChartId)
+            cmdChartName.Connection.Open()
 
-        cmdChartName.Connection.Open()
+            ChartInfoGridView.DataSource = cmdChartName.ExecuteReader()
+            ChartInfoGridView.DataBind()
 
-        ChartInfoGridView.DataSource = cmdChartName.ExecuteReader()
-        ChartInfoGridView.DataBind()
+            cmdChartName.Connection.Close()
+            cmdChartName.Connection.Dispose()
+            'Finish pulling infomation about chart
 
-        cmdChartName.Connection.Close()
-        cmdChartName.Connection.Dispose()
-        'Finish pulling infomation about chart
+            'Sets the pulled information into the correct locations
+            ChartName.Text = ChartInfoGridView.Rows(0).Cells(0).Text
+            RoomRows.Text = ChartInfoGridView.Rows(0).Cells(1).Text
+            RoomColumns.Text = ChartInfoGridView.Rows(0).Cells(2).Text
 
-        'Sets the pulled information into the correct locations
-        ChartName.Text = ChartInfoGridView.Rows(0).Cells(0).Text
-        RoomRows.Text = ChartInfoGridView.Rows(0).Cells(1).Text
-        RoomColumns.Text = ChartInfoGridView.Rows(0).Cells(2).Text
+            'Start pulling information about the students
+            Dim cmdStudents As SqlCommand = New SqlCommand("" _
+                & "SELECT (FirstName + ' ' + LastName) AS Name " _
+                & "FROM   STUDENT " _
+                & "WHERE  ChartID = @chartID", _
+                New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                    & "User ID=480-JKHL;Password=1104ncory"))
 
-        'Start pulling information about the students
-        Dim cmdStudents As SqlCommand = New SqlCommand("" _
-            & "SELECT (FirstName + ' ' + LastName) AS Name " _
-            & "FROM   STUDENT " _
-            & "WHERE  ChartID = @chartID", _
-            New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
-                & "User ID=480-JKHL;Password=1104ncory"))
+            cmdStudents.Parameters.AddWithValue("@chartID", getChartId)
 
-        cmdStudents.Parameters.AddWithValue("@chartID", getChartId)
+            cmdStudents.Connection.Open()
 
-        cmdStudents.Connection.Open()
+            studentList.DataSource = cmdStudents.ExecuteReader()
+            studentList.DataTextField = "Name"
+            studentList.DataValueField = "Name"
 
-        studentList.DataSource = cmdStudents.ExecuteReader()
-        studentList.DataTextField = "Name"
-        studentList.DataValueField = "Name"
+            studentList.DataBind()
 
-        studentList.DataBind()
+            cmdStudents.Connection.Close()
+            cmdStudents.Connection.Dispose()
+            'Finish pulling information about the students
+        End If
 
-        cmdStudents.Connection.Close()
-        cmdStudents.Connection.Dispose()
-        'Finish pulling information about the students
 
     End Sub
 
