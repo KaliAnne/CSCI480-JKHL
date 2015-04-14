@@ -19,12 +19,12 @@
     <header>
         <nav id="nav">
 		    <ul>
-			    <li class="current"><a href="home.html">Home</a></li>
-				<li><a href="">Dropdown</a></li>
-				<li><a href="">Left Sidebar</a></li>
-				<li><a href="">Right Sidebar</a></li>
-				<li><a href="">Two Sidebar</a></li>
-				<li><a href="">No Sidebar</a></li>
+			    <li><a href="home.aspx">Home</a></li>
+				<li><a href="index.aspx">Seating Chart Information</a></li>
+				<li class="current"><a href="viewExisting.aspx">View Existing</a></li>
+				<li><a href="">Placeholder</a></li>
+				<li><a href="">Placeholder</a></li>
+				<li><a href="">Placeholder</a></li>
 			</ul>
 		</nav>
 
@@ -42,7 +42,7 @@
 	                <fieldset id="menu">
 			            <legend><span>Menu</span></legend>
                         <!--This div class needs to be fixed-->
-                        <div class="gridviewBox">
+                        <section align="center" class="gridviewBox">
                             <!--Will fix the Edit and Delete Buttons tomorrow; want to review some work code before trying to do this-->
                             <asp:GridView runat="server" ID="ChartNameGridView" AutoGenerateColumns="False" OnRowEditing="ChartNameGridView_RowEditing" OnRowCancelingEdit="ChartNameGridView_RowCancelingEdit">
                                 <Columns>
@@ -53,7 +53,7 @@
                                     <asp:CommandField ShowDeleteButton="true" ButtonType="Button" />
                                 </Columns>
                             </asp:GridView>
-                        </div>
+                        </section>
 	                </fieldset> <!--End menu-->
 	            </form> <!-- End Form -->
 	        </section> <!--End left nav bar-->
