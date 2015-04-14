@@ -42,7 +42,7 @@
 	                <fieldset id="menu">
 			            <legend><span>Menu</span></legend>
                         <!--This div class needs to be fixed-->
-                        <div class="gridviewBox">
+                        <section align="center" class="gridviewBox">
                             <!--Will fix the Edit and Delete Buttons tomorrow; want to review some work code before trying to do this-->
                             <asp:GridView runat="server" ID="ChartNameGridView" AutoGenerateColumns="False" OnRowEditing="ChartNameGridView_RowEditing" OnRowCancelingEdit="ChartNameGridView_RowCancelingEdit">
                                 <Columns>
@@ -53,7 +53,7 @@
                                     <asp:CommandField ShowDeleteButton="true" ButtonType="Button" />
                                 </Columns>
                             </asp:GridView>
-                        </div>
+                        </section>
 	                </fieldset> <!--End menu-->
 	            </form> <!-- End Form -->
 	        </section> <!--End left nav bar-->

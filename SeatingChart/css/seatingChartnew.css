@@ -145,14 +145,15 @@ section {
 
 /*Kali's attempt to fix the gridview css; Needs to be fixed*/
 .gridviewBox {
-	width: 300px;
+	width: 255px;
 	line-height:30px;
-    height:1550px;
+    height:500px;
     float:left;
 	padding: 5px;
 	background: #f47920 url("images/bg01.png");
 	border-radius: 25px;
 	position: relative;
+	overflow: hidden;
 }
 
 /* div; Main area with buttons for students, */
