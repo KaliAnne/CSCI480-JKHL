@@ -62,7 +62,7 @@
 			
                             <br />
 
-                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" />
+                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" OnClientClick="return false;" />
 			                <button id="EditRoom" type="Button" class ="attenBtn" onclick="activeEdit();">Edit Room</button>
 	                    </fieldset>	  
 
@@ -82,7 +82,7 @@
 		                    <legend><span>Help Menu</span></legend>		
 			                    <button type="Button" class ="attenBtn" onclick="location.href='home.aspx'">Home</button>
 			                    <button type="Button" class ="attenBtn">Delete Room Chart</button>
-                                <asp:Button runat="server" ID="btnAddStudent" Text="Add Student" Class="attenBtn" OnClientClick="addStudent" />
+                                <asp:Button runat="server" ID="btnAddStudent" Text="Add Student" Class="attenBtn" OnClick="addStudent" OnClientClick="return false;" />
 			                    <button type="Button" class ="attenBtn" onclick="removeStudent();">Remove Student</button>
 			                    <button type="Button" class ="attenBtn" id="btnAssign" onclick="AssignSeats();">Assign Seats</button>
 			                    <button type="Button" class ="attenBtn">View Past Seating Charts</button>

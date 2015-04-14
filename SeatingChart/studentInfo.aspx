@@ -40,7 +40,7 @@
                         <asp:FileUpload ID="stuPicture" runat="server" />
 						<br>
 						<br>
-                        <asp:Button runat="server" ID="btnSubmit" Text="Submit" Class="FormNav" OnClientClick="SubmitInfo" />
+                        <asp:Button runat="server" ID="btnSubmit" Text="Submit" Class="FormNav" OnClick="SubmitInfo" OnClientClick="return false;" />
 	  </form> <!-- End Form -->
 	</section> <!--End left nav bar-->
   </body>
