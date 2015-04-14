@@ -19,12 +19,12 @@
     <header>
         <nav id="nav">
 		    <ul>
-			    <li class="current"><a href="home.html">Home</a></li>
-				<li><a href="">Dropdown</a></li>
-				<li><a href="">Left Sidebar</a></li>
-				<li><a href="">Right Sidebar</a></li>
-				<li><a href="">Two Sidebar</a></li>
-				<li><a href="">No Sidebar</a></li>
+			    <li><a href="home.aspx">Home</a></li>
+				<li><a href="index.aspx">Seating Chart Information</a></li>
+				<li class="current"><a href="viewExisting.aspx">View Existing</a></li>
+				<li><a href="">Placeholder</a></li>
+				<li><a href="">Placeholder</a></li>
+				<li><a href="">Placeholder</a></li>
 			</ul>
 		</nav>
 
