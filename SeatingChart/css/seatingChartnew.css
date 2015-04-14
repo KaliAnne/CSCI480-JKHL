@@ -128,6 +128,7 @@ section {
 	background: #f47920 url("images/bg01.png");
 	border-radius: 25px;
 	position: relative;
+	overflow: scroll;
 }
 
 /* Student Info Input Formatting */
@@ -136,18 +137,6 @@ section {
 	width: 300px;
 	line-height:30px;
     height:425px;
-    float:left;
-	padding: 5px;
-	background: #f47920 url("images/bg01.png");
-	border-radius: 25px;
-	position: relative;
-}
-
-/*Kali's attempt to fix the gridview css; Needs to be fixed*/
-.gridviewBox {
-	width: 300px;
-	line-height:30px;
-    height:1550px;
     float:left;
 	padding: 5px;
 	background: #f47920 url("images/bg01.png");
@@ -184,7 +173,7 @@ button.FormNav {
 }
 
 /* attenBtn; Long buttons used for menu options and take attendance*/
-.attenBtn {
+button.attenBtn {
 	width: 200px;
 	height: 50px;
 	border-radius: 15px;
@@ -200,10 +189,6 @@ button.editBtn {
 	border-radius: 5px;
 }
 
-/*Needed to keep hidden items from displaying and messing up the CSS*/
-.aspNetHidden
-{
-    display:none;
-}
+
 
 /* foo; bar */
