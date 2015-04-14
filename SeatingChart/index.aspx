@@ -15,7 +15,7 @@
         <link rel="stylesheet"  href="css/seatingChartnew.css" />
 	    <script src="js/indexjs.js"> </script>
     </head>
-    <body>
+    <body onload="OnLoad()">
     <header>
         <nav id="nav">
 		    <ul>
@@ -83,7 +83,6 @@
 			                    <button type="Button" class ="attenBtn" onclick="location.href='home.aspx'">Home</button>
 			                    <button type="Button" class ="attenBtn">Delete Room Chart</button>
                                 <asp:Button runat="server" ID="btnAddStudent" Text="Add Student" Class="attenBtn" OnClientClick="addStudent" />
-			                    <button type="Button" class ="attenBtn" onclick="addStudent();">Add Student</button>
 			                    <button type="Button" class ="attenBtn" onclick="removeStudent();">Remove Student</button>
 			                    <button type="Button" class ="attenBtn" id="btnAssign" onclick="AssignSeats();">Assign Seats</button>
 			                    <button type="Button" class ="attenBtn">View Past Seating Charts</button>

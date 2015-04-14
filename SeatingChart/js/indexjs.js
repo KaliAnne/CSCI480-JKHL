@@ -7,7 +7,8 @@ Created and revised by JHKL 3/31/2015
   var students = [];
   var NUM_ROWS = 8;  //Number of rows + 1	 
   var NUM_COLS = 11; //Number of columns + 1
-  /*function OnLoad(){
+  function OnLoad(){
+	  /* Old Onload Code
 	  students.push(new studentInfo("None", "None", "None", "None", "None", "0000")); //Dummy student to take index 0
 	  students.push(new studentInfo("Bob", "bob@email", "Premed", "Spanish", "None", "0201"));
 	  students.push(new studentInfo("Rick", "rick@email", "English", "Math", "None", "0102"));
@@ -30,7 +31,11 @@ Created and revised by JHKL 3/31/2015
 			byId(seatID).setAttribute("assigned", i);
 		}
 	  }
-  }*/
+	  */
+	  var rows = byId("RoomRows").value;
+	  var cols = byId("RoomColumns").value;
+	  ChangeRoomSize(rows, cols);
+  }
   
   function byId(e){return document.getElementById(e);}
     window.addEventListener("load", mInit, false);
@@ -205,6 +210,35 @@ function toggleAttend(button_id) {
 //TODO: Connect changes to database entry of chart
 //End Do list -->
 
+function ChangeRoomSize(rows, cols){
+	var strRow = "1";
+	var strCol = "1";
+	var btnSeatID = "";
+	var lblSeatID = "";
+	for (i = 1; i < NUM_ROWS; i++){
+		strRow = i.toString();
+		for (j = 1; j < NUM_COLS; j++){
+			strCol = j.toString();
+			if (strCol < 10){
+				btnSeatID = "btnSeat0" + strRow + "0" + strCol;
+				lblSeatID = "lblSeat0" + strRow + "0" + strCol;				
+			}
+			else{
+				btnSeatID = "btnSeat0" + strRow + strCol;
+				lblSeatID = "lblSeat0" + strRow + strCol;	
+			}
+			
+			if (i <= rows && j <= cols){
+				byId(btnSeatID).style.visibility = "visible";
+				byId(lblSeatID).style.visibility = "visible";
+			}
+			else{
+				byId(btnSeatID).style.visibility = "hidden";
+				byId(lblSeatID).style.visibility = "hidden";
+			}
+		}
+	}
+}
 //Handles changing the available seats based on the entered dimensions for the room layout
   function activeEdit(){
     var chartName  = byId("ChartName");

@@ -68,7 +68,7 @@ Partial Class index
 
     End Sub
 
-    Sub addStudent()
+    Protected Sub addStudent()
         Dim studentToAdd As String = InputBox("Please enter the name of the student.")
         Dim alreadyListed As Boolean = False
 
