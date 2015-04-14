@@ -68,4 +68,35 @@ Partial Class index
 
     End Sub
 
+    Sub addStudent()
+        Dim studentToAdd As String = InputBox("Please enter the name of the student.")
+        Dim alreadyListed As Boolean = False
+
+        'Checks to see if the name is already in the list
+        For Each student As ListItem In studentList.Items
+            If student.Text.ToUpper() = studentToAdd.ToUpper() Then
+                alreadyListed = True
+            End If
+        Next
+
+        'Only asks for further information if the name is unique
+        If alreadyListed = False Then
+            Session("storedStudName") = studentToAdd
+            studentList.Items.Add(New ListItem(studentToAdd))
+            OpenWindow("studentInfo.aspx") 'open student info window
+            'INSERT SQL STATEMENT: Send student name to the database, the other information will be entered on the studentinfo page
+
+            MsgBox(studentToAdd + " was added to the student list.")
+
+            'Shows an alert if the name was not unique
+        Else
+            MsgBox("This student is already on the list!")
+        End If
+    End Sub
+
+    Sub OpenWindow(url As String)
+        Dim s As String = "window.open('" & url + "', 'popup_window', 'width=325,height=450,left=100,top=100,resizable=yes');"
+        ClientScript.RegisterStartupScript(Me.GetType(), "script", s, True)
+    End Sub
+
 End Class

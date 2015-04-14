@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="studentInfo.aspx.vb" Inherits="studentInfo" %>
+﻿<%@ Page Language="VB" AutoEventWireup="true" CodeFile="studentInfo.aspx.vb" Inherits="studentInfo" %>
 
 <!-- Iteration 1 code for seating chart application. -->
 <!-- Created and revised by JHKL 3/31/2015 -->
@@ -19,29 +19,28 @@
   <body>
     <section align="center" class="info"> 
 	<!--Start left nav bar -->
-	  <form> 
+	  <form runat="server"> 
 	  <!--Form Start-->	  
 						Name: <br>
-						<input  id="stuname" readonly="true" placeholder="John Doe" value=""></input>
+						<asp:TextBox runat="server" ID="stuName" /> 
 						<br>
 						Email: <br>
-						<input  id="stuemail" readonly="true" placeholder="None" value=""></input> 
+						<asp:TextBox runat="server" ID="stuEmail" /> 
 						<br>
 						Major: <br>
-						<input  id="stumajor" readonly="true" placeholder="None" value=""></input> 
+						<asp:TextBox runat="server" ID="stuMajor" />  
 						<br>
 						Minor: <br>
-						<input  id="stuminor" readonly="true" placeholder="None" value=""></input>
+						<asp:TextBox runat="server" ID="stuMinor" /> 
 						<br>
 						Extracurriculars:<br>
-						<input  id="stuextra" readonly="true" placeholder="None" value=""></input>
+						<asp:TextBox runat="server" ID="stuExtra" /> 
 						<br>
 						Picture:<br>   
-						<input  id="stupic" type="file" readonly="true" value="" accept="image/*"></input>
+                        <asp:FileUpload ID="stuPicture" runat="server" />
 						<br>
 						<br>
-						<button type="submit" class="FormNav" value="Submit">Submit</button>
-						<button type="cancel" class="FormNav">Cancel</button>
+                        <asp:Button runat="server" ID="btnSubmit" Text="Submit" Class="FormNav" OnClientClick="SubmitInfo" />
 	  </form> <!-- End Form -->
 	</section> <!--End left nav bar-->
   </body>
