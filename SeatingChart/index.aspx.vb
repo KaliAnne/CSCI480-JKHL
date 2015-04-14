@@ -14,14 +14,21 @@ Partial Class index
     Inherits System.Web.UI.Page
 
     Sub Page_Load()
-        
+
+        Dim storedID As String = CType(Session.Item("storedID"), String)
+
+        'Dim getChartId As String = Session("sendID")
+        Dim getChartId As String = storedID
+
         'Start pulling information about the chart
         Dim cmdChartName As SqlCommand = New SqlCommand("" _
             & "SELECT Name, Rows, Columns " _
             & "FROM   CHART " _
-            & "WHERE  ChartID = 1", _
+            & "WHERE  ChartID = @chartID", _
             New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
                 & "User ID=480-JKHL;Password=1104ncory"))
+
+        cmdChartName.Parameters.AddWithValue("@chartID", getChartId)
 
         cmdChartName.Connection.Open()
 
@@ -41,9 +48,11 @@ Partial Class index
         Dim cmdStudents As SqlCommand = New SqlCommand("" _
             & "SELECT (FirstName + ' ' + LastName) AS Name " _
             & "FROM   STUDENT " _
-            & "WHERE  ChartID = 1", _
+            & "WHERE  ChartID = @chartID", _
             New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
                 & "User ID=480-JKHL;Password=1104ncory"))
+
+        cmdStudents.Parameters.AddWithValue("@chartID", getChartId)
 
         cmdStudents.Connection.Open()
 

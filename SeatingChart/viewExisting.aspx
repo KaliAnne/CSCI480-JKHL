@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="viewExisting.aspx.vb" Inherits="viewExisting" %>
+﻿<%@ Page Language="VB" AutoEventWireup="true" CodeFile="viewExisting.aspx.vb" Inherits="viewExisting" EnableEventValidation="true" %>
 
 <!-- Iteration 1 code for seating chart application. -->
 <!-- Created and revised by JHKL 3/31/2015 -->
@@ -37,81 +37,23 @@
         <div align="center">
             <section align="center" class="left"> 
 	        <!--Start left nav bar -->
-	            <form> 
+	            <form runat="server"> 
 	            <!--Form Start-->	
 	                <fieldset id="menu">
 			            <legend><span>Menu</span></legend>
-				        <!--<fieldset id="past1">
-					        <legend id="legend01"><span>Existing Seating Chart 1</span></legend>
-						    <input  id="existing1" readonly="true" placeholder="(This is placeholder text)" value=""></input> :
-						    <br>
-						    <button type="Button" class ="editBtn" id='btnexist0101'>Edit</button>
-						    <button type="Button" class ="editBtn" id='btnexist0102'>DEL</button>
-				        </fieldset>
-				        <fieldset id="past2">
-					        <legend id="legend02"><span>Existing Seating Chart 2</span></legend>
-						    <input  id="existing2" readonly="true" placeholder="(This is placeholder text)" value=""></input> :
-						    <br>
-						    <button type="Button" class ="editBtn" id='btnexist0201'>Edit</button>
-						    <button type="Button" class ="editBtn" id='btnexist0202'>DEL</button>
-				        </fieldset>
-				        <fieldset id="past3">
-					        <legend id="legend03"><span>Existing Seating Chart 3</span></legend>
-						    <input  id="existing3" readonly="true" placeholder="(This is placeholder text)" value=""></input> :
-						    <br>
-						    <button type="Button" class ="editBtn" id='btnexist0301'>Edit</button>
-						    <button type="Button" class ="editBtn" id='btnexist0302'>DEL</button>
-				        </fieldset>
-				        <fieldset id="past4">
-					        <legend  id="legend04"><span>Existing Seating Chart 4</span></legend>
-						    <input  id="existing4" readonly="true" placeholder="(This is placeholder text)" value=""></input> :
-						    <br>
-						    <button type="Button" class ="editBtn" id='btnexist0401'>Edit</button>
-						    <button type="Button" class ="editBtn" id='btnexist0402'>DEL</button>
-				        </fieldset>
-				        <fieldset id="past5">
-					        <legend  id="legend05"><span>Existing Seating Chart 5</span></legend>
-						    <input  id="existing5" readonly="true" placeholder="(This is placeholder text)" value=""></input> :
-						    <br>
-						    <button type="Button" class ="editBtn" id='btnexist0501'>Edit</button>
-						    <button type="Button" class ="editBtn" id='btnexist0502'>DEL</button>
-				        </fieldset>
-				        <fieldset id="past6">
-					        <legend  id="legend06"><span>Existing Seating Chart 6</span></legend>
-						    <input  id="existing6" readonly="true" placeholder="(This is placeholder text)" value=""></input> :
-						    <br>
-						    <button type="Button" class ="editBtn" id='btnexist0601'>Edit</button>
-						    <button type="Button" class ="editBtn" id='btnexist0602'>DEL</button>
-				        </fieldset>
-				        <fieldset id="past7">
-					        <legend  id="legend07"><span>Existing Seating Chart 7</span></legend>
-						    <input  id="existing7" readonly="true" placeholder="(This is placeholder text)" value=""></input> :
-						    <br>
-						    <button type="Button" class ="editBtn" id='btnexist0701'>Edit</button>
-						    <button type="Button" class ="editBtn" id='btnexist0702'>DEL</button>
-				        </fieldset>
-				        <fieldset id="past8">
-					        <legend id="legend08"><span>Existing Seating Chart 8</span></legend>
-						    <input  id="existing8" readonly="true" placeholder="(This is placeholder text)" value=""></input> :
-						    <br>
-						    <button type="Button" class ="editBtn" id='btnexist0801'>Edit</button>
-						    <button type="Button" class ="editBtn" id='btnexist0802'>DEL</button>
-				        </fieldset>
-				        <fieldset id="past9">
-					        <legend  id="legend09"><span>Existing Seating Chart 9</span></legend>
-						    <input  id="existing9" readonly="true" placeholder="(This is placeholder text)" value=""></input> :
-						    <br>
-						    <button type="Button" class ="editBtn" id='btnexist0901'>Edit</button>
-						    <button type="Button" class ="editBtn" id='btnexist0902'>DEL</button>
-				        </fieldset>
-				        <fieldset id="past10">
-					        <legend  id="legend10"><span>Existing Seating Chart 10</span></legend>
-						    <input  id="existing10" readonly="true" placeholder="(This is placeholder text)" value=""></input> :
-						    <br>
-						    <button type="Button" class ="editBtn" id='btnexist1001'>Edit</button>
-						    <button type="Button" class ="editBtn" id='btnexist1002'>DEL</button>
-				        </fieldset>-->
-		 
+                        <!--This div class needs to be fixed-->
+                        <div class="gridviewBox">
+                            <!--Will fix the Edit and Delete Buttons tomorrow; want to review some work code before trying to do this-->
+                            <asp:GridView runat="server" ID="ChartNameGridView" AutoGenerateColumns="False" OnRowEditing="ChartNameGridView_RowEditing" OnRowCancelingEdit="ChartNameGridView_RowCancelingEdit">
+                                <Columns>
+                                    <asp:BoundField DataField="ChartID" HeaderText="ChartID" SortExpression="ChartID" />
+                                    <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+                                    <asp:CommandField SelectText="View" ButtonType="Button" ShowSelectButton="True" />
+                                    <asp:CommandField ShowEditButton="True" ButtonType="Button" />
+                                    <asp:CommandField ShowDeleteButton="true" ButtonType="Button" />
+                                </Columns>
+                            </asp:GridView>
+                        </div>
 	                </fieldset> <!--End menu-->
 	            </form> <!-- End Form -->
 	        </section> <!--End left nav bar-->
@@ -121,19 +63,10 @@
 	                <legend><span>Attendance</span></legend>	
                     <br>
 	                <!-- PUT CODE HERE KALI -->
-	
 	                <br>
 	            </fieldset>
-	        </section>
+            </section>
 
-            <form runat="server">
-                <asp:GridView runat="server" ID="GridView1" AutoGenerateColumns="False" DataSourceID="ChartNameData">
-                    <Columns>
-                        <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
-                    </Columns>
-                </asp:GridView>
-                <asp:SqlDataSource ID="ChartNameData" runat="server" ConnectionString="<%$ ConnectionStrings:480-AttendanceAppConnectionString %>" SelectCommand="SELECT [Name] FROM [CHART]"></asp:SqlDataSource>
-            </form>
         </div>
     </body>
 </html>
