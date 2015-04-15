@@ -17,8 +17,8 @@ Partial Class index
         If Page.IsPostBack = False Then
             Dim storedID As String = CType(Session.Item("storedID"), String)
 
-            'Dim getChartId As String = Session("sendID")
             Dim getChartId As String = storedID
+            HiddenChartID.Text = storedID
 
             'Start pulling information about the chart
             Dim cmdChartName As SqlCommand = New SqlCommand("" _
@@ -105,6 +105,44 @@ Partial Class index
         sb.Append("</script>")
         ClientScript.RegisterStartupScript(Me.GetType(), _
                   "script", sb.ToString())
+    End Sub
+
+    Protected Sub SaveChart_Click(sender As Object, e As EventArgs) Handles SaveChart.Click
+
+        Dim cnUpdateChart As New SqlConnection
+
+        cnUpdateChart.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                & "User ID=480-JKHL;Password=1104ncory"
+
+        Dim cmdUpdateChart As New SqlCommand
+
+        cmdUpdateChart.CommandText = "" _
+            & "UPDATE CHART " _
+            & "SET    Name = @getName, Rows = @getRows, Columns = @getColumns " _
+            & "WHERE  ChartID = @getChartID"
+
+        cmdUpdateChart.Connection = cnUpdateChart
+
+        cmdUpdateChart.Parameters.AddWithValue("@getName", ChartName.Text)
+        cmdUpdateChart.Parameters.AddWithValue("@getRows", RoomRows.Text)
+        cmdUpdateChart.Parameters.AddWithValue("@getColumns", RoomColumns.Text)
+        cmdUpdateChart.Parameters.AddWithValue("@getChartID", HiddenChartID.Text)
+
+        cnUpdateChart.Open()
+
+        cmdUpdateChart.ExecuteNonQuery()
+
+        cnUpdateChart.Close()
+
+    End Sub
+
+    'Changes the ready only property so that the new text is stored
+    Protected Sub EditRoom_Click(sender As Object, e As EventArgs)
+
+        RoomColumns.ReadOnly = False
+        RoomRows.ReadOnly = False
+        ChartName.ReadOnly = False
+
     End Sub
 
 End Class
