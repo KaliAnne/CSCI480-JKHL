@@ -53,62 +53,41 @@ Created and revised by JHKL 3/31/2015
   
   //Handles assigning seats and showing the info of the student assigned to the given seat
  function SeatAssignInfo(btnClickedID){
-	var studentID = byId(btnClickedID).getAttribute("assigned");
-	var name = students[studentID].name;
-	
-	//If the someone is assigned to the seat and btnAssign has not been toggled, displays student info
-	
-	if (byId("btnAssign").innerHTML == "Assign Seats"){
-		if (studentID == 0){
-			alert("No student has been assigned this seat.")
-		}	
-		else{
-			ViewStudentInfo(name);
-		}
-	}
-	else{
-		//if no student is assigned the seat and the user is assigning seats, requests the name of the student to put here
-		if (byId(btnClickedID).getAttribute("assigned") == 0){
-			var studentToAssign = prompt("Enter the name of the student who will sit here.");
-			var studentIndex = 0;
-			
-			for (i = 1; i < students.length; i++){
-				if (students[i].name.toUpperCase() == studentToAssign.toUpperCase()){
-					studentIndex = i;
-				}
-			}
-			
-			if (studentIndex != 0){
-				if (students[studentIndex].seated != "0000"){
-					alert(studentToAssign + " is already assigned to a seat.");
-				}
-				else{
-					byId(btnClickedID).setAttribute("assigned", studentIndex);
-					alert(studentToAssign + " has been assigned to the selected seat.");
-					students[studentIndex].seated = btnClickedID.substring(7, 11);
-					var lblSeat = "lbl" + btnClickedID.substring(3, 11);
-					byId(lblSeat).innerHTML = studentToAssign;
-				}
-			}
-			
-			else{
-				alert("This student is not on the list of students.  To add them to the list, click the 'Add Student' button.");
-			}
-		}
+	//if no student is assigned the seat and the user is assigning seats, requests the name of the student to put here
+     if (byId("btnAssign").innerHTML != "Assign Seats") {
+         if (byId(btnClickedID).getAttribute("assigned") == "") {
+             var studList = byId("studentList");
+             var studentToAssign = prompt("Enter the name of the student who will sit here.");
+             var studentIndex = 0;
+             for (i = 1; i < studList.options.length; i++) {
+                 if (studList.options[i].text.toUpperCase() == studentToAssign.toUpperCase()) {
+                     studentIndex = i;
+                 }
+             }
 
-		//If a student is already assigned to this seat, asks if the user would like to remove the student from the seat		
-		else{
-			var unassign = confirm("Would you like to remove " + name + " from this seat?  WARNING: Attendance data may be lost!");
-			if (unassign){
-				byId(btnClickedID).setAttribute("assigned", 0);
-				students[studentID].seated = "0000";
-				var lblSeat = "lbl" + btnClickedID.substring(3, 11);
-				byId(lblSeat).innerHTML = "Vacant Seat";
-				alert("This seat is now available.");
-				
-			}
-		}
-	}
+             if (studentIndex != 0) {
+                byId(btnClickedID).setAttribute("assigned", studentToAssign);
+                alert(studentToAssign + " has been assigned to the selected seat.");
+                var lblSeat = "lbl" + btnClickedID.substring(3, 11);
+                byId(lblSeat).innerHTML = studentToAssign;
+             }
+
+             else {
+                 alert("This student is not on the list of students.  To add them to the list, click the 'Add Student' button.");
+             }
+         }
+
+             //If a student is already assigned to this seat, asks if the user would like to remove the student from the seat		
+         else {
+             var unassign = confirm("Would you like to remove " + byId(btnClickedID).getAttribute("assigned") + " from this seat?  WARNING: Attendance data may be lost!");
+             if (unassign) {
+                 byId(btnClickedID).setAttribute("assigned", "");
+                 var lblSeat = "lbl" + btnClickedID.substring(3, 11);
+                 byId(lblSeat).innerHTML = "Vacant Seat";
+                 alert("This seat is now available.");
+             }
+         }
+     }
  }
   
   //Toggles between assigning seats and normal mode

@@ -70,7 +70,7 @@ Partial Class index
 
     End Sub
 
-    Protected Sub addStudent()
+    Protected Sub addStudent() Handles btnAddStudent.Click
         Dim studentToAdd As String = InputBox("Please enter the name of the student.")
         Dim alreadyListed As Boolean = False
 
@@ -97,8 +97,14 @@ Partial Class index
     End Sub
 
     Sub OpenWindow(url As String)
-        Dim s As String = "window.open('" & url + "', 'popup_window', 'width=325,height=450,left=100,top=100,resizable=yes');"
-        ClientScript.RegisterStartupScript(Me.GetType(), "script", s, True)
+        Dim sb As New StringBuilder()
+        sb.Append("<script type = 'text/javascript'>")
+        sb.Append("window.open('")
+        sb.Append(url)
+        sb.Append("');")
+        sb.Append("</script>")
+        ClientScript.RegisterStartupScript(Me.GetType(), _
+                  "script", sb.ToString())
     End Sub
 
 End Class
