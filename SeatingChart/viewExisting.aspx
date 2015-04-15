@@ -49,7 +49,7 @@
                                     <asp:BoundField DataField="ChartID" HeaderText="ChartID" SortExpression="ChartID" />
                                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
                                     <asp:CommandField SelectText="View" ButtonType="Button" ShowSelectButton="True" />
-                                    <asp:CommandField ShowEditButton="True" ButtonType="Button" />
+                                      <%--<asp:CommandField ShowEditButton="True" ButtonType="Button" />--%>
                                     <asp:CommandField ShowDeleteButton="true" ButtonType="Button" />
                                 </Columns>
                             </asp:GridView>
