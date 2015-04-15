@@ -13,10 +13,11 @@
 	<title>Seating Chart Application</title>
 	<link rel="shortcut icon" type="image/png" href="images/favicon/apple.png"/>
     <link rel="stylesheet"  href="css/seatingChartnew.css" />
+    <script src="js/studentInfo.js"> </script>
   </head>
   <!-- End header -->
     
-  <body>
+  <body onload="OnLoad()">
     <section align="center" class="info"> 
 	<!--Start left nav bar -->
 	  <form runat="server"> 
@@ -27,13 +28,13 @@
 						Email: <br>
 						<asp:TextBox runat="server" ID="stuEmail" /> 
 						<br>
-						Major: <br>
+						Major(s): <br>
 						<asp:TextBox runat="server" ID="stuMajor" />  
 						<br>
-						Minor: <br>
+						Minor(s): <br>
 						<asp:TextBox runat="server" ID="stuMinor" /> 
 						<br>
-						Extracurriculars:<br>
+						Extracurricular(s):<br>
 						<asp:TextBox runat="server" ID="stuExtra" /> 
 						<br>
 						Picture:<br>   

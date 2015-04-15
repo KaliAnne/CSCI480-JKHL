@@ -82,7 +82,7 @@
 		                    <legend><span>Help Menu</span></legend>		
 			                    <button type="Button" class ="attenBtn" onclick="location.href='home.aspx'">Home</button>
 			                    <button type="Button" class ="attenBtn">Delete Room Chart</button>
-                                <asp:Button runat="server" ID="btnAddStudent" Text="Add Student" Class="attenBtn" OnClick="addStudent" OnClientClick="return false;" />
+                                <asp:Button runat="server" ID="btnAddStudent" Text="Add Student" CssClass="attenBtn" OnClick="btnAddStudent_Click" OnClientClick="addStudent();" />
 			                    <button type="Button" class ="attenBtn" onclick="removeStudent();">Remove Student</button>
 			                    <button type="Button" class ="attenBtn" id="btnAssign" onclick="AssignSeats();">Assign Seats</button>
 			                    <button type="Button" class ="attenBtn">View Past Seating Charts</button>

@@ -70,7 +70,7 @@ Partial Class index
 
     End Sub
 
-    Protected Sub addStudent() Handles btnAddStudent.Click
+    Protected Sub btnAddStudent_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAddStudent.Click
         Dim studentToAdd As String = InputBox("Please enter the name of the student.")
         Dim alreadyListed As Boolean = False
 

@@ -140,7 +140,12 @@ function toggleAttend(button_id) {
 			else{
 				seatID = "imgSeat0" + strRow + strCol;
 			}
-			byId(seatID).src = byId(seatID).getAttribute("src1");
+			if (byId(seatID).src == byId(seatID).getAttribute("src1")) {
+			    byId(SeatID).src = byId(seatID).getAttribute("src2");
+			}
+			else {
+			    byId(seatID).src = byId(seatID).getAttribute("src1");
+			}
 		}
 	 }
    }
@@ -151,7 +156,7 @@ function toggleAttend(button_id) {
 		btnText.innerHTML = "Take Attendance";
 		byId("EditRoom").disabled = false;
 		byId("btnAssign").disabled = false;
-		var curdate = new Date();
+		//var curdate = new Date();
 		for (i = 1; i < NUM_ROWS; i++) { 
 			strRow = i.toString();
 			
@@ -169,7 +174,8 @@ function toggleAttend(button_id) {
 					byId(seatID).src = byId(seatID).getAttribute("src3");
 				}
 				else{
-					if (strCol < 10){
+				    /* This will be moved to the save room button
+                    if (strCol < 10){
 						seatID = "btnSeat0" + strRow + "0" + strCol;			
 					}
 					else{
@@ -177,7 +183,7 @@ function toggleAttend(button_id) {
 					}
 					var studentID = byId(seatID).getAttribute("assigned");
 					students[studentID].absences.push((curdate.getMonth() + 1).toString()  + "/" + (curdate.getDate()).toString() + "/" + (curdate.getFullYear()).toString());
-				}
+				*/}
 			}
 		}
 	//}
@@ -236,29 +242,7 @@ function ChangeRoomSize(rows, cols){
 		alert("Information might be lost. Seats are deleted from the bottom and right; please reposition students if necessary.");
 		if (rows > 0 && rows < NUM_ROWS){
 			if (cols > 0 && cols < NUM_COLS){
-				for (i = 1; i < NUM_ROWS; i++){
-					strRow = i.toString();
-					for (j = 1; j < NUM_COLS; j++){
-						strCol = j.toString();
-						if (strCol < 10){
-							btnSeatID = "btnSeat0" + strRow + "0" + strCol;
-							lblSeatID = "lblSeat0" + strRow + "0" + strCol;				
-						}
-						else{
-							btnSeatID = "btnSeat0" + strRow + strCol;
-							lblSeatID = "lblSeat0" + strRow + strCol;	
-						}
-						
-						if (i <= rows && j <= cols){
-							byId(btnSeatID).style.visibility = "visible";
-							byId(lblSeatID).style.visibility = "visible";
-						}
-						else{
-							byId(btnSeatID).style.visibility = "hidden";
-							byId(lblSeatID).style.visibility = "hidden";
-						}
-					}
-				}
+			    ChangeRoomSize(rows, cols);
 				chartName.readOnly = true;
 				chartRows.readOnly = true;
 				chartColumns.readOnly = true;
@@ -363,8 +347,8 @@ function ChangeRoomSize(rows, cols){
   
   //Add student to studentList dropdown; cannot add duplicate student names
   function addStudent() {
-	var studentList = byId('studentList');
-	var studentToAdd = prompt("Please enter the name of the student.");
+	var studentList = byId("studentList");
+	var studentToAdd = prompt("Please enter the name of the student you'd like to add.");
 	var alreadyListed = "false";
 	
 	//Checks to see if the name is already in the list
@@ -375,24 +359,28 @@ function ChangeRoomSize(rows, cols){
 	}
 	
 	//Only asks for further information if the name is unique
-	if (alreadyListed == "false"){
+	if (alreadyListed == "false") {
+        /*
 		var studentEmail = prompt("Please enter the student's email address.");
 		var studentMajors = prompt("Please enter the student's major(s).");
 		var studentMinors = prompt("Please enter the student's minor(s).");
-		var studentExtra = prompt("Please enter the student's extracurricular activities.");		
+		var studentExtra = prompt("Please enter the student's extracurricular activities.");	
+        */
+	    localStorage.setItem("AddStudName", studentToAdd);
+	    window.open("studentInfo.aspx");
 		var newStudent = document.createElement("option");
-		
 		newStudent.text = studentToAdd;
 		studentList.add(newStudent);
-		students[students.length] = new studentInfo(studentToAdd, studentEmail, studentMajors, studentMinors, studentExtra, false);
 		alert(studentToAdd + " was added to the student list.");
 	}
 	
 	//Shows an alert if the name was not unique
 	else{
-		alert("This student is already on the list!");
+	    alert("This student is already on the list!");
+	    return false;
 	}
   }
+
 function OnClose() {
     return "Any unsaved data will be lost.";
 }
