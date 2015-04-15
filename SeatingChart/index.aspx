@@ -6,12 +6,6 @@
 <!-- Input: From standard input:: Button clicking, typing, form evaluation: From database:: seating chart data-->
 
 <!DOCTYPE html>
-<script lang="JavaScript">
-    window.onbeforeunload = function (event) {
-        event.returnValue = "Any unsaved data will be lost.";
-    };
-
-</script>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <!-- Start header -->
     <head runat="server" align="center">
@@ -21,7 +15,7 @@
         <link rel="stylesheet"  href="css/seatingChartnew.css" />
 	    <script src="js/indexjs.js"> </script>
     </head>
-    <body onload="OnLoad()">
+    <body onload="OnLoad()" onbeforeunload="return OnClose()">
     <header>
         <nav id="nav">
 		    <ul>

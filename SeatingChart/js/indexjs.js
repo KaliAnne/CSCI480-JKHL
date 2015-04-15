@@ -393,3 +393,6 @@ function ChangeRoomSize(rows, cols){
 		alert("This student is already on the list!");
 	}
   }
+function OnClose() {
+    return "Any unsaved data will be lost.";
+}
