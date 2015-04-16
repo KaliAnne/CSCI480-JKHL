@@ -43,7 +43,7 @@ Created and revised by JHKL 3/31/2015
   
   //Handles functions for clicking seats; if not assigned and taking attendance, can swap between check/X, otherwise opens student info
   function SeatClicked(btnClickedID){
-	if (byId("btnAttend").innerHTML == "Save Attendance"){
+      if (byId("btnAttend").innerHTML == "Exit Attendance Mode") {
 		SeatAttndSwap(btnClickedID);
 	}
 	else{
@@ -70,6 +70,7 @@ Created and revised by JHKL 3/31/2015
                 alert(studentToAssign + " has been assigned to the selected seat.");
                 var lblSeat = "lbl" + btnClickedID.substring(3, 11);
                 byId(lblSeat).innerHTML = studentToAssign;
+                RemindToSave = true;
              }
 
              else {
@@ -85,6 +86,7 @@ Created and revised by JHKL 3/31/2015
                  var lblSeat = "lbl" + btnClickedID.substring(3, 11);
                  byId(lblSeat).innerHTML = "Vacant Seat";
                  alert("This seat is now available.");
+                 RemindToSave = true;
              }
          }
      }
@@ -101,6 +103,7 @@ Created and revised by JHKL 3/31/2015
 		byId("btnAssign").innerHTML = "Assign Seats";
 		byId("btnAttend").disabled = false;
 		byId("EditRoom").disabled = false;
+		RemindToSave = true;
 	}
   }
   
@@ -108,10 +111,10 @@ Created and revised by JHKL 3/31/2015
   function SeatAttndSwap(btnClickedID){
 	var seatImg = "img" + btnClickedID.substring(3, 11);
     var tgt = byId(seatImg);
-	if (tgt.getAttribute("src") == tgt.getAttribute("src1")){
+    if (tgt.getAttribute("src") == tgt.getAttribute("src1")) {
 		tgt.src = tgt.getAttribute("src2");
 	}
-	else if (tgt.getAttribute("src") == tgt.getAttribute("src2") && btnAttend.innerHTML == "Save Attendance"){
+    else if (tgt.getAttribute("src") == tgt.getAttribute("src2") && btnAttend.innerHTML == "Exit Attendance Mode") {
 		tgt.src = tgt.getAttribute("src1");
 	}
 		
@@ -149,12 +152,11 @@ function toggleAttend(button_id) {
 		}
 	 }
    }
-
    else{
 	//Toggles text and sets seat to Misc. icons if previously a checkmark, but leaves them as X if absent
-        //RemindToSave = true;
-        //AttendanceTaken = true;
-	    btnText.innerHTML = "Take Attendance";
+	//var saveAttend = confirm("Would you like to save the attendance as shown currently?");
+	//if (saveAttend){
+		btnText.innerHTML = "Take Attendance";
 		byId("EditRoom").disabled = false;
 		byId("btnAssign").disabled = false;
 		//var curdate = new Date();
@@ -174,6 +176,7 @@ function toggleAttend(button_id) {
 				if (byId(seatID).getAttribute("src") == byId(seatID).getAttribute("src1")){
 					byId(seatID).src = byId(seatID).getAttribute("src3");
 				}
+				else{
 				    /* This will be moved to the save room button
                     if (strCol < 10){
 						seatID = "btnSeat0" + strRow + "0" + strCol;			
@@ -183,10 +186,11 @@ function toggleAttend(button_id) {
 					}
 					var studentID = byId(seatID).getAttribute("assigned");
 					students[studentID].absences.push((curdate.getMonth() + 1).toString()  + "/" + (curdate.getDate()).toString() + "/" + (curdate.getFullYear()).toString());
-				*/
+				*/}
 			}
 		}
-    }
+	//}
+  }
 }
 //Heather's to do list -->
 //HB function either makes the room information editable or not
@@ -231,10 +235,6 @@ function ChangeRoomSize(rows, cols){
     var editBtn    = byId("EditRoom");
 	var rows = chartRows.value;
 	var cols = chartColumns.value;
-	var strRow = "1";
-	var strCol = "1";
-	var btnSeatID = "";
-	var lblSeatID = "";
 	
 	//If the user clicks to save the changes, it checks for valid dimensions before adjusting the layout
     if (editBtn.value == "Exit Edit Mode") {
@@ -242,13 +242,14 @@ function ChangeRoomSize(rows, cols){
 		if (rows > 0 && rows < NUM_ROWS){
 			if (cols > 0 && cols < NUM_COLS){
 			    ChangeRoomSize(rows, cols);
+			    RemindToSave = true;
 				chartName.readOnly = true;
 				chartRows.readOnly = true;
 				chartColumns.readOnly = true;
 				byId("btnAttend").disabled = false;
 				byId("btnAssign").disabled = false;
 				editBtn.value = "Edit Room";
-				//RemindToSave = true;
+				
 			}
 			else{
 				alert("There can only be up to 7 columns");
@@ -267,6 +268,7 @@ function ChangeRoomSize(rows, cols){
       chartColumns.readOnly = false;
       editBtn.value = "Exit Edit Mode";
     }
+    return false;
   }
   
 
@@ -376,18 +378,11 @@ function ChangeRoomSize(rows, cols){
 	//Shows an alert if the name was not unique
 	else{
 	    alert("This student is already on the list!");
+	    return false;
 	}
   }
 
-  //function SaveFile() { 
-  //    RemindToSave = false;
-  //    AttendanceTaken = false;
-  //}
-
-  //var RemindToSave = false; //Is set to true again if Exit Assign/Edit/Attendance mode are clicked, reset to false if save room is clicked
-  //var AttendanceTaken = false; //Is set to true if the attendance button is clicked to enter attendance mode then clicked again to exit attendance mode; if false, save room will not save attendance
-  function OnClose() {
-    //if (RemindToSave) {
-        return "Any unsaved data will be lost.";
-    //}
+  var RemindToSave = false; //Is set to true if attendance is taken, the room size changes, or if a student is assigned to/removed from a seat, then is set back to false if saved
+function OnClose() {
+    if (RemindToSave) { return "Any unsaved data will be lost."; }
 }

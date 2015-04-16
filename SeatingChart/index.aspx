@@ -22,9 +22,9 @@
 			    <li><a href="home.aspx">Home</a></li>
 				<li  class="current"><a href="index.aspx">Seating Chart Information</a></li>
 				<li><a href="viewExisting.aspx">View Existing</a></li>
-				<%--<li><a href="">Placeholder</a></li>--%>
-				<%--<li><a href="">Placeholder</a></li>
-				<li><a href="">Placeholder</a></li>--%>
+				<li><a href="">Placeholder</a></li>
+				<li><a href="">Placeholder</a></li>
+				<li><a href="">Placeholder</a></li>
 			</ul>
 		</nav>
 
@@ -63,7 +63,7 @@
                             <br />
 
                             <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" onclick="SaveChart_Click" />
-                            <asp:Button runat="server" ID="EditRoom" Text="Edit Room" CssClass="attenBtn" OnClientClick="activeEdit();"  /> <%--OnClick="EditRoom_Click"--%>
+                            <asp:Button runat="server" ID="EditRoom" Text="Edit Room" CssClass="attenBtn" OnClientClick="activeEdit(); return false;" />
 	                    </fieldset>	  
 
 		                <br />
@@ -82,7 +82,7 @@
 		                    <legend><span>Help Menu</span></legend>		
 			                    <button type="Button" class ="attenBtn" onclick="location.href='home.aspx'">Home</button>
 			                    <button type="Button" class ="attenBtn">Delete Room Chart</button>
-                                <asp:Button runat="server" ID="btnAddStudent" Text="Add Student" CssClass="attenBtn" OnClientClick="addStudent();" />
+                                <asp:Button runat="server" ID="btnAddStudent" Text="Add Student" CssClass="attenBtn" OnClientClick="addStudent(); return false;" />
 			                    <button type="Button" class ="attenBtn" onclick="removeStudent();">Remove Student</button>
 			                    <button type="Button" class ="attenBtn" id="btnAssign" onclick="AssignSeats();">Assign Seats</button>
 			                    <button type="Button" class ="attenBtn">View Past Seating Charts</button>
@@ -118,7 +118,7 @@
 
 	                <br />
 
-                    <button type="Button" class ="attenBtn" id="btnAttend" onclick="toggleAttend(this.id);">Take Attendance</button>
+                    <button class ="attenBtn" id="btnAttend" onclick="toggleAttend(this.id);">Take Attendance</button>
 
 	                <br />
                     <br />

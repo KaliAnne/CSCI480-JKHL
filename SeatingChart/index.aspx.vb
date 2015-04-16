@@ -70,6 +70,17 @@ Partial Class index
 
     End Sub
 
+    Sub OpenWindow(url As String)
+        Dim sb As New StringBuilder()
+        sb.Append("<script type = 'text/javascript'>")
+        sb.Append("window.open('")
+        sb.Append(url)
+        sb.Append("');")
+        sb.Append("</script>")
+        ClientScript.RegisterStartupScript(Me.GetType(), _
+                  "script", sb.ToString())
+    End Sub
+
     Protected Sub SaveChart_Click(sender As Object, e As EventArgs) Handles SaveChart.Click
 
         Dim cnUpdateChart As New SqlConnection
@@ -98,14 +109,5 @@ Partial Class index
         cnUpdateChart.Close()
 
     End Sub
-
-    'Changes the ready only property so that the new text is stored
-    'Protected Sub EditRoom_Click(sender As Object, e As EventArgs)
-
-    '    RoomColumns.ReadOnly = False
-    '    RoomRows.ReadOnly = False
-    '    ChartName.ReadOnly = False
-
-    'End Sub
 
 End Class
