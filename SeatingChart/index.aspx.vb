@@ -70,43 +70,6 @@ Partial Class index
 
     End Sub
 
-    Protected Sub btnAddStudent_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAddStudent.Click
-        Dim studentToAdd As String = InputBox("Please enter the name of the student.")
-        Dim alreadyListed As Boolean = False
-
-        'Checks to see if the name is already in the list
-        For Each student As ListItem In studentList.Items
-            If student.Text.ToUpper() = studentToAdd.ToUpper() Then
-                alreadyListed = True
-            End If
-        Next
-
-        'Only asks for further information if the name is unique
-        If alreadyListed = False Then
-            Session("storedStudName") = studentToAdd
-            studentList.Items.Add(New ListItem(studentToAdd))
-            OpenWindow("studentInfo.aspx") 'open student info window
-            'INSERT SQL STATEMENT: Send student name to the database, the other information will be entered on the studentinfo page
-
-            MsgBox(studentToAdd + " was added to the student list.")
-
-            'Shows an alert if the name was not unique
-        Else
-            MsgBox("This student is already on the list!")
-        End If
-    End Sub
-
-    Sub OpenWindow(url As String)
-        Dim sb As New StringBuilder()
-        sb.Append("<script type = 'text/javascript'>")
-        sb.Append("window.open('")
-        sb.Append(url)
-        sb.Append("');")
-        sb.Append("</script>")
-        ClientScript.RegisterStartupScript(Me.GetType(), _
-                  "script", sb.ToString())
-    End Sub
-
     Protected Sub SaveChart_Click(sender As Object, e As EventArgs) Handles SaveChart.Click
 
         Dim cnUpdateChart As New SqlConnection
@@ -137,12 +100,12 @@ Partial Class index
     End Sub
 
     'Changes the ready only property so that the new text is stored
-    Protected Sub EditRoom_Click(sender As Object, e As EventArgs)
+    'Protected Sub EditRoom_Click(sender As Object, e As EventArgs)
 
-        RoomColumns.ReadOnly = False
-        RoomRows.ReadOnly = False
-        ChartName.ReadOnly = False
+    '    RoomColumns.ReadOnly = False
+    '    RoomRows.ReadOnly = False
+    '    ChartName.ReadOnly = False
 
-    End Sub
+    'End Sub
 
 End Class
