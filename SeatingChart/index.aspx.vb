@@ -46,7 +46,7 @@ Partial Class index
 
             'Start pulling information about the students
             Dim cmdStudents As SqlCommand = New SqlCommand("" _
-                & "SELECT (FirstName + ' ' + LastName) AS Name " _
+                & "SELECT Name " _
                 & "FROM   STUDENT " _
                 & "WHERE  ChartID = @chartID", _
                 New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
