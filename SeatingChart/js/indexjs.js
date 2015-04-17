@@ -66,11 +66,11 @@ Created and revised by JHKL 3/31/2015
              }
 
              if (studentIndex != 0) {
-                byId(btnClickedID).setAttribute("assigned", studentToAssign);
-                alert(studentToAssign + " has been assigned to the selected seat.");
-                var lblSeat = "lbl" + btnClickedID.substring(3, 11);
-                byId(lblSeat).innerHTML = studentToAssign;
-                RemindToSave = true;
+                 byId(btnClickedID).setAttribute("assigned", studentToAssign);
+                 alert(studentToAssign + " has been assigned to the selected seat.");
+                 var lblSeat = "lbl" + btnClickedID.substring(3, 11);
+                 byId(lblSeat).innerHTML = studentToAssign;
+                 RemindToSave = true;
              }
 
              else {
@@ -84,6 +84,8 @@ Created and revised by JHKL 3/31/2015
              if (unassign) {
                  byId(btnClickedID).setAttribute("assigned", "");
                  var lblSeat = "lbl" + btnClickedID.substring(3, 11);
+                 var imgSeat = "img" + btnClickedID.substring(3, 11);
+                 byId(imgSeat).src = byId(imgSeat).getAttribute("src3");
                  byId(lblSeat).innerHTML = "Vacant Seat";
                  alert("This seat is now available.");
                  RemindToSave = true;
@@ -238,9 +240,9 @@ function ChangeRoomSize(rows, cols){
 	
 	//If the user clicks to save the changes, it checks for valid dimensions before adjusting the layout
     if (editBtn.value == "Exit Edit Mode") {
-		alert("Information might be lost. Seats are deleted from the bottom and right; please reposition students if necessary.");
 		if (rows > 0 && rows < NUM_ROWS){
-			if (cols > 0 && cols < NUM_COLS){
+		    if (cols > 0 && cols < NUM_COLS) {
+		        alert("Information might be lost. Seats are deleted from the bottom and right; please reposition students if necessary.");
 			    ChangeRoomSize(rows, cols);
 			    RemindToSave = true;
 				chartName.readOnly = true;
@@ -354,7 +356,7 @@ function ChangeRoomSize(rows, cols){
 	
 	//Checks to see if the name is already in the list
 	for (i=0; i<studentList.length; i++){
-		if (studentList.options[i].text.toUpperCase() == studentToAdd.toUpperCase()){
+		if (studentList.options[i].text.toUpperCase() == studentToAdd.toUpperCase() && studentToAdd != ""){
 			alreadyListed = "true";
 		}
 	}
@@ -380,6 +382,33 @@ function ChangeRoomSize(rows, cols){
 	    alert("This student is already on the list!");
 	    return false;
 	}
+  }
+
+  function HighlightName() {
+      var strRow = "1";
+      var strCol = "1";
+      var btnSeatID = "";
+      var lblSeatID = "";
+      for (i = 1; i < NUM_ROWS; i++) {
+          strRow = i.toString();
+          for (j = 1; j < NUM_COLS; j++) {
+              strCol = j.toString();
+              if (strCol < 10) {
+                  btnSeatID = "btnSeat0" + strRow + "0" + strCol;
+                  lblSeatID = "lblSeat0" + strRow + "0" + strCol;
+              }
+              else {
+                  btnSeatID = "btnSeat0" + strRow + strCol;
+                  lblSeatID = "lblSeat0" + strRow + strCol;
+              }
+              if (byId(btnSeatID).getAttribute("assigned") != byId("studentList").value){
+                  byId(lblSeatID).style.backgroundColor = "transparent";
+              }
+              else {
+                  byId(lblSeatID).style.backgroundColor = "#00FF00";
+              }
+          }
+      }
   }
 
   var RemindToSave = false; //Is set to true if attendance is taken, the room size changes, or if a student is assigned to/removed from a seat, then is set back to false if saved

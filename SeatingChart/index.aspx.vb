@@ -70,19 +70,8 @@ Partial Class index
 
     End Sub
 
-    Sub OpenWindow(url As String)
-        Dim sb As New StringBuilder()
-        sb.Append("<script type = 'text/javascript'>")
-        sb.Append("window.open('")
-        sb.Append(url)
-        sb.Append("');")
-        sb.Append("</script>")
-        ClientScript.RegisterStartupScript(Me.GetType(), _
-                  "script", sb.ToString())
-    End Sub
-
     Protected Sub SaveChart_Click(sender As Object, e As EventArgs) Handles SaveChart.Click
-
+        'To add: saving the attendance, saving seat/student combinations, 
         Dim cnUpdateChart As New SqlConnection
 
         cnUpdateChart.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _

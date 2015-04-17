@@ -62,7 +62,7 @@
 			
                             <br />
 
-                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" onclick="SaveChart_Click" />
+                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" onclick="SaveChart_Click" OnClientClick="RemindToSave = false;" />
                             <asp:Button runat="server" ID="EditRoom" Text="Edit Room" CssClass="attenBtn" OnClientClick="activeEdit(); return false;" />
 	                    </fieldset>	  
 
@@ -71,7 +71,7 @@
 	                    <fieldset id="studentinfo">
 		                    <legend><span>Student Information</span></legend>
 		                    <p>Please select a student:</p>
-                            <asp:DropDownList runat="server" ID="studentList" AppendDataBoundItems="true">
+                            <asp:DropDownList runat="server" ID="studentList" AppendDataBoundItems="true" onchange="HighlightName(); return false;" >
                                 <asp:ListItem Text="(None)" Value=""></asp:ListItem>
                             </asp:DropDownList>
 	                    </fieldset>
