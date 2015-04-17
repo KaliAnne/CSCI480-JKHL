@@ -43,7 +43,7 @@ Created and revised by JHKL 3/31/2015
   
   //Handles functions for clicking seats; if not assigned and taking attendance, can swap between check/X, otherwise opens student info
   function SeatClicked(btnClickedID){
-      if (byId("btnAttend").innerHTML == "Exit Attendance Mode") {
+      if (byId("btnAttend").innerHTML == "Exit Attendance Mode" && byId(btnClickedID).getAttribute("assigned") != ""){
 		SeatAttndSwap(btnClickedID);
 	}
 	else{
@@ -161,6 +161,7 @@ function toggleAttend(button_id) {
 		btnText.innerHTML = "Take Attendance";
 		byId("EditRoom").disabled = false;
 		byId("btnAssign").disabled = false;
+		RemindToSave = true;
 		//var curdate = new Date();
 		for (i = 1; i < NUM_ROWS; i++) { 
 			strRow = i.toString();
@@ -353,34 +354,35 @@ function ChangeRoomSize(rows, cols){
 	var studentList = byId("studentList");
 	var studentToAdd = prompt("Please enter the name of the student you'd like to add.");
 	var alreadyListed = "false";
-	
-	//Checks to see if the name is already in the list
-	for (i=0; i<studentList.length; i++){
-		if (studentList.options[i].text.toUpperCase() == studentToAdd.toUpperCase() && studentToAdd != ""){
-			alreadyListed = "true";
-		}
-	}
-	
-	//Only asks for further information if the name is unique
-	if (alreadyListed == "false") {
-        /*
-		var studentEmail = prompt("Please enter the student's email address.");
-		var studentMajors = prompt("Please enter the student's major(s).");
-		var studentMinors = prompt("Please enter the student's minor(s).");
-		var studentExtra = prompt("Please enter the student's extracurricular activities.");	
-        */
-	    localStorage.setItem("AddStudName", studentToAdd);
-	    window.open("studentInfo.aspx");
-		var newStudent = document.createElement("option");
-		newStudent.text = studentToAdd;
-		studentList.add(newStudent);
-		alert(studentToAdd + " was added to the student list.");
-	}
-	
-	//Shows an alert if the name was not unique
-	else{
-	    alert("This student is already on the list!");
-	    return false;
+	if (studentToAdd != "") {
+	    //Checks to see if the name is already in the list
+	    for (i = 0; i < studentList.length; i++) {
+	        if (studentList.options[i].text.toUpperCase() == studentToAdd.toUpperCase()) {
+	            alreadyListed = "true";
+	        }
+	    }
+
+	    //Only asks for further information if the name is unique
+	    if (alreadyListed == "false") {
+	        /*
+            var studentEmail = prompt("Please enter the student's email address.");
+            var studentMajors = prompt("Please enter the student's major(s).");
+            var studentMinors = prompt("Please enter the student's minor(s).");
+            var studentExtra = prompt("Please enter the student's extracurricular activities.");	
+            */
+	        localStorage.setItem("AddStudName", studentToAdd);
+	        window.open("studentInfo.aspx");
+	        var newStudent = document.createElement("option");
+	        newStudent.text = studentToAdd;
+	        studentList.add(newStudent);
+	        alert(studentToAdd + " was added to the student list.");
+	    }
+
+	        //Shows an alert if the name was not unique
+	    else {
+	        alert("This student is already on the list!");
+	        return false;
+	    }
 	}
   }
 

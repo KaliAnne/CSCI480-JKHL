@@ -81,11 +81,11 @@
                         <fieldset id="extrainfo">
 		                    <legend><span>Help Menu</span></legend>		
 			                    <button type="Button" class ="attenBtn" onclick="location.href='home.aspx'">Home</button>
-			                    <button type="Button" class ="attenBtn">Delete Room Chart</button>
+			                    <asp:Button runat="server" ID="btnDelChart" Text="Delete Room Chart" CssClass ="attenBtn" />
                                 <asp:Button runat="server" ID="btnAddStudent" Text="Add Student" CssClass="attenBtn" OnClientClick="addStudent(); return false;" />
-			                    <button type="Button" class ="attenBtn" onclick="removeStudent();">Remove Student</button>
+			                    <asp:Button runat="server" ID="btnRemoveStudent" Text="Remove Student" CssClass="attenBtn" OnClientClick="removeStudent();" />
 			                    <button type="Button" class ="attenBtn" id="btnAssign" onclick="AssignSeats();">Assign Seats</button>
-			                    <button type="Button" class ="attenBtn">View Past Seating Charts</button>
+			                    <asp:Button runat="server" ID="btnViewPastCharts" Text="View Past Seating Charts" CssClass="attenBtn" />
 	                    </fieldset>
 	   
 	                    <br />
