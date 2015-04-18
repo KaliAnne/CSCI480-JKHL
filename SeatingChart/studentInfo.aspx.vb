@@ -104,4 +104,14 @@ Partial Class studentInfo
 
     End Sub
 
+    Protected Sub btnCancel_Click(sender As Object, e As EventArgs)
+
+        'Sends the user back to the index page
+        Session("storedID") = HiddenChartID.Text
+
+        Response.Redirect("index.aspx")
+        'End sending the user back to the index page
+
+    End Sub
+
 End Class
