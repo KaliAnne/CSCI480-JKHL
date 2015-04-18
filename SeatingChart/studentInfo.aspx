@@ -7,42 +7,44 @@
 
 <!DOCTYPE html>
 <html>
-  <!-- Start header -->
-  <head align="center">
-    <meta charset="UTF-8" />
-	<title>Seating Chart Application</title>
-	<link rel="shortcut icon" type="image/png" href="images/favicon/apple.png"/>
-    <link rel="stylesheet"  href="css/seatingChartnew.css" />
-    <script src="js/studentInfo.js"> </script>
-  </head>
-  <!-- End header -->
+    <!-- Start header -->
+    <head align="center">
+        <meta charset="UTF-8" />
+	    <title>Seating Chart Application</title>
+	    <link rel="shortcut icon" type="image/png" href="images/favicon/apple.png"/>
+        <link rel="stylesheet"  href="css/seatingChartnew.css" />
+        <script src="js/studentInfo.js"> </script>
+    </head>
+    <!-- End header -->
     
-  <body onload="OnLoad()">
-    <section align="center" class="info"> 
-	<!--Start left nav bar -->
-	  <form runat="server"> 
-	  <!--Form Start-->	  
-						Name: <br>
-						<asp:TextBox runat="server" ID="stuName" /> 
-						<br>
-						Email: <br>
-						<asp:TextBox runat="server" ID="stuEmail" /> 
-						<br>
-						Major(s): <br>
-						<asp:TextBox runat="server" ID="stuMajor" />  
-						<br>
-						Minor(s): <br>
-						<asp:TextBox runat="server" ID="stuMinor" /> 
-						<br>
-						Extracurricular(s):<br>
-						<asp:TextBox runat="server" ID="stuExtra" /> 
-						<br>
-						Picture:<br>   
-                        <asp:FileUpload ID="stuPicture" runat="server" />
-						<br>
-						<br>
-                        <asp:Button runat="server" ID="btnSubmit" Text="Submit" Class="FormNav" OnClick="SubmitInfo" OnClientClick="return false;" />
-	  </form> <!-- End Form -->
-	</section> <!--End left nav bar-->
-  </body>
+    <body>
+        <section align="center" class="info"> 
+	    <!--Start left nav bar -->
+	        <form runat="server"> 
+	        <!--Form Start-->	  
+	            Name: <br>
+				<asp:TextBox runat="server" ID="stuName" /> 
+				<br>
+				Email: <br>
+				<asp:TextBox runat="server" ID="stuEmail" /> 
+				<br>
+				Major(s): <br>
+				<asp:TextBox runat="server" ID="stuMajor" />  
+				<br>
+				Minor(s): <br>
+				<asp:TextBox runat="server" ID="stuMinor" /> 
+				<br>
+				Extracurricular(s): <br>
+				<asp:TextBox runat="server" ID="stuExtra" /> 
+				<br>
+				Picture: <br>   
+                <asp:FileUpload ID="stuPicture" runat="server" />
+				<br>
+				<br>
+                <asp:Button runat="server" ID="btnSubmit" Text="Submit" Class="FormNav" OnClick="btnSubmit_Click" />
+                <asp:TextBox runat="server" ID="HiddenChartID" Visible="false"></asp:TextBox>
+	        </form> <!-- End Form -->
+	    </section> <!--End left nav bar-->
+    </body>
+
 </html>

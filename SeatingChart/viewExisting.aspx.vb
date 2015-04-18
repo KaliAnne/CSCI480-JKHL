@@ -37,7 +37,6 @@ Partial Class viewExisting
     'Sends the person to the index page 
     Protected Sub ChartNameGridView_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ChartNameGridView.SelectedIndexChanged
 
-        'Dim storedID As String = ChartNameGridView.SelectedRow.Cells(0).Text
         Dim index As Integer = ChartNameGridView.SelectedIndex
         Dim storedID As String = ChartNameGridView.DataKeys(index).Value.ToString
 

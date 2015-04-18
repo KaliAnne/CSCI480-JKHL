@@ -13,6 +13,7 @@ Imports System.Web.UI.HtmlControls
 Partial Class index
     Inherits System.Web.UI.Page
 
+    'Loads all of the chart information based on the Chart selected
     Sub Page_Load()
         If Page.IsPostBack = False Then
             Dim storedID As String = CType(Session.Item("storedID"), String)
@@ -21,28 +22,37 @@ Partial Class index
             HiddenChartID.Text = storedID
 
             'Start pulling information about the chart
-            Dim cmdChartName As SqlCommand = New SqlCommand("" _
-                & "SELECT Name, Rows, Columns " _
+            Dim cnChartName As New SqlConnection
+
+            cnChartName.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                    & "User ID=480-JKHL;Password=1104ncory"
+
+            cnChartName.Open()
+
+            Dim cmdChartName As New SqlCommand
+
+            cmdChartName.CommandText = "SELECT Name, Rows, Columns " _
                 & "FROM   CHART " _
-                & "WHERE  ChartID = @chartID", _
-                New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
-                    & "User ID=480-JKHL;Password=1104ncory"))
+                & "WHERE  ChartID = @chartID"
+
+            cmdChartName.Connection = cnChartName
+
+            Dim drChartName As SqlDataReader
 
             cmdChartName.Parameters.AddWithValue("@chartID", getChartId)
 
-            cmdChartName.Connection.Open()
+            drChartName = cmdChartName.ExecuteReader()
 
-            ChartInfoGridView.DataSource = cmdChartName.ExecuteReader()
-            ChartInfoGridView.DataBind()
+            drChartName.Read()
 
-            cmdChartName.Connection.Close()
-            cmdChartName.Connection.Dispose()
+            ChartName.Text = drChartName.Item("Name")
+            RoomRows.Text = drChartName.Item("Rows")
+            RoomColumns.Text = drChartName.Item("Columns")
+
+            drChartName.Close()
+
+            cnChartName.Close()
             'Finish pulling infomation about chart
-
-            'Sets the pulled information into the correct locations
-            ChartName.Text = ChartInfoGridView.Rows(0).Cells(0).Text
-            RoomRows.Text = ChartInfoGridView.Rows(0).Cells(1).Text
-            RoomColumns.Text = ChartInfoGridView.Rows(0).Cells(2).Text
 
             'Start pulling information about the students
             Dim cmdStudents As SqlCommand = New SqlCommand("" _
@@ -70,6 +80,7 @@ Partial Class index
 
     End Sub
 
+    'Saves the new fields to the database
     Protected Sub SaveChart_Click(sender As Object, e As EventArgs) Handles SaveChart.Click
         'To add: saving the attendance, saving seat/student combinations, 
         Dim cnUpdateChart As New SqlConnection
@@ -99,11 +110,21 @@ Partial Class index
 
     End Sub
 
+    'Sets the Chart fields to false so that the changed items will be changed in the database
     Protected Sub EditRoom_Click(sender As Object, e As EventArgs)
 
         ChartName.ReadOnly = False
         RoomRows.ReadOnly = False
         RoomColumns.ReadOnly = False
+
+    End Sub
+
+    'Adds a new student to the class
+    Protected Sub btnAddStudent_Click(sender As Object, e As EventArgs)
+
+        Session("storedID") = HiddenChartID.Text
+
+        Response.Redirect("studentInfo.aspx")
 
     End Sub
 End Class

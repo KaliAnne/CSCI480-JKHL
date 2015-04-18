@@ -79,10 +79,10 @@
 		                <br />
 		
                         <fieldset id="extrainfo">
-		                    <legend><span>Help Menu</span></legend>		
+		                    <legend><span>Help Menu</span></legend>	
 			                    <button type="Button" class ="attenBtn" onclick="location.href='home.aspx'">Home</button>
 			                    <asp:Button runat="server" ID="btnDelChart" Text="Delete Room Chart" CssClass ="attenBtn" />
-                                <asp:Button runat="server" ID="btnAddStudent" Text="Add Student" CssClass="attenBtn" OnClientClick="addStudent(); return false;" />
+                                <asp:Button runat="server" ID="btnAddStudent" Text="Add Student" CssClass="attenBtn" OnClick="btnAddStudent_Click" />
 			                    <asp:Button runat="server" ID="btnRemoveStudent" Text="Remove Student" CssClass="attenBtn" OnClientClick="removeStudent();" />
 			                    <button type="Button" class ="attenBtn" id="btnAssign" onclick="AssignSeats();">Assign Seats</button>
 			                    <asp:Button runat="server" ID="btnViewPastCharts" Text="View Past Seating Charts" CssClass="attenBtn" />
@@ -96,15 +96,6 @@
 		 
 	                </fieldset>
 			        <!--End menuopt-->
-
-                    <!--This a gridview that the user will not be able to see. It pulls all of the chart information that is needed-->
-                    <asp:GridView ID="ChartInfoGridView" runat="server" AutoGenerateColumns="false" Visible="false">
-                        <Columns>
-                            <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name"></asp:BoundField>
-                            <asp:BoundField DataField="Rows" HeaderText="Rows" SortExpression="Rows"></asp:BoundField>
-                            <asp:BoundField DataField="Columns" HeaderText="Columns" SortExpression="Columns"></asp:BoundField>
-                        </Columns>
-                    </asp:GridView>
 
 	            </form>
 			    <!-- End Form -->
