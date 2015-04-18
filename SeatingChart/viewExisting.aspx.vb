@@ -37,7 +37,9 @@ Partial Class viewExisting
     'Sends the person to the index page 
     Protected Sub ChartNameGridView_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ChartNameGridView.SelectedIndexChanged
 
-        Dim storedID As String = ChartNameGridView.SelectedRow.Cells(0).Text
+        'Dim storedID As String = ChartNameGridView.SelectedRow.Cells(0).Text
+        Dim index As Integer = ChartNameGridView.SelectedIndex
+        Dim storedID As String = ChartNameGridView.DataKeys(index).Value.ToString
 
         Session("storedID") = storedID
 
@@ -45,14 +47,4 @@ Partial Class viewExisting
 
     End Sub
 
-    Protected Sub ChartNameGridView_RowEditing(sender As Object, e As GridViewEditEventArgs)
-
-    End Sub
-
-    Protected Sub ChartNameGridView_RowCancelingEdit(sender As Object, e As GridViewCancelEditEventArgs)
-        ChartNameGridView.EditIndex = -1
-
-        ChartNameGridView.DataBind()
-
-    End Sub
 End Class

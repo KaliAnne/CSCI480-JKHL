@@ -7,34 +7,34 @@
 
 <!DOCTYPE html>
 <html>
-  <!-- Start header -->
-  <head align="center">
-    <meta charset="UTF-8" />
-	<title>Seating Chart Application</title>
-	<link rel="shortcut icon" type="image/png" href="images/favicon/apple.png"/>
-    <link rel="stylesheet"  href="css/seatingChartnew.css" />
-  </head>
+    <!-- Start header -->
+    <head align="center">
+        <meta charset="UTF-8" />
+	    <title>Seating Chart Application</title>
+	    <link rel="shortcut icon" type="image/png" href="images/favicon/apple.png"/>
+        <link rel="stylesheet"  href="css/seatingChartnew.css" />
+    </head>
 
     <header>
-  <nav id="nav">
-						<ul>
+        <nav id="nav">
+            <ul>
 			    <li class="current"><a href="home.aspx">Home</a></li>
 				<li><a href="index.aspx">Seating Chart Information</a></li>
-				<li ><a href="viewExisting.aspx">View Existing</a></li>
+				<li><a href="viewExisting.aspx">View Existing</a></li>
 				<li><a href="">Placeholder</a></li>
 				<li><a href="">Placeholder</a></li>
 				<li><a href="">Placeholder</a></li>
-						</ul>
-					</nav>
-					<br>
-					<br>
-</header>
+            </ul>
+        </nav>
 
-  <body align="center">
+        <br>
+        <br>
+    </header>
 
-            <button id='btnCreateChart'onClick="location.href='index.aspx'">Create New Chart</button>
-            <button id='btnViewCharts'onClick="location.href='viewExisting.aspx'">View Existing Chart</button>
-            <button id='btnSwitchMode' disabled="true">Switch Modes</button>
+    <body align="center">
+        <button id='btnCreateChart' onClick="location.href='index.aspx'" class="homeBtns">Create New Chart</button>
+        <button id='btnViewCharts' onClick="location.href='viewExisting.aspx'" class="homeBtns">View Existing Chart</button>
+        <button id='btnSwitchMode' class="homeBtns">Switch Modes</button>
+    </body>
 
-  </body>
 </html>

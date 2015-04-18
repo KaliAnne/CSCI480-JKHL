@@ -62,8 +62,8 @@
 			
                             <br />
 
-                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" onclick="SaveChart_Click" OnClientClick="RemindToSave = false;" />
-                            <asp:Button runat="server" ID="EditRoom" Text="Edit Room" CssClass="attenBtn" OnClientClick="activeEdit(); return false;" />
+                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" OnClick="SaveChart_Click" OnClientClick="RemindToSave = false;" />
+                            <asp:Button runat="server" ID="EditRoom" Text="Edit Room" CssClass="attenBtn" OnClick="EditRoom_Click" OnClientClick="activeEdit(); return false;" />
 	                    </fieldset>	  
 
 		                <br />
@@ -91,7 +91,7 @@
 	                    <br />
 	                    <br />
 
-                        <asp:TextBox runat="server" ID="HiddenChartID" Visible="true"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="HiddenChartID" Visible="false"></asp:TextBox>
 
 		 
 	                </fieldset>

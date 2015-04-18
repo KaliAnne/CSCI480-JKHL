@@ -99,4 +99,11 @@ Partial Class index
 
     End Sub
 
+    Protected Sub EditRoom_Click(sender As Object, e As EventArgs)
+
+        ChartName.ReadOnly = False
+        RoomRows.ReadOnly = False
+        RoomColumns.ReadOnly = False
+
+    End Sub
 End Class

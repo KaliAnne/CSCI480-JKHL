@@ -44,12 +44,11 @@
                         <!--This div class needs to be fixed-->
                         <section align="center" class="gridviewBox">
                             <!--Will fix the Edit and Delete Buttons tomorrow; want to review some work code before trying to do this-->
-                            <asp:GridView runat="server" ID="ChartNameGridView" AutoGenerateColumns="False" OnRowEditing="ChartNameGridView_RowEditing" OnRowCancelingEdit="ChartNameGridView_RowCancelingEdit">
+                            <asp:GridView runat="server" ID="ChartNameGridView" AutoGenerateColumns="False" DataKeyNames="ChartID" GridLines="None" Height="93px" Width="240px">
                                 <Columns>
-                                    <asp:BoundField DataField="ChartID" HeaderText="ChartID" SortExpression="ChartID" />
-                                    <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+                                    <asp:BoundField DataField="ChartID" HeaderText="ChartID" SortExpression="ChartID" Visible="false" />
+                                    <asp:BoundField DataField="Name" SortExpression="Name" />
                                     <asp:CommandField SelectText="View" ButtonType="Button" ShowSelectButton="True" />
-                                      <%--<asp:CommandField ShowEditButton="True" ButtonType="Button" />--%>
                                     <asp:CommandField ShowDeleteButton="true" ButtonType="Button" />
                                 </Columns>
                             </asp:GridView>
@@ -62,7 +61,6 @@
 	            <fieldset id="atteninfo">
 	                <legend><span>Attendance</span></legend>	
                     <br>
-	                <!-- PUT CODE HERE KALI -->
 	                <br>
 	            </fieldset>
             </section>
