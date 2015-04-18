@@ -82,7 +82,7 @@ Partial Class index
 
     'Saves the new fields to the database
     Protected Sub SaveChart_Click(sender As Object, e As EventArgs) Handles SaveChart.Click
-        'To add: saving the attendance, saving seat/student combinations, 
+
         Dim cnUpdateChart As New SqlConnection
 
         cnUpdateChart.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
