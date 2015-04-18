@@ -77,7 +77,6 @@ Partial Class index
             'Finish pulling information about the students
         End If
 
-
     End Sub
 
     'Saves the new fields to the database

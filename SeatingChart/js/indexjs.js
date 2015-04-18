@@ -348,7 +348,7 @@ function ChangeRoomSize(rows, cols){
       alert("No student removed.");
     }
   }
-  
+ /* 
   //Add student to studentList dropdown; cannot add duplicate student names
   function addStudent() {
 	var studentList = byId("studentList");
@@ -361,15 +361,15 @@ function ChangeRoomSize(rows, cols){
 	            alreadyListed = "true";
 	        }
 	    }
-
+*/
 	    //Only asks for further information if the name is unique
-	    if (alreadyListed == "false") {
+	    //if (alreadyListed == "false") {
 	        /*
             var studentEmail = prompt("Please enter the student's email address.");
             var studentMajors = prompt("Please enter the student's major(s).");
             var studentMinors = prompt("Please enter the student's minor(s).");
             var studentExtra = prompt("Please enter the student's extracurricular activities.");	
-            */
+            *//*
 	        localStorage.setItem("AddStudName", studentToAdd);
 	        window.open("studentInfo.aspx");
 	        var newStudent = document.createElement("option");
@@ -384,7 +384,7 @@ function ChangeRoomSize(rows, cols){
 	        return false;
 	    }
 	}
-  }
+  }*/
 
   function HighlightName() {
       var strRow = "1";

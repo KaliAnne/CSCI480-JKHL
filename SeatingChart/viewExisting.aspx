@@ -54,6 +54,7 @@
                             </asp:GridView>
                         </section>
 	                </fieldset> <!--End menu-->
+                    <asp:TextBox runat="server" ID="HiddenProfessorEmail" Visible="false"></asp:TextBox>
 	            </form> <!-- End Form -->
 	        </section> <!--End left nav bar-->
 

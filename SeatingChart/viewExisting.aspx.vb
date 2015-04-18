@@ -15,13 +15,19 @@ Partial Class viewExisting
 
     Sub Page_Load()
 
+        Dim storedProfessorEmail As String = CType(Session.Item("storedProfessorEmail"), String)
+
+        HiddenProfessorEmail.Text = storedProfessorEmail
+
         'Start pulling information about the chart
         Dim cmdChartName As SqlCommand = New SqlCommand("" _
             & "SELECT ChartID, Name " _
             & "FROM   CHART " _
-            & "WHERE  ProfessorEmail = 'none@findlay.edu' ", _
+            & "WHERE  ProfessorEmail = @getProfessorEmail", _
             New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
                 & "User ID=480-JKHL;Password=1104ncory"))
+
+        cmdChartName.Parameters.AddWithValue("@getProfessorEmail", HiddenProfessorEmail.Text)
 
         cmdChartName.Connection.Open()
 

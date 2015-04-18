@@ -1,4 +1,4 @@
-<%@ Page Language="VB" AutoEventWireup="false" CodeFile="home.aspx.vb" Inherits="home" %>
+<%@ Page Language="VB" AutoEventWireup="true" CodeFile="home.aspx.vb" Inherits="home" %>
 
 <!-- Iteration 1 code for seating chart application. -->
 <!-- Created and revised by JHKL 3/31/2015 -->
@@ -32,9 +32,12 @@
     </header>
 
     <body align="center">
-        <button id='btnCreateChart' onClick="location.href='index.aspx'" class="homeBtns">Create New Chart</button>
-        <button id='btnViewCharts' onClick="location.href='viewExisting.aspx'" class="homeBtns">View Existing Chart</button>
-        <button id='btnSwitchMode' class="homeBtns">Switch Modes</button>
+        <form runat="server">
+            <asp:Button runat="server" ID="btnCreateChart" CssClass="homeBtns" Text="Creat New Chart" OnClick="btnCreateChart_Click" />
+            <asp:Button runat="server" ID="btnViewCharts" CssClass="homeBtns" Text="View Existing Chart" OnClick="btnViewCharts_Click" />
+            <button id='btnSwitchMode' class="homeBtns">Switch Modes</button>
+            <asp:TextBox runat="server" ID="HiddenProfessorEmail" Visible="false"></asp:TextBox>
+        </form>
     </body>
 
 </html>
