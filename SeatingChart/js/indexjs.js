@@ -67,6 +67,7 @@ Created and revised by JHKL 3/31/2015
              for (i = 1; i < studList.options.length; i++) {
                  if (studList.options[i].text.toUpperCase() == studentToAssign.toUpperCase()) {
                      studentIndex = i;
+                     studentToAssign = studList.options[i].text;
                  }
              }
 
@@ -91,6 +92,7 @@ Created and revised by JHKL 3/31/2015
                  var lblSeat = "lbl" + btnClickedID.substring(3, 11);
                  byId(btnClickedID).src = byId(btnClickedID).getAttribute("srcPic");
                  byId(lblSeat).innerHTML = "Vacant Seat";
+                 byId(lblSeat).style.backgroundColor = "transparent";
                  alert("This seat is now available.");
                  RemindToSave = true;
              }
@@ -148,19 +150,14 @@ function toggleAttend(button_id) {
 			else{
 				seatID = "btnSeat0" + strRow + strCol;
 			}
-			if (byId(seatID).ImageUrl == byId(seatID).getAttribute("srcCheck")) {
-			    byId(SeatID).src = byId(seatID).getAttribute("srcX");
-			}
-			else {
-			    byId(seatID).src = byId(seatID).getAttribute("srcCheck");
+			if (byId(seatID).getAttribute("src") == byId(seatID).getAttribute("srcPic")) {
+			    byId(SeatID).src = byId(seatID).getAttribute("srcCheck");
 			}
 		}
 	 }
    }
+       //Sets button text to "Take Attendance" and changes seats marked present to their student picture
    else{
-	//Toggles text and sets seat to Misc. icons if previously a checkmark, but leaves them as X if absent
-	//var saveAttend = confirm("Would you like to save the attendance as shown currently?");
-	//if (saveAttend){
 		btnText.innerHTML = "Take Attendance";
 		byId("EditRoom").disabled = false;
 		byId("btnAssign").disabled = false;
@@ -178,7 +175,7 @@ function toggleAttend(button_id) {
 				}
 				
 				//If the student is marked present [checkmarked], switches back to normal icon, if marked absent, saves the absent date
-				if (byId(seatID).getAttribute("ImageUrl") == byId(seatID).getAttribute("srcCheck")) {
+				if (byId(seatID).getAttribute("src") == byId(seatID).getAttribute("srcCheck")) {
 				    byId(seatID).src = byId(seatID).getAttribute("srcPic");
 				}
 				else{
@@ -331,11 +328,6 @@ function ChangeRoomSize(rows, cols){
 			//Removes the name from the dropdown and from the students array
 			if(studentList.options[i].text.toUpperCase() == studentToRemove.toUpperCase()){
 				studentList.remove(i);
-				for (j = 1; j < students.length; j++){
-					if (studentToRemove.toUpperCase() == students[j].name.toUpperCase()){
-						students.splice(j, 1);
-					}
-				}
 				found = "true";
 				alert(studentToRemove + " was removed");
 				break;
