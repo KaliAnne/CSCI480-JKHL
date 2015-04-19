@@ -43,12 +43,17 @@ Created and revised by JHKL 3/31/2015
   
   //Handles functions for clicking seats; if not assigned and taking attendance, can swap between check/X, otherwise opens student info
   function SeatClicked(btnClickedID){
-      if (byId("btnAttend").innerHTML == "Exit Attendance Mode" && byId(btnClickedID).getAttribute("assigned") != ""){
-		SeatAttndSwap(btnClickedID);
-	}
-	else{
-		SeatAssignInfo(btnClickedID);
-	}	
+      if (byId("btnAttend").innerHTML == "Exit Attendance Mode" && byId(btnClickedID).getAttribute("assigned") != "") {
+          SeatAttndSwap(btnClickedID);
+          return false;
+      }
+      else if (byId("btnAssign").innerHTML == "Exit Assignment Mode") {
+          SeatAssignInfo(btnClickedID);
+          return false;
+      }
+      else {
+          return true;
+      }
   }
   
   //Handles assigning seats and showing the info of the student assigned to the given seat
@@ -84,8 +89,7 @@ Created and revised by JHKL 3/31/2015
              if (unassign) {
                  byId(btnClickedID).setAttribute("assigned", "");
                  var lblSeat = "lbl" + btnClickedID.substring(3, 11);
-                 var imgSeat = "img" + btnClickedID.substring(3, 11);
-                 byId(imgSeat).src = byId(imgSeat).getAttribute("src3");
+                 byId(btnClickedID).src = byId(btnClickedID).getAttribute("srcPic");
                  byId(lblSeat).innerHTML = "Vacant Seat";
                  alert("This seat is now available.");
                  RemindToSave = true;
@@ -111,13 +115,12 @@ Created and revised by JHKL 3/31/2015
   
   //Handles swapping between checkmarks and X's if taking attendance
   function SeatAttndSwap(btnClickedID){
-	var seatImg = "img" + btnClickedID.substring(3, 11);
-    var tgt = byId(seatImg);
-    if (tgt.getAttribute("src") == tgt.getAttribute("src1")) {
-		tgt.src = tgt.getAttribute("src2");
+      var tgt = byId(btnClickedID);
+    if (tgt.getAttribute("src") == tgt.getAttribute("srcCheck")){
+		tgt.src = tgt.getAttribute("srcX");
 	}
-    else if (tgt.getAttribute("src") == tgt.getAttribute("src2") && btnAttend.innerHTML == "Exit Attendance Mode") {
-		tgt.src = tgt.getAttribute("src1");
+    else if (tgt.getAttribute("src") == tgt.getAttribute("srcX")) {
+        tgt.src = tgt.getAttribute("srcCheck");
 	}
 		
   }
@@ -128,7 +131,7 @@ function toggleAttend(button_id) {
    var btnText = byId(button_id);
    var strRow = "1";
    var strCol = "1";
-   var seatID = "imgSeat0101";
+   var seatID = "";
    if (btnText.innerHTML == "Take Attendance") 
    {
 	//Toggles text and sets seats to checkmarks and allows them to be changed to take attendance
@@ -140,16 +143,16 @@ function toggleAttend(button_id) {
 		for (j = 1; j < NUM_COLS; j++){
 			strCol = j.toString();
 			if (strCol < 10){
-				seatID = "imgSeat0" + strRow + "0" + strCol;				
+				seatID = "btnSeat0" + strRow + "0" + strCol;				
 			}
 			else{
-				seatID = "imgSeat0" + strRow + strCol;
+				seatID = "btnSeat0" + strRow + strCol;
 			}
-			if (byId(seatID).src == byId(seatID).getAttribute("src1")) {
-			    byId(SeatID).src = byId(seatID).getAttribute("src2");
+			if (byId(seatID).ImageUrl == byId(seatID).getAttribute("srcCheck")) {
+			    byId(SeatID).src = byId(seatID).getAttribute("srcX");
 			}
 			else {
-			    byId(seatID).src = byId(seatID).getAttribute("src1");
+			    byId(seatID).src = byId(seatID).getAttribute("srcCheck");
 			}
 		}
 	 }
@@ -165,19 +168,18 @@ function toggleAttend(button_id) {
 		//var curdate = new Date();
 		for (i = 1; i < NUM_ROWS; i++) { 
 			strRow = i.toString();
-			
 			for (j = 1; j < NUM_COLS; j++){
 				strCol = j.toString();
 				if (strCol < 10){
-					seatID = "imgSeat0" + strRow + "0" + strCol;			
+					seatID = "btnSeat0" + strRow + "0" + strCol;			
 				}
 				else{
-					seatID =  "imgSeat0" + strRow + strCol;
+					seatID =  "btnSeat0" + strRow + strCol;
 				}
 				
 				//If the student is marked present [checkmarked], switches back to normal icon, if marked absent, saves the absent date
-				if (byId(seatID).getAttribute("src") == byId(seatID).getAttribute("src1")){
-					byId(seatID).src = byId(seatID).getAttribute("src3");
+				if (byId(seatID).getAttribute("ImageUrl") == byId(seatID).getAttribute("srcCheck")) {
+				    byId(seatID).src = byId(seatID).getAttribute("srcPic");
 				}
 				else{
 				    /* This will be moved to the save room button

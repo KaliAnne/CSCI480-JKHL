@@ -168,7 +168,7 @@ div {
 }
 
 /* img; CSS styling for img elements used in website, defaulted to 100x100px. */
-img {
+.SeatBtn {
 	height: 100px;
 	width: 100px;
 }
