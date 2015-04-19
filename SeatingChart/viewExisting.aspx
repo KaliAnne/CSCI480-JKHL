@@ -44,27 +44,20 @@
                         <!--This div class needs to be fixed-->
                         <section align="center" class="gridviewBox">
                             <!--Will fix the Edit and Delete Buttons tomorrow; want to review some work code before trying to do this-->
-                            <asp:GridView runat="server" ID="ChartNameGridView" AutoGenerateColumns="False" DataKeyNames="ChartID" GridLines="None" Height="93px" Width="240px">
+                            <asp:GridView runat="server" ID="ChartNameGridView" AutoGenerateColumns="False" DataKeyNames="ChartID" GridLines="None" Height="93px" Width="240px" OnRowDeleting="ChartNameGridView_RowDeleting">
                                 <Columns>
                                     <asp:BoundField DataField="ChartID" HeaderText="ChartID" SortExpression="ChartID" Visible="false" />
                                     <asp:BoundField DataField="Name" SortExpression="Name" />
                                     <asp:CommandField SelectText="View" ButtonType="Button" ShowSelectButton="True" />
-                                    <asp:CommandField ShowDeleteButton="true" ButtonType="Button" />
+                                    <asp:CommandField DeleteText="Delete" ButtonType="Button" ShowDeleteButton="True" />
                                 </Columns>
                             </asp:GridView>
                         </section>
 	                </fieldset> <!--End menu-->
+                    <asp:TextBox runat="server" ID="DeleteConfirmation" Visible="true"></asp:TextBox>
                     <asp:TextBox runat="server" ID="HiddenProfessorEmail" Visible="false"></asp:TextBox>
 	            </form> <!-- End Form -->
 	        </section> <!--End left nav bar-->
-
-            <section align="center">
-	            <fieldset id="atteninfo">
-	                <legend><span>Attendance</span></legend>	
-                    <br>
-	                <br>
-	            </fieldset>
-            </section>
 
         </div>
     </body>
