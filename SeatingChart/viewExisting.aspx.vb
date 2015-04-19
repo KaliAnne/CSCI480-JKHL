@@ -78,6 +78,8 @@ Partial Class viewExisting
         cmdDeleteChart.Connection.Dispose()
         'Finish deleting the chart
 
+
+        'Reloads the page once it has finished deleting the chart row
         Session("storedProfessorEmail") = HiddenProfessorEmail.Text
 
         Response.Redirect("viewExisting.aspx")

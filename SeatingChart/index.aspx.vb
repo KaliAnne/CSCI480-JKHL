@@ -126,4 +126,64 @@ Partial Class index
         Response.Redirect("studentInfo.aspx")
 
     End Sub
+
+    'Delete the chart and send the user back to View Existing
+    Protected Sub btnDelChart_Click(sender As Object, e As EventArgs)
+
+        'Start pulling email for the chart
+        Dim cnProfessorEmail As New SqlConnection
+
+        cnProfessorEmail.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                & "User ID=480-JKHL;Password=1104ncory"
+
+        cnProfessorEmail.Open()
+
+        Dim cmdProfessorEmail As New SqlCommand
+
+        cmdProfessorEmail.CommandText = "SELECT ProfessorEmail " _
+            & "FROM   CHART " _
+            & "WHERE  ChartID = @chartID"
+
+        cmdProfessorEmail.Connection = cnProfessorEmail
+
+        Dim drProfessorEmail As SqlDataReader
+
+        cmdProfessorEmail.Parameters.AddWithValue("@chartID", HiddenChartID.Text)
+
+        drProfessorEmail = cmdProfessorEmail.ExecuteReader()
+
+        drProfessorEmail.Read()
+
+        HiddenProfessorEmail.Text = drProfessorEmail.Item("ProfessorEmail")
+
+        drProfessorEmail.Close()
+
+        cnProfessorEmail.Close()
+        'Finish pulling email for the chart
+
+        'Start deleting the chart
+        Dim cmdDeleteChart As SqlCommand = New SqlCommand("" _
+            & "DELETE " _
+            & "FROM   CHART " _
+            & "WHERE  ChartID = @getChartID", _
+            New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                & "User ID=480-JKHL;Password=1104ncory"))
+
+        cmdDeleteChart.Parameters.AddWithValue("@getChartID", HiddenChartID.Text)
+
+        cmdDeleteChart.Connection.Open()
+
+        cmdDeleteChart.ExecuteNonQuery()
+
+        cmdDeleteChart.Connection.Close()
+        cmdDeleteChart.Connection.Dispose()
+        'Finish deleting the chart
+
+        'Sends the user back to view Existing to see their charts
+        Session("storedProfessorEmail") = HiddenProfessorEmail.Text
+
+        Response.Redirect("viewExisting.aspx")
+
+    End Sub
+
 End Class
