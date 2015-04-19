@@ -44,12 +44,16 @@
                         <!--This div class needs to be fixed-->
                         <section align="center" class="gridviewBox">
                             <!--Will fix the Edit and Delete Buttons tomorrow; want to review some work code before trying to do this-->
-                            <asp:GridView runat="server" ID="ChartNameGridView" AutoGenerateColumns="False" DataKeyNames="ChartID" GridLines="None" Height="93px" Width="240px">
+                            <asp:GridView runat="server" ID="ChartNameGridView" AutoGenerateColumns="False" DataKeyNames="ChartID" GridLines="None" Height="93px" Width="240px" OnRowDeleting="ChartNameGridView_RowDeleting">
                                 <Columns>
                                     <asp:BoundField DataField="ChartID" HeaderText="ChartID" SortExpression="ChartID" Visible="false" />
                                     <asp:BoundField DataField="Name" SortExpression="Name" />
                                     <asp:CommandField SelectText="View" ButtonType="Button" ShowSelectButton="True" />
-                                    <asp:CommandField ShowDeleteButton="true" ButtonType="Button" />
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <asp:Button runat="server" Text="Delete" CommandName="Delete" CommandArgument="ChartID" OnClientClick="return confirm('Are you sure you want to delete chart?');" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                 </Columns>
                             </asp:GridView>
                         </section>
@@ -57,14 +61,6 @@
                     <asp:TextBox runat="server" ID="HiddenProfessorEmail" Visible="false"></asp:TextBox>
 	            </form> <!-- End Form -->
 	        </section> <!--End left nav bar-->
-
-            <section align="center">
-	            <fieldset id="atteninfo">
-	                <legend><span>Attendance</span></legend>	
-                    <br>
-	                <br>
-	            </fieldset>
-            </section>
 
         </div>
     </body>

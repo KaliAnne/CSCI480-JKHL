@@ -81,7 +81,7 @@
                         <fieldset id="extrainfo">
 		                    <legend><span>Help Menu</span></legend>	
 			                    <button type="Button" class ="attenBtn" onclick="location.href='home.aspx'">Home</button>
-			                    <asp:Button runat="server" ID="btnDelChart" Text="Delete Room Chart" CssClass ="attenBtn" />
+			                    <asp:Button runat="server" ID="btnDelChart" Text="Delete Room Chart" CssClass ="attenBtn" OnClick="btnDelChart_Click" OnClientClick="return confirm('Are you sure you want to delete this chart?');" />
                                 <asp:Button runat="server" ID="btnAddStudent" Text="Add Student" CssClass="attenBtn" OnClick="btnAddStudent_Click" />
 			                    <asp:Button runat="server" ID="btnRemoveStudent" Text="Remove Student" CssClass="attenBtn" OnClientClick="removeStudent();" />
 			                    <button type="Button" class ="attenBtn" id="btnAssign" onclick="AssignSeats();">Assign Seats</button>
@@ -91,8 +91,9 @@
 	                    <br />
 	                    <br />
 
+                        <!--Hidden fields to store the IDs that are not needed to be seen by the user-->
                         <asp:TextBox runat="server" ID="HiddenChartID" Visible="false"></asp:TextBox>
-
+                        <asp:TextBox runat="server" ID="HiddenProfessorEmail" Visible="false"></asp:TextBox>
 		 
 	                </fieldset>
 			        <!--End menuopt-->
