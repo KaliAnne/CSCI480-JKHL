@@ -49,12 +49,15 @@
                                     <asp:BoundField DataField="ChartID" HeaderText="ChartID" SortExpression="ChartID" Visible="false" />
                                     <asp:BoundField DataField="Name" SortExpression="Name" />
                                     <asp:CommandField SelectText="View" ButtonType="Button" ShowSelectButton="True" />
-                                    <asp:CommandField DeleteText="Delete" ButtonType="Button" ShowDeleteButton="True" />
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <asp:Button runat="server" Text="Delete" CommandName="Delete" CommandArgument="ChartID" OnClientClick="return confirm('Are you sure you want to delete this chart?');" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                 </Columns>
                             </asp:GridView>
                         </section>
 	                </fieldset> <!--End menu-->
-                    <asp:TextBox runat="server" ID="DeleteConfirmation" Visible="true"></asp:TextBox>
                     <asp:TextBox runat="server" ID="HiddenProfessorEmail" Visible="false"></asp:TextBox>
 	            </form> <!-- End Form -->
 	        </section> <!--End left nav bar-->
