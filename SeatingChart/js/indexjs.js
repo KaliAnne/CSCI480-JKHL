@@ -7,30 +7,6 @@ Created and revised by JHKL 3/31/2015
   var NUM_ROWS = 8;  //Number of rows + 1	 
   var NUM_COLS = 11; //Number of columns + 1
   function OnLoad(){
-	  /* Old Onload Code
-	  students.push(new studentInfo("None", "None", "None", "None", "None", "0000")); //Dummy student to take index 0
-	  students.push(new studentInfo("Bob", "bob@email", "Premed", "Spanish", "None", "0201"));
-	  students.push(new studentInfo("Rick", "rick@email", "English", "Math", "None", "0102"));
-	  students.push(new studentInfo("Tim", "tim@email", "Equestrian", "Pre-vet", "None", "0000"));
-	  students.push(new studentInfo("Mary", "mary@email", "English", "Theatre", "None", "0000"));
-	  students.push(new studentInfo("Susan", "susan@email", "Math", "English", "None", "0000"));
-	  students.push(new studentInfo("Kali", "dumpertk@findlay.edu", "Computer Science", "None", "None", "0000"));
-	  students.push(new studentInfo("Heather", "beckh@findlay.edu", "Computer Science, Math", "None", "ACM", "0000"));
-	  students.push(new studentInfo("Jacob", "babionej@findlay.edu", "Computer Science, Math", "None", "ACM, TAG", "0000"));
-	  students.push(new studentInfo("Lucas", "kelleykiefferl@findlay.edu", "Computer Science", "None", "None", "0000"));
-	  
-	  //Adds each student's name to the list, and assigns them to a seat if they were given one above or from the database
-	  for(i = 1; i < students.length; i++){
-		var studentOpt = document.createElement("option");
-		studentOpt.text = students[i].name;
-		byId("studentList").add(studentOpt);
-		
-		if (students[i].seated != "0000"){
-			var seatID = "btnSeat" + students[i].seated;
-			byId(seatID).setAttribute("assigned", i);
-		}
-	  }
-	  */
 	  var rows = byId("RoomRows").value;
 	  var cols = byId("RoomColumns").value;
 	  ChangeRoomSize(rows, cols);
@@ -72,6 +48,8 @@ Created and revised by JHKL 3/31/2015
 
              if (studentIndex != 0) {
                  byId(btnClickedID).setAttribute("assigned", studentToAssign);
+                 byId(btnClickedID).setAttribute("srcPic", "images/icon_png/MiscStudent.png");
+                 byId(btnClickedID).src = byId(btnClickedID).getAttribute("srcPic");
                  alert(studentToAssign + " has been assigned to the selected seat.");
                  var lblSeat = "lbl" + btnClickedID.substring(3, 11);
                  byId(lblSeat).innerHTML = studentToAssign;
@@ -85,10 +63,11 @@ Created and revised by JHKL 3/31/2015
 
              //If a student is already assigned to this seat, asks if the user would like to remove the student from the seat		
          else {
-             var unassign = confirm("Would you like to remove " + byId(btnClickedID).getAttribute("assigned") + " from this seat?  WARNING: Attendance data may be lost!");
+             var unassign = confirm("Would you like to remove " + byId(btnClickedID).getAttribute("assigned") + " from this seat?");
              if (unassign) {
                  byId(btnClickedID).setAttribute("assigned", "");
                  var lblSeat = "lbl" + btnClickedID.substring(3, 11);
+                 byId(btnClickedID).setAttribute("srcPic", "images/icon_png/EmptySeat.png");
                  byId(btnClickedID).src = byId(btnClickedID).getAttribute("srcPic");
                  byId(lblSeat).innerHTML = "Vacant Seat";
                  byId(lblSeat).style.backgroundColor = "transparent";
@@ -230,7 +209,7 @@ function ChangeRoomSize(rows, cols){
     if (editBtn.value == "Exit Edit Mode") {
 		if (rows > 0 && rows < NUM_ROWS){
 		    if (cols > 0 && cols < NUM_COLS) {
-		        alert("Information might be lost. Seats are deleted from the bottom and right; please reposition students if necessary.");
+		        alert("Seats are deleted from the top and right; please reposition students if necessary.");
 			    ChangeRoomSize(rows, cols);
 			    RemindToSave = true;
 				chartName.readOnly = true;
@@ -265,45 +244,7 @@ function ChangeRoomSize(rows, cols){
 //HB function to remove a student from the class
 //TODO: Check whether professor or not
 //TODO: Connect changes to database entry of chart
-
-//Handles creation of new students and their information; can be expanded further to include absences or something
-  function studentInfo(fullname, studemail, major, minor, extra, seat){
-	this.name = fullname;
-	this.email = studemail;
-	this.majors = major;
-	this.minors = minor;
-	this.extras = extra;
-	this.seated = seat;
-	this.absences = [];
-  }
   
-  //Brings up an alert to view a student's information, given their name
-  function ViewStudentInfo(name){
-	var studentID = 0;
-	for (i = 1; i < students.length; i++){
-		if (name.toUpperCase() == students[i].name.toUpperCase()){
-			studentID = i;
-		}
-	}
-	var email = students[studentID].email;	
-	var majors = students[studentID].majors;
-	var minors = students[studentID].minors;
-	var home = students[studentID].extras;
-	var absences = students[studentID].absences.length;
-	var absenceList = "\nAbsences:    ";
-	
-	//Shows dates absent, if any
-	if (absences > 0){
-		absenceList = absenceList + absences;
-		for (i = 0; i < absences; i++){
-			absenceList = absenceList + "\n                    " + students[studentID].absences[i];
-		}
-	}
-	else{
-		absenceList = absenceList + "No days missed!";
-	}
-	alert("Name:         " + name + "\nEmail:          " + email + "\nMajor:         " + majors + "\nMinor:         " + minors + "\nExtracurriculars: " + home + absenceList);
-  }
   
   //Remove student from the studentList dropdown
   function removeStudent() {
@@ -330,44 +271,8 @@ function ChangeRoomSize(rows, cols){
       alert("No student removed.");
     }
   }
- /* 
-  //Add student to studentList dropdown; cannot add duplicate student names
-  function addStudent() {
-	var studentList = byId("studentList");
-	var studentToAdd = prompt("Please enter the name of the student you'd like to add.");
-	var alreadyListed = "false";
-	if (studentToAdd != "") {
-	    //Checks to see if the name is already in the list
-	    for (i = 0; i < studentList.length; i++) {
-	        if (studentList.options[i].text.toUpperCase() == studentToAdd.toUpperCase()) {
-	            alreadyListed = "true";
-	        }
-	    }
-*/
-	    //Only asks for further information if the name is unique
-	    //if (alreadyListed == "false") {
-	        /*
-            var studentEmail = prompt("Please enter the student's email address.");
-            var studentMajors = prompt("Please enter the student's major(s).");
-            var studentMinors = prompt("Please enter the student's minor(s).");
-            var studentExtra = prompt("Please enter the student's extracurricular activities.");	
-            *//*
-	        localStorage.setItem("AddStudName", studentToAdd);
-	        window.open("studentInfo.aspx");
-	        var newStudent = document.createElement("option");
-	        newStudent.text = studentToAdd;
-	        studentList.add(newStudent);
-	        alert(studentToAdd + " was added to the student list.");
-	    }
 
-	        //Shows an alert if the name was not unique
-	    else {
-	        alert("This student is already on the list!");
-	        return false;
-	    }
-	}
-  }*/
-
+//If user selects a student on the dropdown, the name on their seat is highlighted (if they're assigned to a seat)
   function HighlightName() {
       var strRow = "1";
       var strCol = "1";
@@ -395,15 +300,21 @@ function ChangeRoomSize(rows, cols){
       }
   }
 
+//Confirms that the selected student should be removed and makes sure they're not assigned a seat
   function ConfirmStudRemoval() {
+      //Alerts user if no student is selected
       var studname = byId("studentList").value;
       if (studname == "") {
           alert("Please select a student from the list.");
           return false;
       }
+
+      //Confirms that the selected student should be removed or not removed
       else {
           var deleteConfirmed = confirm("Are you sure you want to delete " + studname + " from this chart?");
           return deleteConfirmed;
+
+          //If being removed, makes sure to unassign the seat that the student was assigned to, if any
           if (deleteConfirmed) {
               var strRow = "1";
               var strCol = "1";
@@ -421,7 +332,7 @@ function ChangeRoomSize(rows, cols){
                       if (byId(btnSeatID).getAttribute("assigned") == studname) {
                           byId(btnSeatID).setAttribute("assigned", "");
                           var lblSeat = "lbl" + btnSeatID.substring(3, 11);
-                          byId(btnSeatID).setAttribute("srcPic", "images/icon_png/MiscStudent.png");
+                          byId(btnSeatID).setAttribute("srcPic", "images/icon_png/EmptySeat.png");
                           byId(btnSeatID).src = byId(btnClickedID).getAttribute("srcPic");
                           byId(lblSeat).innerHTML = "Vacant Seat";
                           byId(lblSeat).style.backgroundColor = "transparent";
