@@ -24,11 +24,43 @@ Partial Class studentInfo
     'Inserts all of the student information
     Protected Sub btnSubmit_Click(sender As Object, e As EventArgs)
 
-        If (stuEmail.Text = String.Empty) Then
+        If (stuName.Text = String.Empty) Then
+
+            ClientScript.RegisterStartupScript(GetType(Page), "", "alert('Name cannot be empty. Please type a name.');", True)
+
+        ElseIf (stuEmail.Text = String.Empty) Then
 
             ClientScript.RegisterStartupScript(GetType(Page), "", "alert('Student Email cannot be empty. Please type an email.');", True)
 
         Else
+
+            'Check if name is already in the database
+            Dim cnCheckName As New SqlConnection
+
+            cnCheckName.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                    & "User ID=480-JKHL;Password=1104ncory"
+
+            cnCheckName.Open()
+
+            Dim cmdCheckName As New SqlCommand
+
+            cmdCheckName.CommandText = "" _
+                & "SELECT Name " _
+                & "FROM   STUDENT " _
+                & "WHERE  ChartID = @chartID " _
+                & "AND    Name = @name"
+
+            cmdCheckName.Connection = cnCheckName
+
+            Dim drCheckName As SqlDataReader
+
+            cmdCheckName.Parameters.AddWithValue("@chartID", HiddenChartID.Text)
+            cmdCheckName.Parameters.AddWithValue("@name", stuName.Text)
+
+            drCheckName = cmdCheckName.ExecuteReader()
+
+            drCheckName.Read()
+            'End of checking for a name
 
             'Check if email is already in the database
             Dim cnCheckEmail As New SqlConnection
@@ -58,7 +90,7 @@ Partial Class studentInfo
             drCheckEmail.Read()
             'End of checking for an email
 
-            'If a result returns, send a message saying the student already exists
+            'If a result returns, send a message saying the student email already exists
             If (drCheckEmail.HasRows) Then
 
                 ClientScript.RegisterStartupScript(GetType(Page), "", "alert('This student in already in this class. Please check the email you entered.');", True)
@@ -66,10 +98,28 @@ Partial Class studentInfo
                 drCheckEmail.Close()
                 cnCheckEmail.Close()
 
-            Else
-                'Close the connection if there was no email returned
+                drCheckName.Close()
+                drCheckName.Close()
+
+
+            ElseIf (drCheckName.HasRows) Then
+                'If a result returns, send a message saying the student name already exists
+
+                ClientScript.RegisterStartupScript(GetType(Page), "", "alert('Students cannot have the same name. Please check the name you entered.');", True)
+
                 drCheckEmail.Close()
                 cnCheckEmail.Close()
+
+                drCheckName.Close()
+                drCheckName.Close()
+
+            Else
+                'Close the connection if there was no email or name returned
+                drCheckEmail.Close()
+                cnCheckEmail.Close()
+
+                drCheckName.Close()
+                drCheckName.Close()
 
                 'Begin inserting student information
                 Dim cnInsertStudent As New SqlConnection
