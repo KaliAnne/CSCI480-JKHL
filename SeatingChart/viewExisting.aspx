@@ -51,7 +51,7 @@
                                     <asp:CommandField SelectText="View" ButtonType="Button" ShowSelectButton="True" />
                                     <asp:TemplateField>
                                         <ItemTemplate>
-                                            <asp:Button runat="server" Text="Delete" CommandName="Delete" CommandArgument="ChartID" OnClientClick="return confirm('Are you sure you want to delete chart?');" />
+                                            <asp:Button runat="server" Text="Delete" CommandName="Delete" CommandArgument="ChartID" OnClientClick="return confirm('Are you sure you want to delete this chart?');" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>

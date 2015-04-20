@@ -186,4 +186,45 @@ Partial Class index
 
     End Sub
 
+    Protected Sub btnRemoveStudent_Click(sender As Object, e As EventArgs)
+
+        Dim deleteStudent As String = studentList.SelectedItem.Value
+
+        If (deleteStudent = String.Empty) Then
+
+            'Make this javascript later
+            ClientScript.RegisterStartupScript(GetType(Page), "", "alert('Please select the student you wish to remove.');", True)
+            'Response.Write("<script>alert('Please select the student you wish to remove.');</script>")
+
+        Else
+
+            'Start deleting the student
+            Dim cmdDeleteStudent As SqlCommand = New SqlCommand("" _
+            & "DELETE " _
+             & "FROM   STUDENT " _
+            & "WHERE  ChartID = @getChartID " _
+            & "AND    Name = @getStudentName", _
+            New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+             & "User ID=480-JKHL;Password=1104ncory"))
+
+            cmdDeleteStudent.Parameters.AddWithValue("@getStudentName", deleteStudent)
+            cmdDeleteStudent.Parameters.AddWithValue("@getchartID", HiddenChartID.Text)
+
+            cmdDeleteStudent.Connection.Open()
+
+            cmdDeleteStudent.ExecuteNonQuery()
+
+            cmdDeleteStudent.Connection.Close()
+            cmdDeleteStudent.Connection.Dispose()
+            'Finish deleting the student
+
+            'Reload the page with the new information
+            Session("storedID") = HiddenChartID.Text
+
+            Response.Redirect("index.aspx")
+
+        End If
+
+    End Sub
+
 End Class
