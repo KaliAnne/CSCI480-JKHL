@@ -106,7 +106,7 @@
 
 	                <br />
 
-                    <button class ="attenBtn" id="btnAttend" onclick="toggleAttend(this.id); return false;">Take Attendance</button>
+                    <button type="Button" class="attenBtn" id="btnAttend" onclick="toggleAttend(this.id)">Take Attendance</button>
 
 	                <br />
                     <br />
@@ -580,7 +580,7 @@
                         </section>
 						
 						<section class="picture">
-		                    <asp:Imagebutton runat="server" ID="btnSeat0110"  OnClientClick="return SeatClicked(this.id);" CssClass="SeatBtn" ImageUrl="images/icon_png/MiscStudent.png" assigned="" srcCheck="images/icon_png/Checkmark.png" srcX="images/icon_png/X.png" srcPic="images/icon_png/MiscStudent.png"  />
+		                    <asp:Imagebutton runat="server" ID="btnSeat0110"  OnClientClick="return SeatClicked(this.id);" CssClass="SeatBtn" ImageUrl="images/icon_png/MiscStudent.png" assigned="" srcCheck="~/images/icon_png/Checkmark.png" srcX="images/icon_png/X.png" srcPic="images/icon_png/MiscStudent.png"  />
                             <br />
                             <label type="label" class="seatLbl" id="lblSeat0110" for="btnSeat0110">Vacant Seat</label>
                         </section>

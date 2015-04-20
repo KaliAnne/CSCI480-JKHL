@@ -4,7 +4,6 @@ Created and revised by JHKL 3/31/2015
  */
 
  //Initialize student list and load it into the dropdown of student names
-  var students = [];
   var NUM_ROWS = 8;  //Number of rows + 1	 
   var NUM_COLS = 11; //Number of columns + 1
   function OnLoad(){
@@ -133,7 +132,7 @@ function toggleAttend(button_id) {
    var btnText = byId(button_id);
    var strRow = "1";
    var strCol = "1";
-   var seatID = "";
+   var seatID = "test";
    if (btnText.innerHTML == "Take Attendance") 
    {
 	//Toggles text and sets seats to checkmarks and allows them to be changed to take attendance
@@ -150,9 +149,9 @@ function toggleAttend(button_id) {
 			else{
 				seatID = "btnSeat0" + strRow + strCol;
 			}
-			if (byId(seatID).getAttribute("src") == byId(seatID).getAttribute("srcPic")) {
-			    byId(SeatID).src = byId(seatID).getAttribute("srcCheck");
-			}
+			//if (byId(seatID).getAttribute("src") == byId(seatID).getAttribute("srcpic")) {
+			byId(seatID).src = byId(seatID).getAttribute("srcCheck");
+			//}
 		}
 	 }
    }
@@ -162,7 +161,6 @@ function toggleAttend(button_id) {
 		byId("EditRoom").disabled = false;
 		byId("btnAssign").disabled = false;
 		RemindToSave = true;
-		//var curdate = new Date();
 		for (i = 1; i < NUM_ROWS; i++) { 
 			strRow = i.toString();
 			for (j = 1; j < NUM_COLS; j++){
@@ -178,20 +176,8 @@ function toggleAttend(button_id) {
 				if (byId(seatID).getAttribute("src") == byId(seatID).getAttribute("srcCheck")) {
 				    byId(seatID).src = byId(seatID).getAttribute("srcPic");
 				}
-				else{
-				    /* This will be moved to the save room button
-                    if (strCol < 10){
-						seatID = "btnSeat0" + strRow + "0" + strCol;			
-					}
-					else{
-						seatID = "btnSeat0" + strRow + strCol;
-					}
-					var studentID = byId(seatID).getAttribute("assigned");
-					students[studentID].absences.push((curdate.getMonth() + 1).toString()  + "/" + (curdate.getDate()).toString() + "/" + (curdate.getFullYear()).toString());
-				*/}
 			}
 		}
-	//}
   }
 }
 //Heather's to do list -->
