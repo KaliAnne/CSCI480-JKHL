@@ -42,7 +42,7 @@ Created and revised by JHKL 3/31/2015
   
   //Handles functions for clicking seats; if not assigned and taking attendance, can swap between check/X, otherwise opens student info
   function SeatClicked(btnClickedID){
-      if (byId("btnAttend").innerHTML == "Exit Attendance Mode" && byId(btnClickedID).getAttribute("assigned") != "") {
+      if (byId("btnAttend").innerHTML == "Exit Attendance Mode") {
           SeatAttndSwap(btnClickedID);
           return false;
       }
@@ -123,7 +123,9 @@ Created and revised by JHKL 3/31/2015
     else if (tgt.getAttribute("src") == tgt.getAttribute("srcX")) {
         tgt.src = tgt.getAttribute("srcCheck");
 	}
-		
+    else {
+        alert("There is no student assigned to this seat");
+    }
   }
 
 
@@ -149,9 +151,9 @@ function toggleAttend(button_id) {
 			else{
 				seatID = "btnSeat0" + strRow + strCol;
 			}
-			//if (byId(seatID).getAttribute("src") == byId(seatID).getAttribute("srcpic")) {
+			if (byId(seatID).getAttribute("src") == byId(seatID).getAttribute("srcpic") && byId(seatID).getAttribute("assigned") != ""){
 			byId(seatID).src = byId(seatID).getAttribute("srcCheck");
-			//}
+			}
 		}
 	 }
    }
@@ -393,6 +395,42 @@ function ChangeRoomSize(rows, cols){
       }
   }
 
+  function ConfirmStudRemoval() {
+      var studname = byId("studentList").value;
+      if (studname == "") {
+          alert("Please select a student from the list.");
+          return false;
+      }
+      else {
+          var deleteConfirmed = confirm("Are you sure you want to delete " + studname + " from this chart?");
+          return deleteConfirmed;
+          if (deleteConfirmed) {
+              var strRow = "1";
+              var strCol = "1";
+              var btnSeatID = "";
+              for (i = 1; i < NUM_ROWS; i++) {
+                  strRow = i.toString();
+                  for (j = 1; j < NUM_COLS; j++) {
+                      strCol = j.toString();
+                      if (strCol < 10) {
+                          btnSeatID = "btnSeat0" + strRow + "0" + strCol;
+                      }
+                      else {
+                          btnSeatID = "btnSeat0" + strRow + strCol;
+                      }
+                      if (byId(btnSeatID).getAttribute("assigned") == studname) {
+                          byId(btnSeatID).setAttribute("assigned", "");
+                          var lblSeat = "lbl" + btnSeatID.substring(3, 11);
+                          byId(btnSeatID).setAttribute("srcPic", "images/icon_png/MiscStudent.png");
+                          byId(btnSeatID).src = byId(btnClickedID).getAttribute("srcPic");
+                          byId(lblSeat).innerHTML = "Vacant Seat";
+                          byId(lblSeat).style.backgroundColor = "transparent";
+                      }
+                  }
+              }
+          }
+      }
+  }
   var RemindToSave = false; //Is set to true if attendance is taken, the room size changes, or if a student is assigned to/removed from a seat, then is set back to false if saved
 function OnClose() {
     if (RemindToSave) { return "Any unsaved data will be lost."; }

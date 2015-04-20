@@ -190,13 +190,6 @@ Partial Class index
 
         Dim deleteStudent As String = studentList.SelectedItem.Value
 
-        If (deleteStudent = String.Empty) Then
-
-            'Make this javascript later
-            ClientScript.RegisterStartupScript(GetType(Page), "", "alert('Please select the student you wish to remove.');", True)
-            'Response.Write("<script>alert('Please select the student you wish to remove.');</script>")
-
-        Else
 
             'Start deleting the student
             Dim cmdDeleteStudent As SqlCommand = New SqlCommand("" _
@@ -223,7 +216,6 @@ Partial Class index
 
             Response.Redirect("index.aspx")
 
-        End If
 
     End Sub
 
