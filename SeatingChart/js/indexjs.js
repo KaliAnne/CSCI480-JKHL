@@ -4,8 +4,10 @@ Created and revised by JHKL 3/31/2015
  */
 
  //Initialize student list and load it into the dropdown of student names
-  var NUM_ROWS = 8;  //Number of rows + 1	 
-  var NUM_COLS = 11; //Number of columns + 1
+  var NUM_ROWS = 8;  //Max number of rows on the chart, + 1	 
+  var NUM_COLS = 11; //Max number of columns on the chart, + 1
+
+//Sets the size of the room when the page first opens
   function OnLoad(){
 	  var rows = byId("RoomRows").value;
 	  var cols = byId("RoomColumns").value;
@@ -16,16 +18,22 @@ Created and revised by JHKL 3/31/2015
     window.addEventListener("load", mInit, false);
   function byId(e){return document.getElementById(e);}
   
-  //Handles functions for clicking seats; if not assigned and taking attendance, can swap between check/X, otherwise opens student info
-  function SeatClicked(btnClickedID){
+  //Handles functions for clicking seats
+  function SeatClicked(btnClickedID) {
+
+      //Handles when in Attendance mode
       if (byId("btnAttend").innerHTML == "Exit Attendance Mode") {
           SeatAttndSwap(btnClickedID);
           return false;
       }
+
+      //Handles when in Assign Seats mode
       else if (byId("btnAssign").innerHTML == "Exit Assignment Mode") {
           SeatAssignInfo(btnClickedID);
           return false;
       }
+
+      //If no mode currently in use, the VB function is called for the student's informationw
       else {
           return true;
       }
@@ -65,12 +73,7 @@ Created and revised by JHKL 3/31/2015
          else {
              var unassign = confirm("Would you like to remove " + byId(btnClickedID).getAttribute("assigned") + " from this seat?");
              if (unassign) {
-                 byId(btnClickedID).setAttribute("assigned", "");
-                 var lblSeat = "lbl" + btnClickedID.substring(3, 11);
-                 byId(btnClickedID).setAttribute("srcPic", "images/icon_png/EmptySeat.png");
-                 byId(btnClickedID).src = byId(btnClickedID).getAttribute("srcPic");
-                 byId(lblSeat).innerHTML = "Vacant Seat";
-                 byId(lblSeat).style.backgroundColor = "transparent";
+                 ResetSeat(btnClickedID);
                  alert("This seat is now available.");
                  RemindToSave = true;
              }
@@ -111,9 +114,9 @@ Created and revised by JHKL 3/31/2015
 //Swaps between viewing the seats and taking attendance
 function toggleAttend(button_id) {
    var btnText = byId(button_id);
-   var strRow = "1";
-   var strCol = "1";
-   var seatID = "test";
+   var strRow = ""; 
+   var strCol = "";
+   var seatID = "";
    if (btnText.innerHTML == "Take Attendance") 
    {
 	//Toggles text and sets seats to checkmarks and allows them to be changed to take attendance
@@ -131,7 +134,7 @@ function toggleAttend(button_id) {
 				seatID = "btnSeat0" + strRow + strCol;
 			}
 			if (byId(seatID).getAttribute("src") == byId(seatID).getAttribute("srcpic") && byId(seatID).getAttribute("assigned") != ""){
-			byId(seatID).src = byId(seatID).getAttribute("srcCheck");
+			    byId(seatID).src = byId(seatID).getAttribute("srcCheck");
 			}
 		}
 	 }
@@ -161,12 +164,8 @@ function toggleAttend(button_id) {
 		}
   }
 }
-//Heather's to do list -->
-//HB function either makes the room information editable or not
-//TODO: check whether professor or not
-//TODO: Connect changes to database entry of chart
-//End Do list -->
 
+//Changes the room size to the inputted rows x cols size
 function ChangeRoomSize(rows, cols){
 	var strRow = "1";
 	var strCol = "1";
@@ -239,38 +238,6 @@ function ChangeRoomSize(rows, cols){
     }
     return false;
   }
-  
-
-//HB function to remove a student from the class
-//TODO: Check whether professor or not
-//TODO: Connect changes to database entry of chart
-  
-  
-  //Remove student from the studentList dropdown
-  function removeStudent() {
-    var studentList = byId("studentList");
-    var studentToRemove = prompt("Which student would you like to remove?");
-    var found = "false";
-	//Looks for the requested name after confirming that the user would like to remove the student
-    if(confirm("Information will be lost. Are you sure you want to remove this student?")){
-		for (i=0; i<studentList.length; i++){
-			//Removes the name from the dropdown and from the students array
-			if(studentList.options[i].text.toUpperCase() == studentToRemove.toUpperCase()){
-				studentList.remove(i);
-				found = "true";
-				alert(studentToRemove + " was removed");
-				break;
-			}
-		}
-  
-		if (found == "false") {
-			alert("Student not found. Please try again.");
-		}	  
-    }
-    else{
-      alert("No student removed.");
-    }
-  }
 
 //If user selects a student on the dropdown, the name on their seat is highlighted (if they're assigned to a seat)
   function HighlightName() {
@@ -330,19 +297,27 @@ function ChangeRoomSize(rows, cols){
                           btnSeatID = "btnSeat0" + strRow + strCol;
                       }
                       if (byId(btnSeatID).getAttribute("assigned") == studname) {
-                          byId(btnSeatID).setAttribute("assigned", "");
-                          var lblSeat = "lbl" + btnSeatID.substring(3, 11);
-                          byId(btnSeatID).setAttribute("srcPic", "images/icon_png/EmptySeat.png");
-                          byId(btnSeatID).src = byId(btnClickedID).getAttribute("srcPic");
-                          byId(lblSeat).innerHTML = "Vacant Seat";
-                          byId(lblSeat).style.backgroundColor = "transparent";
+                          ResetSeat(btnSeatID);
                       }
                   }
               }
           }
       }
   }
+
+//Resets the desired seat to be unassigned
+  function ResetSeat(btnSeatID) {
+      var lblSeat = "lbl" + btnSeatID.substring(3, 11); //Used to find the label for the inputted seat
+
+      byId(btnSeatID).setAttribute("assigned", "");
+      byId(btnSeatID).setAttribute("srcPic", "images/icon_png/EmptySeat.png");
+      byId(btnSeatID).src = byId(btnSeatID).getAttribute("srcPic");
+      byId(lblSeat).innerHTML = "Vacant Seat";
+      byId(lblSeat).style.backgroundColor = "transparent";
+  }
+
   var RemindToSave = false; //Is set to true if attendance is taken, the room size changes, or if a student is assigned to/removed from a seat, then is set back to false if saved
-function OnClose() {
+
+  function OnClose() {
     if (RemindToSave) { return "Any unsaved data will be lost."; }
 }
