@@ -219,4 +219,7 @@ Partial Class index
 
     End Sub
 
+    Protected Sub btnViewStuInfo_Click(sender As Object, e As EventArgs)
+
+    End Sub
 End Class
