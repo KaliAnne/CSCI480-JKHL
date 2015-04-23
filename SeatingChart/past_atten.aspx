@@ -62,7 +62,7 @@
 			
                             <br />
 
-                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" OnClick="SaveChart_Click" OnClientClick="RemindToSave = false;" />
+                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" OnClientClick="RemindToSave = false;" /> <%--OnClick="SaveChart_Click" --%>
                            </fieldset>	  
 
 		                <br />
@@ -80,7 +80,7 @@
                         <fieldset id="extrainfo">
 		                    <legend><span>Help Menu</span></legend>	
 			                    <button type="Button" class ="attenBtn" onclick="location.href='home.aspx'">Home</button>
-			                    <asp:Button runat="server" ID="btnViewStuInfo" Text="View Student Information" CssClass="attenBtn" OnClick="btnViewStuInfo_Click" />
+			                    <asp:Button runat="server" ID="btnViewStuInfo" Text="View Student Information" CssClass="attenBtn" /> <%-- OnClick="btnViewStuInfo_Click"--%>
 			                    <asp:Button runat="server" ID="btnViewPastAttendance" Text="View Past Attendance" CssClass="attenBtn" />
 	                    </fieldset>
 	   

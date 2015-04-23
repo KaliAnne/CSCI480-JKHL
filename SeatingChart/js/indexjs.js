@@ -84,14 +84,12 @@ Created and revised by JHKL 3/31/2015
   //Toggles between assigning seats and normal mode
   function AssignSeats(){
 	if (byId("btnAssign").innerHTML == "Assign Seats"){
-		byId("btnAttend").disabled = true;
-		byId("EditRoom").disabled = true;
+	    StartMode("btnAssign");
 		byId("btnAssign").innerHTML = "Exit Assignment Mode";
 	}
 	else{
 		byId("btnAssign").innerHTML = "Assign Seats";
-		byId("btnAttend").disabled = false;
-		byId("EditRoom").disabled = false;
+		EndMode("btnAssign");
 		RemindToSave = true;
 	}
   }
@@ -121,8 +119,7 @@ function toggleAttend(button_id) {
    {
 	//Toggles text and sets seats to checkmarks and allows them to be changed to take attendance
      btnText.innerHTML = "Exit Attendance Mode";
-	 byId("EditRoom").disabled = true;
-	 byId("btnAssign").disabled = true;
+     StartMode(button_id);
 	 for (i = 1; i < NUM_ROWS; i++) { 
 		strRow = i.toString();
 		for (j = 1; j < NUM_COLS; j++){
@@ -142,8 +139,7 @@ function toggleAttend(button_id) {
        //Sets button text to "Take Attendance" and changes seats marked present to their student picture
    else{
 		btnText.innerHTML = "Take Attendance";
-		byId("EditRoom").disabled = false;
-		byId("btnAssign").disabled = false;
+		EndMode("btnAttend");
 		RemindToSave = true;
 		for (i = 1; i < NUM_ROWS; i++) { 
 			strRow = i.toString();
@@ -211,11 +207,7 @@ function ChangeRoomSize(rows, cols){
 		        alert("Seats are deleted from the top and right; please reposition students if necessary.");
 			    ChangeRoomSize(rows, cols);
 			    RemindToSave = true;
-				chartName.readOnly = true;
-				chartRows.readOnly = true;
-				chartColumns.readOnly = true;
-				byId("btnAttend").disabled = false;
-				byId("btnAssign").disabled = false;
+			    EndMode("EditRoom");
 				editBtn.value = "Edit Room";
 				
 			}
@@ -229,11 +221,7 @@ function ChangeRoomSize(rows, cols){
     }
 	//Makes the textboxes editable and changes the button's text
     else {
-	  byId("btnAttend").disabled = true;
-	  byId("btnAssign").disabled = true;
-      chartName.readOnly = false;
-      chartRows.readOnly = false;
-      chartColumns.readOnly = false;
+      StartMode("EditRoom");
       editBtn.value = "Exit Edit Mode";
     }
     return false;
@@ -314,6 +302,56 @@ function ChangeRoomSize(rows, cols){
       byId(btnSeatID).src = byId(btnSeatID).getAttribute("srcPic");
       byId(lblSeat).innerHTML = "Vacant Seat";
       byId(lblSeat).style.backgroundColor = "transparent";
+  }
+
+//When assign seats, take attendance, or edit room are clicked, their mode starts and most buttons are made unavailable to prevent any conflicting data from possibly occuring 
+  function StartMode(modeButtonID) {
+      if (modeButtonID == "EditRoom") {
+          byId("btnAttend").disabled = true;
+          byId("btnAssign").disabled = true;
+          byId("ChartName").disabled = false;
+          byId("RoomRows").disabled = false;
+          byId("RoomColumns").disabled = false;
+      }
+      else if (modeButtonID == "btnAttend") {
+          byId("EditRoom").disabled = true;
+          byId("btnAssign").disabled = true;
+      }
+      else if (modeButtonID == "btnAssign") {
+          byId("btnAttend").disabled = true;
+          byId("EditRoom").disabled = true;
+      }
+      byId("SaveChart").disabled = true;
+      byId("btnViewPastAttendance").disabled = true;
+      byId("btnViewStuInfo").disabled = true;
+      byId("btnAddStudent").disabled = true;
+      byId("btnRemoveStudent").disabled = true;
+      byId("btnDelChart").disabled = true;
+  }
+
+  //When a button with "Exit X Mode" is clicked, this gets run and makes other buttons clickable again.
+  function EndMode(modeButtonID) {
+      if (modeButtonID == "EditRoom") {
+          byId("btnAttend").disabled = false;
+          byId("btnAssign").disabled = false;
+          byId("ChartName").disabled = true;
+          byId("RoomRows").disabled = true;
+          byId("RoomColumns").disabled = true;
+      }
+      else if (modeButtonID == "btnAttend") {
+          byId("EditRoom").disabled = false;
+          byId("btnAssign").disabled = false;
+      }
+      else if (modeButtonID == "btnAssign") {
+          byId("btnAttend").disabled = false;
+          byId("EditRoom").disabled = false;
+      }
+      byId("SaveChart").disabled = false;
+      byId("btnViewPastAttendance").disabled = false;
+      byId("btnViewStuInfo").disabled = false;
+      byId("btnAddStudent").disabled = false;
+      byId("btnRemoveStudent").disabled = false;
+      byId("btnDelChart").disabled = false;
   }
 
   var RemindToSave = false; //Is set to true if attendance is taken, the room size changes, or if a student is assigned to/removed from a seat, then is set back to false if saved

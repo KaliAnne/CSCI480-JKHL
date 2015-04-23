@@ -19,11 +19,6 @@
         <nav id="nav">
             <ul>
 			    <li class="current"><a href="home.aspx">Home</a></li>
-				<li><a href="index.aspx">Seating Chart Information</a></li>
-				<li><a href="viewExisting.aspx">View Existing</a></li>
-				<li><a href="">Placeholder</a></li>
-				<li><a href="">Placeholder</a></li>
-				<li><a href="">Placeholder</a></li>
             </ul>
         </nav>
 
