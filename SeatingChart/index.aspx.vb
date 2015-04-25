@@ -221,5 +221,13 @@ Partial Class index
 
     Protected Sub btnViewStuInfo_Click(sender As Object, e As EventArgs)
 
+        Dim selectedStudent As String = studentList.SelectedItem.Value
+
+        Session("selectedStudent") = selectedStudent
+        Session("storedID") = HiddenChartID.Text
+
+        Response.Redirect("viewStudentInfo.aspx")
+
     End Sub
+
 End Class

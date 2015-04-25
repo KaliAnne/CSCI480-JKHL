@@ -358,4 +358,16 @@ function ChangeRoomSize(rows, cols){
 
   function OnClose() {
     if (RemindToSave) { return "Any unsaved data will be lost."; }
-}
+  }
+
+  //If no student was selected, send this alert to the user
+  function NoStudentSelected() {
+
+      //Alerts user if no student is selected
+      var studname = byId("studentList").value;
+      if (studname == "") {
+          alert("Please select a student from the list.");
+          return false;
+      }
+
+  }
