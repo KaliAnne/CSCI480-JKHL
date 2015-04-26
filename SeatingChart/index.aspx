@@ -15,16 +15,12 @@
         <link rel="stylesheet"  href="css/seatingChartnew.css" />
 	    <script src="js/indexjs.js"> </script>
     </head>
-    <body onload="OnLoad()" onbeforeunload="return OnClose()">
+    <body onload="OnLoad()" onbeforeunload="return OnClose();">
     <header>
         <nav id="nav">
 		    <ul>
 			    <li><a href="home.aspx">Home</a></li>
-				<li  class="current"><a href="index.aspx">Seating Chart Information</a></li>
 				<li><a href="viewExisting.aspx">View Existing</a></li>
-				<li><a href="">Placeholder</a></li>
-				<li><a href="">Placeholder</a></li>
-				<li><a href="">Placeholder</a></li>
 			</ul>
 		</nav>
 
@@ -50,20 +46,20 @@
 	  
 	                    <fieldset id="chartinfo">
 			                <legend><span>Chart Name</span></legend>
-                            <p><asp:TextBox runat="server" ID="ChartName" ReadOnly="true" /></p>
+                            <p><asp:TextBox runat="server" ID="ChartName" /></p>
 	                    </fieldset>	 
                          
 		                <br />
 	  
                         <fieldset id="roominfo">
 		                    <legend><span>Room Size:</span></legend>
-                            <p>Rows: <br /> <asp:TextBox runat="server" ID="RoomRows" ReadOnly="true" /></p>
-                            <p>Columns: <br /> <asp:TextBox runat="server" ID="RoomColumns" ReadOnly="true" /></p>
+                            <p>Rows: <br /> <asp:TextBox runat="server" ID="RoomRows" /></p>
+                            <p>Columns: <br /> <asp:TextBox runat="server" ID="RoomColumns" /></p>
 			
                             <br />
 
                             <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" OnClick="SaveChart_Click" OnClientClick="RemindToSave = false;" />
-                            <asp:Button runat="server" ID="EditRoom" Text="Edit Room" CssClass="attenBtn" OnClick="EditRoom_Click" OnClientClick="activeEdit(); return false;" />
+                            <asp:Button runat="server" ID="EditRoom" Text="Edit Room" CssClass="attenBtn" OnClientClick="return activeEdit();" />
 	                    </fieldset>	  
 
 		                <br />

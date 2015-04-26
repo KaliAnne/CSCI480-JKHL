@@ -31,6 +31,7 @@ Partial Class viewExisting
 
             cmdChartName.Parameters.AddWithValue("@getProfessorEmail", HiddenProfessorEmail.Text)
 
+6:
             cmdChartName.Connection.Open()
 
             ChartNameGridView.DataSource = cmdChartName.ExecuteReader()

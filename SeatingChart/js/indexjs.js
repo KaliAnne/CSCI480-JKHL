@@ -310,9 +310,6 @@ function ChangeRoomSize(rows, cols){
       if (modeButtonID == "EditRoom") {
           byId("btnAttend").disabled = true;
           byId("btnAssign").disabled = true;
-          byId("ChartName").setAttribute("readOnly", "false");
-          byId("RoomRows").setAttribute("readOnly", "false");
-          byId("RoomColumns").setAttribute("readOnly", "false");
       }
       else if (modeButtonID == "btnAttend") {
           byId("EditRoom").disabled = true;
@@ -324,7 +321,6 @@ function ChangeRoomSize(rows, cols){
       }
       byId("SaveChart").disabled = true;
       byId("btnViewPastAttendance").disabled = true;
-      byId("btnViewStuInfo").disabled = true;
       byId("btnAddStudent").disabled = true;
       byId("btnRemoveStudent").disabled = true;
       byId("btnDelChart").disabled = true;
@@ -335,9 +331,6 @@ function ChangeRoomSize(rows, cols){
       if (modeButtonID == "EditRoom") {
           byId("btnAttend").disabled = false;
           byId("btnAssign").disabled = false;
-          byId("ChartName").setAttribute("readOnly", "true");
-          byId("RoomRows").setAttribute("readOnly", "true");
-          byId("RoomColumns").setAttribute("readOnly", "true");
       }
       else if (modeButtonID == "btnAttend") {
           byId("EditRoom").disabled = false;
@@ -349,7 +342,6 @@ function ChangeRoomSize(rows, cols){
       }
       byId("SaveChart").disabled = false;
       byId("btnViewPastAttendance").disabled = false;
-      byId("btnViewStuInfo").disabled = false;
       byId("btnAddStudent").disabled = false;
       byId("btnRemoveStudent").disabled = false;
       byId("btnDelChart").disabled = false;
