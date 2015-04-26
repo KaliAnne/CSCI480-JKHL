@@ -46,16 +46,17 @@ Created and revised by JHKL 3/31/2015
      if (byId("btnAssign").innerHTML != "Assign Seats") {
          if (byId(btnClickedID).getAttribute("assigned") == "") {
              var studList = byId("studentList");
-             var studentToAssign = prompt("Enter the name of the student who will sit here.");
-             var studentIndex = 0;
-             for (i = 1; i < studList.options.length; i++) {
-                 if (studList.options[i].text.toUpperCase() == studentToAssign.toUpperCase()) {
-                     studentIndex = i;
-                     studentToAssign = studList.options[i].text;
+             var studentToAssign = studList.value;
+             var alreadyAssigned = false;
+             var seatList = byId("SeatsInfo");
+             for (i = 0; i < seatList.options.length; i++) {
+                 var optText = seatList.options[i].text;
+                 if (optText.substring(4, optText.length) == studentToAssign) {
+                     alreadyAssigned = true;
                  }
              }
 
-             if (studentIndex != 0) {
+             if (studentToAssign != "" && alreadyAssigned == false) {
                  byId(btnClickedID).setAttribute("assigned", studentToAssign);
                  byId(btnClickedID).setAttribute("srcPic", "images/icon_png/MiscStudent.png");
                  byId(btnClickedID).src = byId(btnClickedID).getAttribute("srcPic");
@@ -65,9 +66,11 @@ Created and revised by JHKL 3/31/2015
                  AddToSeatList(studentToAssign, btnClickedID.substring(7, 11));
                  RemindToSave = true;
              }
-
+             else if (alreadyAssigned){
+                 alert(studentToAssign + " has already been assigned to a seat");
+             }
              else {
-                 alert("This student is not on the list of students.  To add them to the list, click the 'Add Student' button.");
+                 alert("Please select a student from the list.");
              }
          }
 
@@ -353,58 +356,9 @@ function ChangeRoomSize(rows, cols){
   var RemindToSave = false; //Is set to true if attendance is taken, the room size changes, or if a student is assigned to/removed from a seat, then is set back to false if saved
 
   function OnClose() {
-    SaveSeatChanges();
     if (RemindToSave) { return "Any unsaved data will be lost."; }
   }
 
-
-  function SaveSeatChanges(){
-      var btnSeatID = "";
-      var btnSeatSrc = "";
-      var btnSeatAsn = "";
-      for (r = 1; r < NUM_ROWS; r++){
-          for  (c = 1; c < NUM_COLS; c++){
-              if (c < 10) {
-                  btnSeatID = "btnSeat0" + r.toString() + "0" + c.toString();
-              }
-              else {
-                  btnSeatID = "btnSeat0" + r.toString() + c.toString();
-              }
-              btnSeatSrc = btnSeatID + "src";
-              btnSeatAsn = btnSeatID + "asn";
-              seatButton = byId(btnSeatID);
-              sessionStorage.setItem(btnSeatAsn, seatButton.getAttribute("assigned"));
-              if (seatButton.getAttribute("src") == seatButton.getAttribute("srcX"))
-                  sessionStorage.setItem(btnSeatSrc, seatButton.getAttribute("srcX"));
-              else
-                  sessionStorage.setItem(btnSeatSrc, seatButton.getAttribute("srcPic"));
-          }
-      }
-  }
-
-  function ReloadSeats() {
-      if(sessionStorage.getItem(btnSeat0101src != "")){
-          var btnSeatID = "";
-          var btnSeatSrc = "";
-          var btnSeatAsn = "";
-          for (r = 1; r < NUM_ROWS; r++) {
-              for (c = 1; c < NUM_COLS; c++) {
-                  if (c < 10) {
-                      btnSeatID = "btnSeat0" + r.toString() + "0" + c.toString();
-                  }
-                  else {
-                      btnSeatID = "btnSeat0" + r.toString() + c.toString();
-                  }
-                  btnSeatSrc = btnSeatID + "src";
-                  btnSeatAsn = btnSeatID + "asn";
-                  seatButton = byId(btnSeatID);
-                  var temp = sessionStorage.getItem(btnSeatAsn);
-                  seatButton.setAttribute("assigned", sessionStorage.getItem(btnSeatAsn));
-                  seatButton.src = sessionStorage.getItem(btnSeatSrc);
-              }
-          }
-      }
-  }
   //If no student was selected, send this alert to the user
   function NoStudentSelected() {
 
@@ -454,6 +408,8 @@ function ChangeRoomSize(rows, cols){
                       assigned = optText.substring(4, optText.length);
                       byId(btnSeatID).setAttribute("assigned", assigned);
                       byId(lblSeatID).innerHTML = assigned;
+                      byId(btnSeatID).setAttribute("srcPic", "images/icon_png/MiscStudent.png");
+                      byId(btnSeatID).src = byId(btnClickedID).getAttribute("srcPic");
                   }
               }
 
