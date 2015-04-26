@@ -20,8 +20,6 @@
         <nav id="nav">
 		    <ul>
 			    <li><a href="home.aspx">Home</a></li>
-				<li><a href="index.aspx">Seating Chart Information</a></li>
-				<li class="current"><a href="viewExisting.aspx">View Existing</a></li>
 			</ul>
 		</nav>
 
