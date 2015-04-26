@@ -18,7 +18,7 @@
     <header>
         <nav id="nav">
             <ul>
-			    <li class="current"><a href="home.aspx">Home</a></li>
+		<li class="current"><a href="home.aspx">Home</a></li>
             </ul>
         </nav>
 
@@ -30,7 +30,7 @@
         <form runat="server">
             <asp:Button runat="server" ID="btnCreateChart" CssClass="homeBtns" Text="Creat New Chart" OnClick="btnCreateChart_Click" />
             <asp:Button runat="server" ID="btnViewCharts" CssClass="homeBtns" Text="View Existing Chart" OnClick="btnViewCharts_Click" />
-            <button id='btnSwitchMode' class="homeBtns">Switch Modes</button>
+            <button id='btnSwitchMode' class="homeBtns" Disabled="Disabled">Switch Modes</button>
             <asp:TextBox runat="server" ID="HiddenProfessorEmail" Visible="false"></asp:TextBox>
         </form>
     </body>

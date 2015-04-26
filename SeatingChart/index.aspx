@@ -46,18 +46,19 @@
 	                    <fieldset id="chartinfo">
 			                <legend><span>Chart Name</span></legend>
                             <p><asp:TextBox runat="server" ID="ChartName" ReadOnly="true" /></p>
+                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" OnClick="SaveChart_Click" OnClientClick="SaveSeatChanges(); RemindToSave = false;" />
 	                    </fieldset>	 
                          
 		                <br />
 	  
                         <fieldset id="roominfo">
 		                    <legend><span>Room Size:</span></legend>
-                            <p>Rows: <br /> <asp:TextBox runat="server" ID="RoomRows" Disabled="true" /></p>
-                            <p>Columns: <br /> <asp:TextBox runat="server" ID="RoomColumns" Disabled="true" /></p>
+                            <p>Rows: <br /> <asp:TextBox runat="server" ID="RoomRows" ReadOnly="true" /></p>
+                            <p>Columns: <br /> <asp:TextBox runat="server" ID="RoomColumns" ReadOnly="true" /></p>
 			
                             <br />
 
-                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" OnClick="SaveChart_Click" OnClientClick="SaveSeatChanges(); RemindToSave = false;" />
+
                             <asp:Button runat="server" ID="EditRoom" Text="Edit Room" CssClass="attenBtn" OnClientClick="activeEdit(); return false;" />
 	                    </fieldset>	  
 
@@ -79,7 +80,7 @@
 			                    <asp:Button runat="server" ID="btnDelChart" Text="Delete Room Chart" CssClass ="attenBtn" OnClick="btnDelChart_Click" OnClientClick="return confirm('Are you sure you want to delete this chart?');" />
                                 <asp:Button runat="server" ID="btnAddStudent" Text="Add Student" CssClass="attenBtn" OnClick="btnAddStudent_Click" />
 			                    <asp:Button runat="server" ID="btnRemoveStudent" Text="Remove Student" CssClass="attenBtn" OnClick="btnRemoveStudent_Click" OnClientClick="return ConfirmStudRemoval();" />
-                                <asp:Button runat="server" ID="btnViewStuInfo" Text="View Student Information" CssClass="attenBtn" OnClick="btnViewStuInfo_Click" />
+                                <asp:Button runat="server" ID="btnViewStuInfo" Text="View Student Information" CssClass="attenBtn" OnClick="btnViewStuInfo_Click" OnClientClick="return NoStudentSelected();" />
 			                    <button type="Button" class ="attenBtn" id="btnAssign" onclick="AssignSeats();">Assign Seats</button>
 			                    <asp:Button runat="server" ID="btnViewPastAttendance" Text="View Past Attendance" CssClass="attenBtn" />
 	                    </fieldset>

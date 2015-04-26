@@ -310,9 +310,9 @@ function ChangeRoomSize(rows, cols){
       if (modeButtonID == "EditRoom") {
           byId("btnAttend").disabled = true;
           byId("btnAssign").disabled = true;
-          byId("ChartName").disabled = false;
-          byId("RoomRows").disabled = false;
-          byId("RoomColumns").disabled = false;
+          byId("ChartName").setAttribute("readOnly", "false");
+          byId("RoomRows").setAttribute("readOnly", "false");
+          byId("RoomColumns").setAttribute("readOnly", "false");
       }
       else if (modeButtonID == "btnAttend") {
           byId("EditRoom").disabled = true;
@@ -335,9 +335,9 @@ function ChangeRoomSize(rows, cols){
       if (modeButtonID == "EditRoom") {
           byId("btnAttend").disabled = false;
           byId("btnAssign").disabled = false;
-          byId("ChartName").disabled = true;
-          byId("RoomRows").disabled = true;
-          byId("RoomColumns").disabled = true;
+          byId("ChartName").setAttribute("readOnly", "true");
+          byId("RoomRows").setAttribute("readOnly", "true");
+          byId("RoomColumns").setAttribute("readOnly", "true");
       }
       else if (modeButtonID == "btnAttend") {
           byId("EditRoom").disabled = false;
@@ -362,17 +362,19 @@ function ChangeRoomSize(rows, cols){
     if (RemindToSave) { return "Any unsaved data will be lost."; }
   }
 
+
   function SaveSeatChanges(){
       var btnSeatID = "";
       var btnSeatSrc = "";
       var btnSeatAsn = "";
       for (r = 1; r < NUM_ROWS; r++){
           for  (c = 1; c < NUM_COLS; c++){
-              if (c < 10)
-                  btnSeatID = "btnSeat0" + r.ToString() + "0" + c.ToString();
-              else
-                  btnSeatID = "btnSeat0" + r.ToString() + c.ToString();
-
+              if (c < 10) {
+                  btnSeatID = "btnSeat0" + r.toString() + "0" + c.toString();
+              }
+              else {
+                  btnSeatID = "btnSeat0" + r.toString() + c.toString();
+              }
               btnSeatSrc = btnSeatID + "src";
               btnSeatAsn = btnSeatID + "asn";
               seatButton = byId(btnSeatID);
@@ -392,17 +394,29 @@ function ChangeRoomSize(rows, cols){
           var btnSeatAsn = "";
           for (r = 1; r < NUM_ROWS; r++) {
               for (c = 1; c < NUM_COLS; c++) {
-                  if (c < 10)
-                      btnSeatID = "btnSeat0" + r.ToString() + "0" + c.ToString();
-                  else
-                      btnSeatID = "btnSeat0" + r.ToString() + c.ToString();
-
+                  if (c < 10) {
+                      btnSeatID = "btnSeat0" + r.toString() + "0" + c.toString();
+                  }
+                  else {
+                      btnSeatID = "btnSeat0" + r.toString() + c.toString();
+                  }
                   btnSeatSrc = btnSeatID + "src";
                   btnSeatAsn = btnSeatID + "asn";
                   seatButton = byId(btnSeatID);
+                  var temp = sessionStorage.getItem(btnSeatAsn);
                   seatButton.setAttribute("assigned", sessionStorage.getItem(btnSeatAsn));
                   seatButton.src = sessionStorage.getItem(btnSeatSrc);
               }
           }
+      }
+  }
+  //If no student was selected, send this alert to the user
+  function NoStudentSelected() {
+
+      //Alerts user if no student is selected
+      var studname = byId("studentList").value;
+      if (studname == "") {
+          alert("Please select a student from the list.");
+          return false;
       }
   }

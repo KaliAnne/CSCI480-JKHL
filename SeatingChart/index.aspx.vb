@@ -75,28 +75,6 @@ Partial Class index
             cmdStudents.Connection.Close()
             cmdStudents.Connection.Dispose()
             'Finish pulling information about the student
-            'Else
-            '    Dim btnSeatID As String
-            '    Dim btnSeatSrc As String
-            '    Dim btnSeatAsn As String
-            '    Dim temp As String
-            '    Dim seatButton As ImageButton
-            '    For r As Integer = 1 To 7
-            '        For c As Integer = 1 To 10
-            '            If c < 10 Then
-            '                btnSeatID = "btnSeat0" + r.ToString + "0" + c.ToString
-            '            Else
-            '                btnSeatID = "btnSeat0" + r.ToString + c.ToString
-            '            End If
-            '            btnSeatSrc = btnSeatID + "src"
-            '            btnSeatAsn = btnSeatID + "asn"
-            '            seatButton = FindControl(btnSeatID)
-            '            temp = CType(Session.Item(btnSeatAsn), String)
-            '            temp = CType(Session.Item(btnSeatSrc), String)
-            '            seatButton.Attributes("assigned") = CType(Session.Item(btnSeatAsn), String)
-            '            seatButton.ImageUrl = CType(Session.Item(btnSeatSrc), String)
-            '        Next
-            '    Next
         End If
 
     End Sub
@@ -236,35 +214,12 @@ Partial Class index
 
     Protected Sub btnViewStuInfo_Click(sender As Object, e As EventArgs)
 
+        Dim selectedStudent As String = studentList.SelectedItem.Value
+
+        Session("selectedStudent") = selectedStudent
+        Session("storedID") = HiddenChartID.Text
+
+        Response.Redirect("viewStudentInfo.aspx")
+
     End Sub
-
-    'Sub SaveSeatChanges()
-    '    Dim btnSeatID As String
-    '    Dim btnSeatSrc As String
-    '    Dim btnSeatAsn As String
-    '    Dim temp As String
-    '    Dim seatButton As ImageButton
-    '    For r As Integer = 1 To 7
-    '        For c As Integer = 1 To 10
-    '            If c < 10 Then
-    '                btnSeatID = "btnSeat0" + r.ToString + "0" + c.ToString
-    '            Else
-    '                btnSeatID = "btnSeat0" + r.ToString + c.ToString
-    '            End If
-    '            btnSeatSrc = btnSeatID + "src"
-    '            btnSeatAsn = btnSeatID + "asn"
-    '            seatButton = FindControl(btnSeatID)
-    '            temp = seatButton.Attributes("Assigned")
-    '            temp =
-    '            Session(btnSeatAsn) = seatButton.Attributes("Assigned")
-    '            If seatButton.Attributes("src") = seatButton.Attributes("srcX") Then
-    '                Session(btnSeatSrc) = seatButton.Attributes("srcX")
-    '            Else
-    '                Session(btnSeatSrc) = seatButton.Attributes("srcPic")
-    '            End If
-    '        Next
-    '    Next
-
-    'End Sub
-
 End Class
