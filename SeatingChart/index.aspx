@@ -45,19 +45,20 @@
 	  
 	                    <fieldset id="chartinfo">
 			                <legend><span>Chart Name</span></legend>
-                            <p><asp:TextBox runat="server" ID="ChartName" ReadOnly="true" /></p>
+                            <p><asp:TextBox runat="server" ID="ChartName" Disabled="true" /></p>
+                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" OnClick="SaveChart_Click" OnClientClick="RemindToSave = false;" />
 	                    </fieldset>	 
                          
 		                <br />
 	  
                         <fieldset id="roominfo">
 		                    <legend><span>Room Size:</span></legend>
-                            <p>Rows: <br /> <asp:TextBox runat="server" ID="RoomRows" ReadOnly="true" /></p>
-                            <p>Columns: <br /> <asp:TextBox runat="server" ID="RoomColumns" ReadOnly="true" /></p>
+                            <p>Rows: <br /> <asp:TextBox runat="server" ID="RoomRows" Disabled="true" /></p>
+                            <p>Columns: <br /> <asp:TextBox runat="server" ID="RoomColumns" Disabled="true" /></p>
 			
                             <br />
 
-                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" OnClick="SaveChart_Click" OnClientClick="RemindToSave = false;" />
+
                             <asp:Button runat="server" ID="EditRoom" Text="Edit Room" CssClass="attenBtn" OnClick="EditRoom_Click" OnClientClick="activeEdit(); return false;" />
 	                    </fieldset>	  
 
