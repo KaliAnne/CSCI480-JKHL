@@ -12,7 +12,7 @@ Created and revised by JHKL 3/31/2015
 	  var rows = byId("RoomRows").value;
 	  var cols = byId("RoomColumns").value;
 	  ChangeRoomSize(rows, cols);
-	  ReloadSeats();
+	  LoadSeats();
   }
   
   function byId(e){return document.getElementById(e);}
@@ -62,6 +62,7 @@ Created and revised by JHKL 3/31/2015
                  alert(studentToAssign + " has been assigned to the selected seat.");
                  var lblSeat = "lbl" + btnClickedID.substring(3, 11);
                  byId(lblSeat).innerHTML = studentToAssign;
+                 AddToSeatList(studentToAssign, btnClickedID.substring(7, 11));
                  RemindToSave = true;
              }
 
@@ -75,6 +76,7 @@ Created and revised by JHKL 3/31/2015
              var unassign = confirm("Would you like to remove " + byId(btnClickedID).getAttribute("assigned") + " from this seat?");
              if (unassign) {
                  ResetSeat(btnClickedID);
+                 RemoveFromSeatList(btnClickedID.substring(7, 11));
                  alert("This seat is now available.");
                  RemindToSave = true;
              }
@@ -192,6 +194,7 @@ function ChangeRoomSize(rows, cols){
 		}
 	}
 }
+
 //Handles changing the available seats based on the entered dimensions for the room layout
   function activeEdit(){
     var chartName  = byId("ChartName");
@@ -410,5 +413,50 @@ function ChangeRoomSize(rows, cols){
       if (studname == "") {
           alert("Please select a student from the list.");
           return false;
+      }
+  }
+
+  function AddToSeatList(studname, studseat) {
+      var opt = document.createElement("option");
+      opt.text = studseat + studname;
+      opt.value = studseat + studname;
+      byId("SeatsInfo").options.add(opt);
+  }
+
+  function RemoveFromSeatList(studseat) {
+      var seatList = byId("SeatsInfo");
+      for (i = 0; i < seatList.options.length; i++) {
+          var optText = seatList.options[i].text;
+          if (optText.substring(0, 4) == studseat) {
+              seatList.remove(i);
+          }
+      }
+  }
+
+  function LoadSeats() {
+      var btnSeatID = "";
+      var lblSeatID = "";
+      var assigned = "";
+      var optText = "";
+      var seatList = byId("SeatsInfo");
+      for (r = 1; r < NUM_ROWS; r++) {
+          for (c = 1; c < NUM_COLS; c++) {
+              if (c < 10) {
+                  btnSeatID = "btnSeat0" + r.toString() + "0" + c.toString();
+              }
+              else {
+                  btnSeatID = "btnSeat0" + r.toString() + c.toString();
+              }
+              lblSeatID = "lbl" + btnSeatID.substring(3, 11);
+              for (i = 0; i < seatList.options.length; i++) {
+                  optText = seatList.options[i].text;
+                  if (optText.substring(0, 4) == btnSeatID.substring(7, 11)) {
+                      assigned = optText.substring(4, optText.length);
+                      byId(btnSeatID).setAttribute("assigned", assigned);
+                      byId(lblSeatID).innerHTML = assigned;
+                  }
+              }
+
+          }
       }
   }
