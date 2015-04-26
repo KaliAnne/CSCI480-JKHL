@@ -47,6 +47,7 @@
 	                    <fieldset id="chartinfo">
 			                <legend><span>Chart Name</span></legend>
                             <p><asp:TextBox runat="server" ID="ChartName" /></p>
+                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" OnClick="SaveChart_Click" OnClientClick="RemindToSave = false;" />
 	                    </fieldset>	 
                          
 		                <br />
@@ -58,7 +59,7 @@
 			
                             <br />
 
-                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" OnClick="SaveChart_Click" OnClientClick="RemindToSave = false;" />
+                            
                             <asp:Button runat="server" ID="EditRoom" Text="Edit Room" CssClass="attenBtn" OnClientClick="return activeEdit();" />
 	                    </fieldset>	  
 
@@ -81,7 +82,7 @@
                                 <asp:Button runat="server" ID="btnAddStudent" Text="Add Student" CssClass="attenBtn" OnClick="btnAddStudent_Click" />
 			                    <asp:Button runat="server" ID="btnRemoveStudent" Text="Remove Student" CssClass="attenBtn" OnClick="btnRemoveStudent_Click" OnClientClick="return confirm('Are you sure you want to delete this student?');" />
 			                    <button type="Button" class ="attenBtn" id="btnAssign" onclick="AssignSeats();">Assign Seats</button>
-			                    <asp:Button runat="server" ID="btnViewPastAttendance" Text="View Past Attendance" CssClass="attenBtn" />
+			                    <asp:Button runat="server" ID="btnViewPastAttendance" Text="View Past Attendance" CssClass="attenBtn" OnClick="btnViewPastAttendance_Click" />
 	                    </fieldset>
 	   
 	                    <br />

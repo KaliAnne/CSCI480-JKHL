@@ -226,5 +226,11 @@ Partial Class index
         End If
 
     End Sub
+    
+    Protected Sub btnViewPastAttendance_Click(sender As Object, e As EventArgs)
+        Session("storedID") = HiddenChartID.Text
+
+        Response.Redirect("past_atten.aspx")
+    End Sub
 
 End Class
