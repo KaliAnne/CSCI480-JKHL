@@ -12,6 +12,7 @@ Created and revised by JHKL 3/31/2015
 	  var rows = byId("RoomRows").value;
 	  var cols = byId("RoomColumns").value;
 	  ChangeRoomSize(rows, cols);
+	  ReloadSeats();
   }
   
   function byId(e){return document.getElementById(e);}
@@ -357,5 +358,51 @@ function ChangeRoomSize(rows, cols){
   var RemindToSave = false; //Is set to true if attendance is taken, the room size changes, or if a student is assigned to/removed from a seat, then is set back to false if saved
 
   function OnClose() {
+    SaveSeatChanges();
     if (RemindToSave) { return "Any unsaved data will be lost."; }
-}
+  }
+
+  function SaveSeatChanges(){
+      var btnSeatID = "";
+      var btnSeatSrc = "";
+      var btnSeatAsn = "";
+      for (r = 1; r < NUM_ROWS; r++){
+          for  (c = 1; c < NUM_COLS; c++){
+              if (c < 10)
+                  btnSeatID = "btnSeat0" + r.ToString() + "0" + c.ToString();
+              else
+                  btnSeatID = "btnSeat0" + r.ToString() + c.ToString();
+
+              btnSeatSrc = btnSeatID + "src";
+              btnSeatAsn = btnSeatID + "asn";
+              seatButton = byId(btnSeatID);
+              sessionStorage.setItem(btnSeatAsn, seatButton.getAttribute("assigned"));
+              if (seatButton.getAttribute("src") == seatButton.getAttribute("srcX"))
+                  sessionStorage.setItem(btnSeatSrc, seatButton.getAttribute("srcX"));
+              else
+                  sessionStorage.setItem(btnSeatSrc, seatButton.getAttribute("srcPic"));
+          }
+      }
+  }
+
+  function ReloadSeats() {
+      if(sessionStorage.getItem(btnSeat0101src != "")){
+          var btnSeatID = "";
+          var btnSeatSrc = "";
+          var btnSeatAsn = "";
+          for (r = 1; r < NUM_ROWS; r++) {
+              for (c = 1; c < NUM_COLS; c++) {
+                  if (c < 10)
+                      btnSeatID = "btnSeat0" + r.ToString() + "0" + c.ToString();
+                  else
+                      btnSeatID = "btnSeat0" + r.ToString() + c.ToString();
+
+                  btnSeatSrc = btnSeatID + "src";
+                  btnSeatAsn = btnSeatID + "asn";
+                  seatButton = byId(btnSeatID);
+                  seatButton.setAttribute("assigned", sessionStorage.getItem(btnSeatAsn));
+                  seatButton.src = sessionStorage.getItem(btnSeatSrc);
+              }
+          }
+      }
+  }

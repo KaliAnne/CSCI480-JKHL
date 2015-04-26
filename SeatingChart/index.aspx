@@ -15,7 +15,7 @@
         <link rel="stylesheet"  href="css/seatingChartnew.css" />
 	    <script src="js/indexjs.js"> </script>
     </head>
-    <body onload="OnLoad()" onbeforeunload="return OnClose()">
+    <body onload="OnLoad()" onbeforeunload="return OnClose();">
     <header>
         <nav id="nav">
 		    <ul>
@@ -52,13 +52,13 @@
 	  
                         <fieldset id="roominfo">
 		                    <legend><span>Room Size:</span></legend>
-                            <p>Rows: <br /> <asp:TextBox runat="server" ID="RoomRows" ReadOnly="true" /></p>
-                            <p>Columns: <br /> <asp:TextBox runat="server" ID="RoomColumns" ReadOnly="true" /></p>
+                            <p>Rows: <br /> <asp:TextBox runat="server" ID="RoomRows" Disabled="true" /></p>
+                            <p>Columns: <br /> <asp:TextBox runat="server" ID="RoomColumns" Disabled="true" /></p>
 			
                             <br />
 
-                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" OnClick="SaveChart_Click" OnClientClick="RemindToSave = false;" />
-                            <asp:Button runat="server" ID="EditRoom" Text="Edit Room" CssClass="attenBtn" OnClick="EditRoom_Click" OnClientClick="activeEdit(); return false;" />
+                            <asp:Button runat="server" ID="SaveChart" Text="Save Room" Class="attenBtn" OnClick="SaveChart_Click" OnClientClick="SaveSeatChanges(); RemindToSave = false;" />
+                            <asp:Button runat="server" ID="EditRoom" Text="Edit Room" CssClass="attenBtn" OnClientClick="activeEdit(); return false;" />
 	                    </fieldset>	  
 
 		                <br />
@@ -90,7 +90,6 @@
                         <!--Hidden fields to store the IDs that are not needed to be seen by the user-->
                         <asp:TextBox runat="server" ID="HiddenChartID" Visible="false"></asp:TextBox>
                         <asp:TextBox runat="server" ID="HiddenProfessorEmail" Visible="false"></asp:TextBox>
-		 
 	                </fieldset>
 			        <!--End menuopt-->
 	        </section> 	
