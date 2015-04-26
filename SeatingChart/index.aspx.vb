@@ -74,7 +74,7 @@ Partial Class index
 
             cmdStudents.Connection.Close()
             cmdStudents.Connection.Dispose()
-            'Finish pulling information about the student
+            'Finish pulling information about the students
         End If
 
     End Sub
@@ -107,7 +107,14 @@ Partial Class index
 
         cnUpdateChart.Close()
 
-        'SaveSeatChanges()
+    End Sub
+
+    'Sets the Chart fields to false so that the changed items will be changed in the database
+    Protected Sub EditRoom_Click(sender As Object, e As EventArgs)
+
+        ChartName.ReadOnly = False
+        RoomRows.ReadOnly = False
+        RoomColumns.ReadOnly = False
 
     End Sub
 
@@ -183,6 +190,13 @@ Partial Class index
 
         Dim deleteStudent As String = studentList.SelectedItem.Value
 
+        If (deleteStudent = String.Empty) Then
+
+            'Make this javascript later
+            ClientScript.RegisterStartupScript(GetType(Page), "", "alert('Please select the student you wish to remove.');", True)
+            'Response.Write("<script>alert('Please select the student you wish to remove.');</script>")
+
+        Else
 
             'Start deleting the student
             Dim cmdDeleteStudent As SqlCommand = New SqlCommand("" _
@@ -209,17 +223,8 @@ Partial Class index
 
             Response.Redirect("index.aspx")
 
+        End If
 
     End Sub
 
-    Protected Sub btnViewStuInfo_Click(sender As Object, e As EventArgs)
-
-        Dim selectedStudent As String = studentList.SelectedItem.Value
-
-        Session("selectedStudent") = selectedStudent
-        Session("storedID") = HiddenChartID.Text
-
-        Response.Redirect("viewStudentInfo.aspx")
-
-    End Sub
 End Class
