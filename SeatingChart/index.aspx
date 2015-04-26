@@ -93,7 +93,7 @@
                         <asp:TextBox runat="server" ID="HiddenChartID" Visible="false"></asp:TextBox>
                         <asp:TextBox runat="server" ID="HiddenProfessorEmail" Visible="false"></asp:TextBox>
 		                <br />
-                        <asp:DropDownList runat="server" ID="SeatsInfo">
+                        <asp:DropDownList runat="server" ID="SeatsInfo" AppendDataBoundItems="true">
                             <asp:ListItem Text="(None)" Value=""></asp:ListItem>
                         </asp:DropDownList>
 	                </fieldset>

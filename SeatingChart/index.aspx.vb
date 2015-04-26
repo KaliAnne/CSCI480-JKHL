@@ -75,6 +75,31 @@ Partial Class index
             cmdStudents.Connection.Close()
             cmdStudents.Connection.Dispose()
             'Finish pulling information about the students
+
+            'Pulls all of the student seating
+            Dim cmdSeating As SqlCommand = New SqlCommand("" _
+                & "SELECT     SeatNumber + ('') + Name AS Seat " _
+                & "FROM       STUDENT " _
+                & "INNER JOIN SEATS " _
+                & "ON         STUDENT.StudentEmail = SEATS.StudentEmail " _
+                & "WHERE      SEATS.ChartID = @chartID", _
+                New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                    & "User ID=480-JKHL;Password=1104ncory"))
+
+            cmdSeating.Parameters.AddWithValue("@chartID", getChartId)
+
+            cmdSeating.Connection.Open()
+
+            SeatsInfo.DataSource = cmdSeating.ExecuteReader()
+            SeatsInfo.DataTextField = "Seat"
+            SeatsInfo.DataValueField = "Seat"
+
+            SeatsInfo.DataBind()
+
+            cmdSeating.Connection.Close()
+            cmdSeating.Connection.Dispose()
+            'End pulling all of the student seating
+
         End If
 
     End Sub
