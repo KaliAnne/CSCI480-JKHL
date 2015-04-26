@@ -28,7 +28,7 @@
 
     <body align="center">
         <form runat="server">
-            <asp:Button runat="server" ID="btnCreateChart" CssClass="homeBtns" Text="Create New Chart" OnClick="btnCreateChart_Click" Height="109px" />
+            <asp:Button runat="server" ID="btnCreateChart" CssClass="homeBtns" Text="Create New Chart" OnClick="btnCreateChart_Click" />
             <asp:Button runat="server" ID="btnViewCharts" CssClass="homeBtns" Text="View Existing Chart" OnClick="btnViewCharts_Click" />
             <button id='btnSwitchMode' class="homeBtns" Disabled="Disabled">Switch Modes</button>
             <asp:TextBox runat="server" ID="HiddenProfessorEmail" Visible="false"></asp:TextBox>
