@@ -202,9 +202,9 @@ button.editBtn {
 }
 
 .homeBtns {
-    width: 125px;
-    height: 100px;
     vertical-align: top;
+    width: 143px;
+    height: 109px;
 }
 
 /*Needed to keep hidden items from displaying and messing up the CSS*/
