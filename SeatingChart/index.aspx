@@ -81,6 +81,7 @@
 			                    <asp:Button runat="server" ID="btnDelChart" Text="Delete Room Chart" CssClass ="attenBtn" OnClick="btnDelChart_Click" OnClientClick="return confirm('Are you sure you want to delete this chart?');" />
                                 <asp:Button runat="server" ID="btnAddStudent" Text="Add Student" CssClass="attenBtn" OnClick="btnAddStudent_Click" />
 			                    <asp:Button runat="server" ID="btnRemoveStudent" Text="Remove Student" CssClass="attenBtn" OnClick="btnRemoveStudent_Click" OnClientClick="return confirm('Are you sure you want to delete this student?');" />
+                                <asp:Button runat="server" ID="btnViewStuInfo" Text="View Student Information" CssClass="attenBtn" OnClick="btnViewStuInfo_Click" OnClientClick="return NoStudentSelected();" />
 			                    <button type="Button" class ="attenBtn" id="btnAssign" onclick="AssignSeats();">Assign Seats</button>
 			                    <asp:Button runat="server" ID="btnViewPastAttendance" Text="View Past Attendance" CssClass="attenBtn" OnClick="btnViewPastAttendance_Click" />
 	                    </fieldset>
