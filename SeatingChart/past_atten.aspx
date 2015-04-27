@@ -1,83 +1,121 @@
-<%@ Page Language="VB" AutoEventWireup="true" CodeFile="past_atten.aspx.vb" Inherits="past_atten" %>
+Option Explicit On
+Imports System.Data
+Imports System.Data.SqlClient
+Imports System
+Imports System.Configuration
+Imports System.Web
+Imports System.Web.Security
+Imports System.Web.UI
+Imports System.Web.UI.WebControls
+Imports System.Web.UI.WebControls.WebParts
+Imports System.Web.UI.HtmlControls
 
-<!-- Iteration 1 code for seating chart application. -->
-<!-- Created and revised by JHKL 3/31/2015 -->
-<!-- The purpose of this program is to have the availability for a client to store multiple charts on a website, and be able to pull data from them for in-class use. -->
-<!-- Input: From standard input:: Button clicking, typing, form evaluation: From database:: seating chart data-->
+Partial Class past_atten
+    Inherits System.Web.UI.Page
 
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <!-- Start header -->
-    <head runat="server" align="center">
-        <meta charset="UTF-8" />
-	    <title>Seating Chart Application</title>
-	    <link rel="shortcut icon" type="image/png" href="images/favicon/apple.png"/>
-        <link rel="stylesheet"  href="css/seatingChartnew.css" />
-	    <script src="js/indexjs.js"> </script>
-    </head>
-    <body onload="OnLoad()" onbeforeunload="return OnClose()">
-    <header>
-        <nav id="nav">
-		    <ul>
-			    <li><a href="home.aspx">Home</a></li>
-			</ul>
-		</nav>
+    Sub Page_Load()
 
-		<br />
-		<br />
+        If Not IsPostBack Then
 
-    </header>
+            Dim storedID As String = CType(Session.Item("storedID"), String)
+            HiddenChartID.Text = storedID
 
-   
-  
-        <div align="center">
-	
-	        <form runat="server"> 
-		    <!--Form Start-->
-            <section align="center" class="left">
-		    <!--Start left nav bar -->
-	  
-	                <fieldset id="menuopt">
-		            <!-- Creates menu options, to change the option to scroll, please see CSS -->
-                        <fieldset id="chartinfo">
-			                <legend><span>Chart Name</span></legend>
-                            <p><asp:TextBox runat="server" ID="ChartName" ReadOnly="true" /></p>
-		                    <legend><span>Student Information<p>Please select a student:<fieldset id="studentinfo">
-                            <asp:DropDownList runat="server" ID="studentList" AppendDataBoundItems="true" onchange="HighlightName(); return false;" >
-                                <asp:ListItem Text="(None)" Value=""></asp:ListItem>
-                            </asp:DropDownList>
-	                    </fieldset>
-			                    <button type="Button" class ="attenBtn" onclick="location.href='home.aspx'">Home</button>
-                                </p>
-                                </span></legend>
-	                    </fieldset>
-		                <br />
-	  
-	                    &nbsp;<br />
-	  
-                        &nbsp;<br />
-      
-	                    &nbsp;<br />
-		
-                        &nbsp;<br />
-	                    <br />
+            'Start pulling information about the chart
+            Dim cnChartName As New SqlConnection
 
-                        <!--Hidden fields to store the IDs that are not needed to be seen by the user-->
-		 
-	                </fieldset>
-			        <!--End menuopt-->
-	        </section> 	
-			<!--End left nav bar-->
-                               <asp:GridView runat="server" ID="AttendanceInfo" AutoGenerateColumns="False" DataKeyNames="ChartID" GridLines="None" Height="93px" Width="240px">
-                                <Columns>
-                                    <asp:BoundField DataField="ChartID" HeaderText="ChartID" SortExpression="ChartID" Visible="false" />
-                                    <asp:BoundField DataField="Name" SortExpression="Name" />
-                                    <asp:CommandField SelectText="Edit" ButtonType="Button" ShowSelectButton="True" />
-                                </Columns>
-                            </asp:GridView>
-            </form>
-        </div>
-    </body>
+            cnChartName.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                    & "User ID=480-JKHL;Password=1104ncory"
 
-</html>
+            cnChartName.Open()
 
+            Dim cmdChartName As New SqlCommand
+
+            cmdChartName.CommandText = "SELECT Name, Rows, Columns " _
+                & "FROM   CHART " _
+                & "WHERE  ChartID = @chartID"
+
+            cmdChartName.Connection = cnChartName
+
+            Dim drChartName As SqlDataReader
+
+            cmdChartName.Parameters.AddWithValue("@chartID", storedID)
+
+            drChartName = cmdChartName.ExecuteReader()
+
+            drChartName.Read()
+
+            ChartName.Text = drChartName.Item("Name")
+
+            drChartName.Close()
+
+            cnChartName.Close()
+            'Finish pulling infomation about chart
+
+
+
+            'ChartName.Text = storedID
+
+            'Start pulling information about the students
+            Dim cmdStudents As SqlCommand = New SqlCommand("" _
+                & "SELECT Name " _
+                & "FROM   STUDENT " _
+                & "WHERE  ChartID = @chartID", _
+                New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                    & "User ID=480-JKHL;Password=1104ncory"))
+
+            cmdStudents.Parameters.AddWithValue("@chartID", storedID)
+
+            cmdStudents.Connection.Open()
+
+            studentList.DataSource = cmdStudents.ExecuteReader()
+            studentList.DataTextField = "Name"
+            studentList.DataValueField = "Name"
+
+            studentList.DataBind()
+
+            cmdStudents.Connection.Close()
+            cmdStudents.Connection.Dispose()
+            'Finish pulling information about the students
+        End If
+
+
+    End Sub
+
+    Protected Sub ShowAtten_Click(sender As Object, e As EventArgs) Handles ShowAtten.Click
+        'If Not IsPostBack Then
+
+        'Dim storedProfessorEmail As String = CType(Session.Item("storedProfessorEmail"), String)
+
+        'HiddenProfessorEmail.Text = storedProfessorEmail
+
+
+        '    Dim cmdChartName As SqlCommand = New SqlCommand("" _
+        '& "SELECT StudentEmail, Date, Present " _
+        '& "FROM   ATTENDANCE " _
+        '& "WHERE  ChartID = @getChartID ", _
+
+        'Start pulling information about the chart
+        Dim cmdChartName As SqlCommand = New SqlCommand("" _
+            & "SELECT StudentEmail, Date, Present " _
+            & "FROM   ATTENDANCE " _
+            & "WHERE  ChartID = @getChartID " _
+            & "AND    StudentEmail = (SELECT StudentEmail" _
+            & "                         FROM STUDENT" _
+            & "                          WHERE Name = @getStudentName" _
+            & "                          AND ChartID = @getChartID)", _
+            New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                  & "User ID=480-JKHL;Password=1104ncory"))
+
+        cmdChartName.Parameters.AddWithValue("@getChartID", HiddenChartID.Text)
+        cmdChartName.Parameters.AddWithValue("@getStudentName", studentList.SelectedValue)
+
+        cmdChartName.Connection.Open()
+
+        AttendanceInfo.DataSource = cmdChartName.ExecuteReader()
+        AttendanceInfo.DataBind()
+
+        cmdChartName.Connection.Close()
+        cmdChartName.Connection.Dispose()
+        'Finish pulling infomation about chart
+    End Sub
+End Class
