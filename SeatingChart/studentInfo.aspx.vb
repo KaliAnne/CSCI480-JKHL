@@ -16,9 +16,9 @@ Partial Class studentInfo
     Sub Page_Load()
 
         Dim storedID As String = CType(Session.Item("storedID"), String)
-
+        Dim storedChartName As String = CType(Session.Item("storedChartName"), String)
         HiddenChartID.Text = storedID
-
+        HiddenChartName.Text = storedChartName
     End Sub
 
     'Inserts all of the student information
@@ -144,7 +144,7 @@ Partial Class studentInfo
 
                 'Sends the user back to the index page
                 Session("storedID") = HiddenChartID.Text
-
+                SaveStudPic(stuName.Text)
                 Response.Redirect("index.aspx")
                 'End sending the user back to the index page
 
@@ -162,6 +162,14 @@ Partial Class studentInfo
         Response.Redirect("index.aspx")
         'End sending the user back to the index page
 
+    End Sub
+
+    Sub SaveStudPic(studname As String)
+        Dim Savepath As String = Server.MapPath("images/StudentPictures/") + HiddenChartName.Text + "_" + studname + ".png"
+
+        If stuPicture.HasFile() Then
+            stuPicture.PostedFile.SaveAs(Savepath)
+        End If
     End Sub
 
 End Class

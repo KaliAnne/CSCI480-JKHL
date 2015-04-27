@@ -49,6 +49,7 @@ Created and revised by JHKL 3/31/2015
              var studentToAssign = studList.value;
              var alreadyAssigned = false;
              var seatList = byId("SeatsInfo");
+             var imagedir = "";
              for (i = 0; i < seatList.options.length; i++) {
                  var optText = seatList.options[i].text;
                  if (optText.substring(4, optText.length) == studentToAssign) {
@@ -57,8 +58,14 @@ Created and revised by JHKL 3/31/2015
              }
 
              if (studentToAssign != "" && alreadyAssigned == false) {
+                 if (StudPicExists(studentToAssign, byId("ChartName").value)) {
+                     imagedir = "images/StudentPictures/" + byId("ChartName").value + "_" + studentToAssign + ".png";
+                 }
+                 else {
+                     imagedir = "images/icon_png/MiscStudent.png";
+                 }
                  byId(btnClickedID).setAttribute("assigned", studentToAssign);
-                 byId(btnClickedID).setAttribute("srcPic", "images/icon_png/MiscStudent.png");
+                 byId(btnClickedID).setAttribute("srcPic", imagedir);
                  byId(btnClickedID).src = byId(btnClickedID).getAttribute("srcPic");
                  alert(studentToAssign + " has been assigned to the selected seat.");
                  var lblSeat = "lbl" + btnClickedID.substring(3, 11);
@@ -392,6 +399,7 @@ function ChangeRoomSize(rows, cols){
       var lblSeatID = "";
       var assigned = "";
       var optText = "";
+      var imagedir = "";
       var seatList = byId("SeatsInfo");
       for (r = 1; r < NUM_ROWS; r++) {
           for (c = 1; c < NUM_COLS; c++) {
@@ -408,11 +416,25 @@ function ChangeRoomSize(rows, cols){
                       assigned = optText.substring(4, optText.length);
                       byId(btnSeatID).setAttribute("assigned", assigned);
                       byId(lblSeatID).innerHTML = assigned;
-                      byId(btnSeatID).setAttribute("srcPic", "images/icon_png/MiscStudent.png");
-                      byId(btnSeatID).src = byId(btnClickedID).getAttribute("srcPic");
+                      if (StudPicExists(assigned, byId("ChartName").value)) {
+                          imagedir = "images/StudentPictures/" + byId("ChartName").value + "_" + assigned + ".png";
+                      }
+                      else {
+                          imagedir = "images/icon_png/MiscStudent.png";
+                      }
+                      byId(btnSeatID).setAttribute("srcPic", imagedir);
+                      byId(btnSeatID).src = byId(btnSeatID).getAttribute("srcPic");
+
                   }
               }
 
           }
       }
+  }
+
+  function StudPicExists(studname, chartname) {
+      var img = new Image();
+      var imagedir = "images/StudentPictures/" + chartname + "_" + studname + ".png";
+      img.src = imagedir;
+      return img.height != 0;
   }

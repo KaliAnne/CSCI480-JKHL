@@ -147,7 +147,7 @@ Partial Class index
     Protected Sub btnAddStudent_Click(sender As Object, e As EventArgs)
 
         Session("storedID") = HiddenChartID.Text
-
+        Session("storedChartName") = ChartName.Text
         Response.Redirect("studentInfo.aspx")
 
     End Sub

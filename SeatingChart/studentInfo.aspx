@@ -44,6 +44,7 @@
                 <asp:Button runat="server" ID="btnSubmit" Text="Submit" Class="FormNav" OnClick="btnSubmit_Click" />
                 <asp:Button runat="server" ID="btnCancel" Text="Cancel" CssClass="FormNave" OnClick="btnCancel_Click" />
                 <asp:TextBox runat="server" ID="HiddenChartID" Visible="false"></asp:TextBox>
+                <asp:TextBox runat="server" ID="HiddenChartName" Visible="false"></asp:TextBox>
 	        </form> <!-- End Form -->
 	    </section> <!--End left nav bar-->
     </body>
