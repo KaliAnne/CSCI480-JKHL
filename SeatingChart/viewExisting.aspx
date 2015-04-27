@@ -29,7 +29,7 @@
     </header>
 
     <body>
-        <div align="center">
+
             <section align="center" class="left"> 
 	        <!--Start left nav bar -->
 	            <form runat="server"> 
@@ -57,6 +57,6 @@
 	            </form> <!-- End Form -->
 	        </section> <!--End left nav bar-->
 
-        </div>
+
     </body>
 </html>
