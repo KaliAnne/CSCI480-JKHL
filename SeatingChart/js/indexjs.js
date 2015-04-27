@@ -8,7 +8,8 @@ Created and revised by JHKL 3/31/2015
   var NUM_COLS = 11; //Max number of columns on the chart, + 1
 
 //Sets the size of the room when the page first opens
-  function OnLoad(){
+  function OnLoad() {
+      LoadStudPics();
 	  var rows = byId("RoomRows").value;
 	  var cols = byId("RoomColumns").value;
 	  ChangeRoomSize(rows, cols);
@@ -437,4 +438,15 @@ function ChangeRoomSize(rows, cols){
       var imagedir = "images/StudentPictures/" + chartname + "_" + studname + ".png";
       img.src = imagedir;
       return img.height != 0;
+  }
+
+  function LoadStudPics() {
+      var studentPics = [];
+      var studList = byId("studentList")
+      var path = "";
+      for (i = 0; i < studList.options.length; i++) {
+          studentPics[i] = new Image()
+          path = "images/StudentPictures/" + byId("ChartName").value + "_" + studList.options[i].text + ".png";
+          studentPics[i].src = path;
+      }
   }
