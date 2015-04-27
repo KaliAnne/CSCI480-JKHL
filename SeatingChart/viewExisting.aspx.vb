@@ -1,4 +1,4 @@
-﻿Option Explicit On
+Option Explicit On
 Imports System.Data
 Imports System.Data.SqlClient
 Imports System
@@ -10,80 +10,155 @@ Imports System.Web.UI.WebControls
 Imports System.Web.UI.WebControls.WebParts
 Imports System.Web.UI.HtmlControls
 
-Partial Class viewExisting
+Partial Class past_atten
     Inherits System.Web.UI.Page
 
     Sub Page_Load()
 
         If Not IsPostBack Then
 
-            Dim storedProfessorEmail As String = CType(Session.Item("storedProfessorEmail"), String)
-
-            HiddenProfessorEmail.Text = storedProfessorEmail
+            Dim storedID As String = CType(Session.Item("storedID"), String)
+            HiddenChartID.Text = storedID
 
             'Start pulling information about the chart
-            Dim cmdChartName As SqlCommand = New SqlCommand("" _
-                & "SELECT ChartID, Name " _
+            Dim cnChartName As New SqlConnection
+
+            cnChartName.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                    & "User ID=480-JKHL;Password=1104ncory"
+
+            cnChartName.Open()
+
+            Dim cmdChartName As New SqlCommand
+
+            cmdChartName.CommandText = "SELECT Name, Rows, Columns " _
                 & "FROM   CHART " _
-                & "WHERE  ProfessorEmail = @getProfessorEmail", _
+                & "WHERE  ChartID = @chartID"
+
+            cmdChartName.Connection = cnChartName
+
+            Dim drChartName As SqlDataReader
+
+            cmdChartName.Parameters.AddWithValue("@chartID", storedID)
+
+            drChartName = cmdChartName.ExecuteReader()
+
+            drChartName.Read()
+
+            ChartName.Text = drChartName.Item("Name")
+
+            drChartName.Close()
+
+            cnChartName.Close()
+            'Finish pulling infomation about chart
+
+            'Start pulling information about the students
+            Dim cmdStudents As SqlCommand = New SqlCommand("" _
+                & "SELECT Name " _
+                & "FROM   STUDENT " _
+                & "WHERE  ChartID = @chartID", _
                 New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
                     & "User ID=480-JKHL;Password=1104ncory"))
 
-            cmdChartName.Parameters.AddWithValue("@getProfessorEmail", HiddenProfessorEmail.Text)
+            cmdStudents.Parameters.AddWithValue("@chartID", storedID)
 
-6:
-            cmdChartName.Connection.Open()
+            cmdStudents.Connection.Open()
 
-            ChartNameGridView.DataSource = cmdChartName.ExecuteReader()
-            ChartNameGridView.DataBind()
+            studentList.DataSource = cmdStudents.ExecuteReader()
+            studentList.DataTextField = "Name"
+            studentList.DataValueField = "Name"
 
-            cmdChartName.Connection.Close()
-            cmdChartName.Connection.Dispose()
-            'Finish pulling infomation about chart
+            studentList.DataBind()
 
+            cmdStudents.Connection.Close()
+            cmdStudents.Connection.Dispose()
+            'Finish pulling information about the students
         End If
 
-    End Sub
-
-    'Sends the person to the index page 
-    Protected Sub ChartNameGridView_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ChartNameGridView.SelectedIndexChanged
-
-            Dim index As Integer = ChartNameGridView.SelectedIndex
-            Dim storedID As String = ChartNameGridView.DataKeys(index).Value.ToString
-
-            Session("storedID") = storedID
-
-            Response.Redirect("index.aspx")
 
     End Sub
 
-    Protected Sub ChartNameGridView_RowDeleting(sender As Object, e As GridViewDeleteEventArgs)
-
-        Dim storedID As String = ChartNameGridView.DataKeys(e.RowIndex).Value.ToString
-
-        'Start deleting the chart
-        Dim cmdDeleteChart As SqlCommand = New SqlCommand("" _
-            & "DELETE " _
-            & "FROM   CHART " _
-            & "WHERE  ChartID = @getChartID", _
+    Protected Sub ShowAtten_Click(sender As Object, e As EventArgs) Handles ShowAtten.Click
+        Dim cmdChartName As SqlCommand = New SqlCommand("" _
+            & "SELECT StudentEmail, Date, Present " _
+            & "FROM   ATTENDANCE " _
+            & "WHERE  ChartID = @getChartID " _
+            & "AND    StudentEmail = (SELECT StudentEmail" _
+            & "                         FROM STUDENT" _
+            & "                          WHERE Name = @getStudentName" _
+            & "                          AND ChartID = @getChartID)", _
             New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
-                & "User ID=480-JKHL;Password=1104ncory"))
+                  & "User ID=480-JKHL;Password=1104ncory"))
 
-        cmdDeleteChart.Parameters.AddWithValue("@getChartID", storedID)
+        cmdChartName.Parameters.AddWithValue("@getChartID", HiddenChartID.Text)
+        cmdChartName.Parameters.AddWithValue("@getStudentName", studentList.SelectedValue)
 
-        cmdDeleteChart.Connection.Open()
+        cmdChartName.Connection.Open()
 
-        cmdDeleteChart.ExecuteNonQuery()
+        AttendanceInfo.DataSource = cmdChartName.ExecuteReader()
+        AttendanceInfo.DataBind()
 
-        cmdDeleteChart.Connection.Close()
-        cmdDeleteChart.Connection.Dispose()
-        'Finish deleting the chart
+        cmdChartName.Connection.Close()
+        cmdChartName.Connection.Dispose()
+
+    End Sub
+
+    Protected Sub testGrid_RowEditing(ByVal sender As Object, ByVal e As GridViewEditEventArgs)
+
+        AttendanceInfo.EditIndex = e.NewEditIndex
+        AttendanceInfo.DataBind()
+        ShowAtten_Click(sender, e)
+
+    End Sub
+
+    Protected Sub testGrid_RowCancelingEdit(ByVal sender As Object, ByVal e As GridViewCancelEditEventArgs)
+
+        AttendanceInfo.EditIndex = -1
+        AttendanceInfo.DataBind()
+        ShowAtten_Click(sender, e)
+
+    End Sub
 
 
-        'Reloads the page once it has finished deleting the chart row
-        Session("storedProfessorEmail") = HiddenProfessorEmail.Text
 
-        Response.Redirect("viewExisting.aspx")
+    Protected Sub testGrid_RowUpdating(ByVal sender As Object, ByVal e As GridViewUpdateEventArgs)
+
+        Dim con As New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                  & "User ID=480-JKHL;Password=1104ncory")
+        Dim cmd As SqlCommand
+        Dim sqlUpdate As String
+        Dim index As Integer = 0
+
+        sqlUpdate = "" _
+            & "UPDATE ATTENDANCE " _
+            & "SET Present = @present " _
+            & "WHERE StudentEmail = @studentEmail " _
+            & "AND Date = @dateAtten;"
+
+
+        'Dim studentEmail As String = AttendanceInfo.Rows(e.RowIndex).Cells(0).Text
+        'Dim dateAtten As String = AttendanceInfo.Rows(e.RowIndex).Cells(1).Text
+        Dim present As String = AttendanceInfo.Rows(e.RowIndex).Cells(2).Text
+
+        cmd = New SqlCommand(sqlUpdate, con)
+
+        'cmd.Parameters.AddWithValue("@studentEmail", SqlDbType.VarChar, 50).Value = studentEmail
+        'cmd.Parameters.Add("@dateAtten", SqlDbType.DateTime).Value = dateAtten
+        cmd.Parameters.AddWithValue("@studentEmail", AttendanceInfo.Rows(e.RowIndex).Cells(0).Text)
+        cmd.Parameters.AddWithValue("@dateAtten", AttendanceInfo.Rows(e.RowIndex).Cells(1).Text)
+        cmd.Parameters.Add("@present", SqlDbType.VarChar, 10).Value = present
+
+        con.Open()
+
+        cmd.ExecuteNonQuery()
+
+        AttendanceInfo.DataSource = cmd.ExecuteReader()
+
+        AttendanceInfo.EditIndex = -1
+
+        AttendanceInfo.DataBind()
+
+        con.Close()
+        ShowAtten_Click(sender, e)
 
     End Sub
 
