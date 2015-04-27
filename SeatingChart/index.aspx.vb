@@ -243,6 +243,10 @@ Partial Class index
             cmdDeleteStudent.Connection.Dispose()
             'Finish deleting the student
 
+            'Delete student picture from studentpictures folder
+            Dim path = Server.MapPath("images/StudentPictures/") + ChartName.Text + "_" + deleteStudent + ".png"
+            System.IO.File.Delete(path)
+
             'Reload the page with the new information
             Session("storedID") = HiddenChartID.Text
 
