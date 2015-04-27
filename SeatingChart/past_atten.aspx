@@ -1,10 +1,10 @@
 <%@ Page Language="VB" AutoEventWireup="true" CodeFile="past_atten.aspx.vb" Inherits="past_atten" %>
-
+ 
 <!-- Iteration 1 code for seating chart application. -->
 <!-- Created and revised by JHKL 3/31/2015 -->
 <!-- The purpose of this program is to have the availability for a client to store multiple charts on a website, and be able to pull data from them for in-class use. -->
 <!-- Input: From standard input:: Button clicking, typing, form evaluation: From database:: seating chart data-->
-
+ 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Start header -->
@@ -22,21 +22,21 @@
                 <li><a href="home.aspx">Home</a></li>
             </ul>
         </nav>
-
+ 
         <br />
         <br />
-
+ 
     </header>
-
-
-
+ 
+ 
+ 
     <div align="center">
-
+ 
         <form runat="server">
             <!--Form Start-->
             <section align="center" class="left">
                 <!--Start left nav bar -->
-
+ 
                 <fieldset id="menuopt">
                     <!-- Creates menu options, to change the option to scroll, please see CSS -->
                     <fieldset id="chartinfo">
@@ -60,34 +60,34 @@
                         </span></legend>
                     </fieldset>
                     <br />
-
+ 
                     &nbsp;<br />
-
+ 
                     <asp:TextBox runat="server" ID="HiddenChartID" Visible="false"></asp:TextBox>
-
+ 
                     &nbsp;<br />
-
+ 
                     &nbsp;<br />
-
+ 
                     &nbsp;<br />
                     <br />
-
+ 
                     <!--Hidden fields to store the IDs that are not needed to be seen by the user-->
-
+ 
                 </fieldset>
                 <!--End menuopt-->
-
+ 
             </section>
             <!--End left nav bar-->
             <section align="center" class="gridviewfullBox">
-                <asp:GridView runat="server" ID="AttendanceInfo" AutoGenerateColumns="False" GridLines="None" Height="93px" Width="240px" 
+                <asp:GridView runat="server" ID="AttendanceInfo" AutoGenerateColumns="False" GridLines="None" Height="93px" Width="240px"
                     OnRowEditing="testGrid_RowEditing" OnRowCancelingEdit="testGrid_RowCancelingEdit" OnRowUpdating="testGrid_RowUpdating">
                     <Columns>
-
+ 
                         <asp:BoundField DataField="StudentEmail" HeaderText="Student Email" SortExpression="StudentEmail" />
                         <asp:BoundField DataField="Date" HeaderText="Date" SortExpression="Date" />
-
-
+ 
+ 
                          <asp:TemplateField HeaderText="Present">
                             <EditItemTemplate>
                                 <asp:TextBox ID="PresentText" runat="server" Text='<%# Bind("Present")%>'> </asp:TextBox>
@@ -96,8 +96,8 @@
                                 <asp:Label ID="PresentLabel" runat="server" Text='<%# Bind("Present")%>'> </asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
-
-
+ 
+ 
                         <asp:TemplateField>
                             <ItemTemplate>
                                 <asp:LinkButton ID="lnkEdit" runat="server" Text="Edit" CommandName="Edit"
@@ -113,15 +113,15 @@
                                 </asp:LinkButton>
                             </EditItemTemplate>
                         </asp:TemplateField>
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
 <%--                        <asp:BoundField DataField="Present" SortExpression="Present" HeaderText="Present" />
                         <asp:TemplateField>
                             <ItemTemplate>
-
+ 
                                 <asp:Button runat="server" Text="Edit" CommandName="Edit" CommandArgument="StudentEmail" />
                             </ItemTemplate>
                         </asp:TemplateField>--%>
@@ -131,6 +131,5 @@
         </form>
     </div>
 </body>
-
+ 
 </html>
-

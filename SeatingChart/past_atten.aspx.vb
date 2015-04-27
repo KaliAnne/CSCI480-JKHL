@@ -51,10 +51,6 @@ Partial Class past_atten
             cnChartName.Close()
             'Finish pulling infomation about chart
 
-
-
-            'ChartName.Text = storedID
-
             'Start pulling information about the students
             Dim cmdStudents As SqlCommand = New SqlCommand("" _
                 & "SELECT Name " _
@@ -82,19 +78,6 @@ Partial Class past_atten
     End Sub
 
     Protected Sub ShowAtten_Click(sender As Object, e As EventArgs) Handles ShowAtten.Click
-        'If Not IsPostBack Then
-
-        'Dim storedProfessorEmail As String = CType(Session.Item("storedProfessorEmail"), String)
-
-        'HiddenProfessorEmail.Text = storedProfessorEmail
-
-
-        '    Dim cmdChartName As SqlCommand = New SqlCommand("" _
-        '& "SELECT StudentEmail, Date, Present " _
-        '& "FROM   ATTENDANCE " _
-        '& "WHERE  ChartID = @getChartID ", _
-
-        'Start pulling information about the chart
         Dim cmdChartName As SqlCommand = New SqlCommand("" _
             & "SELECT StudentEmail, Date, Present " _
             & "FROM   ATTENDANCE " _
@@ -116,6 +99,67 @@ Partial Class past_atten
 
         cmdChartName.Connection.Close()
         cmdChartName.Connection.Dispose()
-        'Finish pulling infomation about chart
+
     End Sub
+
+    Protected Sub testGrid_RowEditing(ByVal sender As Object, ByVal e As GridViewEditEventArgs)
+
+        AttendanceInfo.EditIndex = e.NewEditIndex
+        AttendanceInfo.DataBind()
+        ShowAtten_Click(sender, e)
+
+    End Sub
+
+    Protected Sub testGrid_RowCancelingEdit(ByVal sender As Object, ByVal e As GridViewCancelEditEventArgs)
+
+        AttendanceInfo.EditIndex = -1
+        AttendanceInfo.DataBind()
+        ShowAtten_Click(sender, e)
+
+    End Sub
+
+
+
+    Protected Sub testGrid_RowUpdating(ByVal sender As Object, ByVal e As GridViewUpdateEventArgs)
+
+        Dim con As New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                  & "User ID=480-JKHL;Password=1104ncory")
+        Dim cmd As SqlCommand
+        Dim sqlUpdate As String
+        Dim index As Integer = 0
+
+        sqlUpdate = "" _
+            & "UPDATE ATTENDANCE " _
+            & "SET Present = @present " _
+            & "WHERE StudentEmail = @studentEmail " _
+            & "AND Date = @dateAtten;"
+
+
+        'Dim studentEmail As String = AttendanceInfo.Rows(e.RowIndex).Cells(0).Text
+        'Dim dateAtten As String = AttendanceInfo.Rows(e.RowIndex).Cells(1).Text
+        Dim present As String = AttendanceInfo.Rows(e.RowIndex).Cells(2).Text
+
+        cmd = New SqlCommand(sqlUpdate, con)
+
+        'cmd.Parameters.AddWithValue("@studentEmail", SqlDbType.VarChar, 50).Value = studentEmail
+        'cmd.Parameters.Add("@dateAtten", SqlDbType.DateTime).Value = dateAtten
+        cmd.Parameters.AddWithValue("@studentEmail", AttendanceInfo.Rows(e.RowIndex).Cells(0).Text)
+        cmd.Parameters.AddWithValue("@dateAtten", AttendanceInfo.Rows(e.RowIndex).Cells(1).Text)
+        cmd.Parameters.Add("@present", SqlDbType.VarChar, 10).Value = present
+
+        con.Open()
+
+        cmd.ExecuteNonQuery()
+
+        AttendanceInfo.DataSource = cmd.ExecuteReader()
+
+        AttendanceInfo.EditIndex = -1
+
+        AttendanceInfo.DataBind()
+
+        con.Close()
+        ShowAtten_Click(sender, e)
+
+    End Sub
+
 End Class

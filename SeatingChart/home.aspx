@@ -1,7 +1,7 @@
 <%@ Page Language="VB" AutoEventWireup="true" CodeFile="home.aspx.vb" Inherits="home" %>
 
 <!-- Iteration 1 code for seating chart application. -->
-<!-- Created and revised by JHKL 3/31/2015 -->
+<!-- Created and revised by JHKL 4/27/2015 -->
 <!-- The purpose of this program is to have the availability for a client to store multiple charts on a website, and be able to pull data from them for in-class use. -->
 <!-- Input: From standard input:: Button clicking, typing, form evaluation: From database:: seating chart data-->
 
