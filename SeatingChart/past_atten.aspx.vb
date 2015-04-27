@@ -15,133 +15,107 @@ Partial Class past_atten
 
     Sub Page_Load()
 
-        'If Not IsPostBack Then
+        If Not IsPostBack Then
 
-        Dim storedID As String = CType(Session.Item("storedID"), String)
+            Dim storedID As String = CType(Session.Item("storedID"), String)
+            HiddenChartID.Text = storedID
 
+            'Start pulling information about the chart
+            Dim cnChartName As New SqlConnection
 
-        'Start pulling information about the chart
-        Dim cnChartName As New SqlConnection
+            cnChartName.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                    & "User ID=480-JKHL;Password=1104ncory"
 
-        cnChartName.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
-                & "User ID=480-JKHL;Password=1104ncory"
+            cnChartName.Open()
 
-        cnChartName.Open()
+            Dim cmdChartName As New SqlCommand
 
-        Dim cmdChartName As New SqlCommand
+            cmdChartName.CommandText = "SELECT Name, Rows, Columns " _
+                & "FROM   CHART " _
+                & "WHERE  ChartID = @chartID"
 
-        cmdChartName.CommandText = "SELECT Name, Rows, Columns " _
-            & "FROM   CHART " _
-            & "WHERE  ChartID = @chartID"
+            cmdChartName.Connection = cnChartName
 
-        cmdChartName.Connection = cnChartName
+            Dim drChartName As SqlDataReader
 
-        Dim drChartName As SqlDataReader
+            cmdChartName.Parameters.AddWithValue("@chartID", storedID)
 
-        cmdChartName.Parameters.AddWithValue("@chartID", storedID)
+            drChartName = cmdChartName.ExecuteReader()
 
-        drChartName = cmdChartName.ExecuteReader()
+            drChartName.Read()
 
-        drChartName.Read()
+            ChartName.Text = drChartName.Item("Name")
 
-        ChartName.Text = drChartName.Item("Name")
-        'RoomRows.Text = drChartName.Item("Rows")
-        'RoomColumns.Text = drChartName.Item("Columns")
+            drChartName.Close()
 
-        drChartName.Close()
-
-        cnChartName.Close()
-        'Finish pulling infomation about chart
+            cnChartName.Close()
+            'Finish pulling infomation about chart
 
 
 
-        'ChartName.Text = storedID
+            'ChartName.Text = storedID
 
-        'Start pulling information about the students
-        Dim cmdStudents As SqlCommand = New SqlCommand("" _
-            & "SELECT Name " _
-            & "FROM   STUDENT " _
-            & "WHERE  ChartID = @chartID", _
-            New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
-                & "User ID=480-JKHL;Password=1104ncory"))
+            'Start pulling information about the students
+            Dim cmdStudents As SqlCommand = New SqlCommand("" _
+                & "SELECT Name " _
+                & "FROM   STUDENT " _
+                & "WHERE  ChartID = @chartID", _
+                New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                    & "User ID=480-JKHL;Password=1104ncory"))
 
-        cmdStudents.Parameters.AddWithValue("@chartID", storedID)
+            cmdStudents.Parameters.AddWithValue("@chartID", storedID)
 
-        cmdStudents.Connection.Open()
+            cmdStudents.Connection.Open()
 
-        studentList.DataSource = cmdStudents.ExecuteReader()
-        studentList.DataTextField = "Name"
-        studentList.DataValueField = "Name"
+            studentList.DataSource = cmdStudents.ExecuteReader()
+            studentList.DataTextField = "Name"
+            studentList.DataValueField = "Name"
 
-        studentList.DataBind()
+            studentList.DataBind()
 
-        cmdStudents.Connection.Close()
-        cmdStudents.Connection.Dispose()
-        'Finish pulling information about the students
+            cmdStudents.Connection.Close()
+            cmdStudents.Connection.Dispose()
+            'Finish pulling information about the students
+        End If
 
-        '        'Start pulling information about the chart
-        '        Dim cmdChartName As SqlCommand = New SqlCommand("" _
-        '            & "SELECT ChartID, Name " _
-        '            & "FROM   CHART " _
-        '            & "WHERE  ProfessorEmail = @getProfessorEmail", _
-        '            New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
-        '                & "User ID=480-JKHL;Password=1104ncory"))
-
-        '        cmdChartName.Parameters.AddWithValue("@getProfessorEmail", HiddenProfessorEmail.Text)
-
-        '        cmdChartName.Connection.Open()
-
-        '        ChartNameGridView.DataSource = cmdChartName.ExecuteReader()
-        '        ChartNameGridView.DataBind()
-
-        '        cmdChartName.Connection.Close()
-        '        cmdChartName.Connection.Dispose()
-        '        'Finish pulling infomation about chart
-
-        '    End If
 
     End Sub
 
-    ''Sends the person to the index page 
-    'Protected Sub ChartNameGridView_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ChartNameGridView.SelectedIndexChanged
+    Protected Sub ShowAtten_Click(sender As Object, e As EventArgs) Handles ShowAtten.Click
+        'If Not IsPostBack Then
 
-    '    Dim index As Integer = ChartNameGridView.SelectedIndex
-    '    Dim storedID As String = ChartNameGridView.DataKeys(index).Value.ToString
+        'Dim storedProfessorEmail As String = CType(Session.Item("storedProfessorEmail"), String)
 
-    '    Session("storedID") = storedID
-
-    '    Response.Redirect("index.aspx")
-
-    'End Sub
-
-    'Protected Sub ChartNameGridView_RowDeleting(sender As Object, e As GridViewDeleteEventArgs)
-
-    '    Dim storedID As String = ChartNameGridView.DataKeys(e.RowIndex).Value.ToString
-
-    '    'Start deleting the chart
-    '    Dim cmdDeleteChart As SqlCommand = New SqlCommand("" _
-    '        & "DELETE " _
-    '        & "FROM   CHART " _
-    '        & "WHERE  ChartID = @getChartID", _
-    '        New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
-    '            & "User ID=480-JKHL;Password=1104ncory"))
-
-    '    cmdDeleteChart.Parameters.AddWithValue("@getChartID", storedID)
-
-    '    cmdDeleteChart.Connection.Open()
-
-    '    cmdDeleteChart.ExecuteNonQuery()
-
-    '    cmdDeleteChart.Connection.Close()
-    '    cmdDeleteChart.Connection.Dispose()
-    '    'Finish deleting the chart
+        'HiddenProfessorEmail.Text = storedProfessorEmail
 
 
-    '    'Reloads the page once it has finished deleting the chart row
-    '    Session("storedProfessorEmail") = HiddenProfessorEmail.Text
+        '    Dim cmdChartName As SqlCommand = New SqlCommand("" _
+        '& "SELECT StudentEmail, Date, Present " _
+        '& "FROM   ATTENDANCE " _
+        '& "WHERE  ChartID = @getChartID ", _
 
-    '    Response.Redirect("viewExisting.aspx")
+        'Start pulling information about the chart
+        Dim cmdChartName As SqlCommand = New SqlCommand("" _
+            & "SELECT StudentEmail, Date, Present " _
+            & "FROM   ATTENDANCE " _
+            & "WHERE  ChartID = @getChartID " _
+            & "AND    StudentEmail = (SELECT StudentEmail" _
+            & "                         FROM STUDENT" _
+            & "                          WHERE Name = @getStudentName" _
+            & "                          AND ChartID = @getChartID)", _
+            New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                  & "User ID=480-JKHL;Password=1104ncory"))
 
-    'End Sub
+        cmdChartName.Parameters.AddWithValue("@getChartID", HiddenChartID.Text)
+        cmdChartName.Parameters.AddWithValue("@getStudentName", studentList.SelectedValue)
 
+        cmdChartName.Connection.Open()
+
+        AttendanceInfo.DataSource = cmdChartName.ExecuteReader()
+        AttendanceInfo.DataBind()
+
+        cmdChartName.Connection.Close()
+        cmdChartName.Connection.Dispose()
+        'Finish pulling infomation about chart
+    End Sub
 End Class
