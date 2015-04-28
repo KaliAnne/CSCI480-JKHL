@@ -80,51 +80,12 @@
             </section>
             <!--End left nav bar-->
             <section align="center" class="gridviewfullBox">
-                <asp:GridView runat="server" ID="AttendanceInfo" AutoGenerateColumns="False" GridLines="None" Height="93px" Width="240px"
-                    OnRowEditing="testGrid_RowEditing" OnRowCancelingEdit="testGrid_RowCancelingEdit" OnRowUpdating="testGrid_RowUpdating">
+                    <asp:GridView runat="server" ID="AttendanceInfo" AutoGenerateColumns="False" GridLines="None" Height="93px" Width="240px">
                     <Columns>
  
-                        <asp:BoundField DataField="StudentEmail" HeaderText="Student Email" SortExpression="StudentEmail" />
-                        <asp:BoundField DataField="Date" HeaderText="Date" SortExpression="Date" />
- 
- 
-                         <asp:TemplateField HeaderText="Present">
-                            <EditItemTemplate>
-                                <asp:TextBox ID="PresentText" runat="server" Text='<%# Bind("Present")%>'> </asp:TextBox>
-                            </EditItemTemplate>
-                            <ItemTemplate>
-                                <asp:Label ID="PresentLabel" runat="server" Text='<%# Bind("Present")%>'> </asp:Label>
-                            </ItemTemplate>
-                        </asp:TemplateField>
- 
- 
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:LinkButton ID="lnkEdit" runat="server" Text="Edit" CommandName="Edit"
-                                    OnClientClick="return confirm('Are you sure you want to update this?')"></asp:LinkButton>
-                            </ItemTemplate>
-                            <EditItemTemplate>
-                                <asp:LinkButton ID="lnkUpdate" runat="server" Text="Update"
-                                    CommandName="Update" CommandArgument='<%# Container.DataItemIndex %>'
-                                    OnClientClick="return confirm('Are you sure you want to update this?');">
-                                </asp:LinkButton>
-                                <asp:LinkButton ID="lnkCancel" runat="server" Text="Cancel"
-                                    CommandName="Cancel" CommandArgument='<%# Container.DataItemIndex %>'>
-                                </asp:LinkButton>
-                            </EditItemTemplate>
-                        </asp:TemplateField>
- 
- 
- 
- 
- 
-<%--                        <asp:BoundField DataField="Present" SortExpression="Present" HeaderText="Present" />
-                        <asp:TemplateField>
-                            <ItemTemplate>
- 
-                                <asp:Button runat="server" Text="Edit" CommandName="Edit" CommandArgument="StudentEmail" />
-                            </ItemTemplate>
-                        </asp:TemplateField>--%>
+                        <asp:BoundField DataField="StudentEmail" HeaderText="Student Email" SortExpression="StudentEmail" ReadOnly="true" />
+                        <asp:BoundField DataField="Date" HeaderText="Date" SortExpression="Date" ReadOnly="true"/>
+                        <asp:BoundField  DataField="Present" HeaderText="Present" SortExpression="Present" ReadOnly="true"> </asp:BoundField>
                     </Columns>
                 </asp:GridView>
             </section>
