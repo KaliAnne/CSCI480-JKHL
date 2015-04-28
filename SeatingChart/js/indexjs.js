@@ -31,8 +31,7 @@ Created and revised by JHKL 3/31/2015
 
       //Handles when in Assign Seats mode
       else if (byId("btnAssign").innerHTML == "Exit Assignment Mode") {
-          SeatAssignInfo(btnClickedID);
-          return false;
+          return SeatAssignInfo(btnClickedID);
       }
 
       //If no mode currently in use, the VB function is called for the student's informationw
@@ -42,58 +41,56 @@ Created and revised by JHKL 3/31/2015
   }
   
   //Handles assigning seats and showing the info of the student assigned to the given seat
- function SeatAssignInfo(btnClickedID){
-	//if no student is assigned the seat and the user is assigning seats, requests the name of the student to put here
-     if (byId("btnAssign").innerHTML != "Assign Seats") {
-         if (byId(btnClickedID).getAttribute("assigned") == "") {
-             var studList = byId("studentList");
-             var studentToAssign = studList.value;
-             var alreadyAssigned = false;
-             var seatList = byId("SeatsInfo");
-             var imagedir = "";
-             for (i = 0; i < seatList.options.length; i++) {
-                 var optText = seatList.options[i].text;
-                 if (optText.substring(4, optText.length) == studentToAssign) {
-                     alreadyAssigned = true;
-                 }
-             }
+  function SeatAssignInfo(btnClickedID) {
+      //if no student is assigned the seat and the user is assigning seats, requests the name of the student to put here
+      if (byId("btnAssign").innerHTML != "Assign Seats") {
+          if (byId(btnClickedID).getAttribute("assigned") == "") {
+              var studList = byId("studentList");
+              var studentToAssign = studList.value;
+              var alreadyAssigned = false;
+              var seatList = byId("SeatsInfo");
+              for (i = 0; i < seatList.options.length; i++) {
+                  var optText = seatList.options[i].text;
+                  if (optText.substring(4, optText.length) == studentToAssign) {
+                      alreadyAssigned = true;
+                  }
+              }
 
-             if (studentToAssign != "" && alreadyAssigned == false) {
-                 if (StudPicExists(studentToAssign, byId("ChartName").value)) {
-                     imagedir = "images/StudentPictures/" + byId("ChartName").value + "_" + studentToAssign + ".png";
-                 }
-                 else {
-                     imagedir = "images/icon_png/MiscStudent.png";
-                 }
-                 byId(btnClickedID).setAttribute("assigned", studentToAssign);
-                 byId(btnClickedID).setAttribute("srcPic", imagedir);
-                 byId(btnClickedID).src = byId(btnClickedID).getAttribute("srcPic");
-                 alert(studentToAssign + " has been assigned to the selected seat.");
-                 var lblSeat = "lbl" + btnClickedID.substring(3, 11);
-                 byId(lblSeat).innerHTML = studentToAssign;
-                 AddToSeatList(studentToAssign, btnClickedID.substring(7, 11));
-                 RemindToSave = true;
-             }
-             else if (alreadyAssigned){
-                 alert(studentToAssign + " has already been assigned to a seat");
-             }
-             else {
-                 alert("Please select a student from the list.");
-             }
-         }
+              if (studentToAssign != "" && alreadyAssigned == false) {
+                  byId(btnClickedID).setAttribute("assigned", studentToAssign);
+                  byId(btnClickedID).setAttribute("srcPic", "images/icon_png/MiscStudent.png");
+                  byId(btnClickedID).src = byId(btnClickedID).getAttribute("srcPic");
+                  alert(studentToAssign + " has been assigned to the selected seat.");
+                  var lblSeat = "lbl" + btnClickedID.substring(3, 11);
+                  byId(lblSeat).innerHTML = studentToAssign;
+                  AddToSeatList(studentToAssign, btnClickedID.substring(7, 11));
+                  return true;
+              }
+              else if (alreadyAssigned) {
+                  return false;
+                  alert(studentToAssign + " has already been assigned to a seat");
+              }
+              else {
+                  return false;
+                  alert("Please select a student from the list.");
+              }
+          }
 
-             //If a student is already assigned to this seat, asks if the user would like to remove the student from the seat		
-         else {
-             var unassign = confirm("Would you like to remove " + byId(btnClickedID).getAttribute("assigned") + " from this seat?");
-             if (unassign) {
-                 ResetSeat(btnClickedID);
-                 RemoveFromSeatList(btnClickedID.substring(7, 11));
-                 alert("This seat is now available.");
-                 RemindToSave = true;
-             }
-         }
-     }
- }
+              //If a student is already assigned to this seat, asks if the user would like to remove the student from the seat		
+          else {
+              var unassign = confirm("Would you like to remove " + byId(btnClickedID).getAttribute("assigned") + " from this seat?");
+              if (unassign) {
+                  RemoveFromSeatList(byId(btnClickedID).getAttribute("assigned"), btnClickedID.substring(7, 11));
+                  ResetSeat(btnClickedID);
+                  alert("This seat is now available.");
+                  return true;
+              }
+              else {
+                  return false;
+              }
+          }
+      }
+  }
   
   //Toggles between assigning seats and normal mode
   function AssignSeats(){
@@ -379,20 +376,22 @@ function ChangeRoomSize(rows, cols){
   }
 
   function AddToSeatList(studname, studseat) {
-      var opt = document.createElement("option");
-      opt.text = studseat + studname;
-      opt.value = studseat + studname;
-      byId("SeatsInfo").options.add(opt);
+      //var opt = document.createElement("option");
+      //opt.text = studseat + studname;
+      //opt.value = studseat + studname;
+      //byId("SeatsInfo").options.add(opt);
+      byId("AddStud").value = studseat + studname;
   }
 
-  function RemoveFromSeatList(studseat) {
-      var seatList = byId("SeatsInfo");
-      for (i = 0; i < seatList.options.length; i++) {
-          var optText = seatList.options[i].text;
-          if (optText.substring(0, 4) == studseat) {
-              seatList.remove(i);
-          }
-      }
+  function RemoveFromSeatList(studname, studseat) {
+      //var seatList = byId("SeatsInfo");
+      //for (i = 0; i < seatList.options.length; i++) {
+      //    var optText = seatList.options[i].text;
+      //    if (optText.substring(0, 4) == studseat) {
+      //        seatList.remove(i);
+      //    }
+      //}
+      byId("RmvStud").value = studseat + studname;
   }
 
   function LoadSeats() {

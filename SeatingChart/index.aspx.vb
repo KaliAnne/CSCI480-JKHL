@@ -275,4 +275,16 @@ Partial Class index
 
     End Sub
 
+    Protected Sub ManageStudSeat()
+        If Not AddStud.Text = "" Then
+            SeatsInfo.Items.Add(AddStud.Text)
+            AddStud.Text = ""
+            RmvStud.Text = ""
+        ElseIf Not RmvStud.Text = "" Then
+            SeatsInfo.Items.Remove(RmvStud.Text)
+            AddStud.Text = ""
+            RmvStud.Text = ""
+        End If
+    End Sub
+
 End Class
