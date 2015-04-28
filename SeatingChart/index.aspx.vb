@@ -284,6 +284,13 @@ Partial Class index
             SeatsInfo.Items.Remove(RmvStud.Text)
             AddStud.Text = ""
             RmvStud.Text = ""
+        Else
+            Dim atndText As String = AtndStud.Text
+            If atndText.Substring(0, 1) = "P" Then
+                AbsentStuds.Items.Remove(atndText.Substring(1, atndText.Length - 1))
+            Else
+                AbsentStuds.Items.Add(atndText.Substring(1, atndText.Length - 1))
+            End If
         End If
     End Sub
 

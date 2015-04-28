@@ -92,12 +92,16 @@
                         <!--Hidden fields to store the IDs that are not needed to be seen by the user-->
                         <asp:TextBox runat="server" ID="HiddenChartID" Visible="false"></asp:TextBox>
                         <asp:TextBox runat="server" ID="HiddenProfessorEmail" Visible="false"></asp:TextBox>
-                        <asp:TextBox runat="server" ID="AddStud" Visible="true" ></asp:TextBox>
-                        <asp:TextBox runat="server" ID="RmvStud" Visible="true" ></asp:TextBox>
+                        <asp:TextBox runat="server" ID="AddStud" ></asp:TextBox>
+                        <asp:TextBox runat="server" ID="RmvStud" ></asp:TextBox>
+                        <asp:TextBox runat="server" ID="AtndStud" ></asp:TextBox>
 		                <br />
                         <asp:DropDownList runat="server" ID="SeatsInfo" AppendDataBoundItems="true">
-                            <asp:ListItem Text="(None)" Value=""></asp:ListItem>
                         </asp:DropDownList>
+                        <br />
+                        <asp:DropDownList runat="server" ID="AbsentStuds" AppendDataBoundItems="true">
+                        </asp:DropDownList>
+
 	                </fieldset>
 			        <!--End menuopt-->
 	        </section> 	

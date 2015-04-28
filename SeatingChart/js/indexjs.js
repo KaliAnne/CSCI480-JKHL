@@ -10,6 +10,15 @@ Created and revised by JHKL 3/31/2015
 //Sets the size of the room when the page first opens
   function OnLoad() {
       LoadStudPics();
+      byId("ChartName").readOnly = true;
+      byId("RoomRows").readOnly = true;
+      byId("RoomColumns").readOnly = true;
+      byId("AddStud").style.visibility = "hidden";
+      byId("RmvStud").style.visibility = "hidden";
+      byId("AtndStud").style.visibility = "hidden";
+      //byId("SeatsInfo").style.visibility = "hidden";  
+      //byId("AbsentStuds").style.visibility = "hidden"; 
+
 	  var rows = byId("RoomRows").value;
 	  var cols = byId("RoomColumns").value;
 	  ChangeRoomSize(rows, cols);
@@ -25,8 +34,7 @@ Created and revised by JHKL 3/31/2015
 
       //Handles when in Attendance mode
       if (byId("btnAttend").innerHTML == "Exit Attendance Mode") {
-          SeatAttndSwap(btnClickedID);
-          return false;
+          return SeatAttndSwap(btnClickedID);
       }
 
       //Handles when in Assign Seats mode
@@ -36,7 +44,7 @@ Created and revised by JHKL 3/31/2015
 
       //If no mode currently in use, the VB function is called for the student's informationw
       else {
-          return true;
+          return false;
       }
   }
   
@@ -50,7 +58,7 @@ Created and revised by JHKL 3/31/2015
               var alreadyAssigned = false;
               var seatList = byId("SeatsInfo");
               for (i = 0; i < seatList.options.length; i++) {
-                  var optText = seatList.options[i].text;
+                  var optText = seatList.options[i].value;
                   if (optText.substring(4, optText.length) == studentToAssign) {
                       alreadyAssigned = true;
                   }
@@ -67,8 +75,8 @@ Created and revised by JHKL 3/31/2015
                   return true;
               }
               else if (alreadyAssigned) {
-                  return false;
                   alert(studentToAssign + " has already been assigned to a seat");
+                  return false;
               }
               else {
                   return false;
@@ -107,16 +115,21 @@ Created and revised by JHKL 3/31/2015
   
   //Handles swapping between checkmarks and X's if taking attendance
   function SeatAttndSwap(btnClickedID){
-      var tgt = byId(btnClickedID);
-    if (tgt.getAttribute("src") == tgt.getAttribute("srcCheck")){
-		tgt.src = tgt.getAttribute("srcX");
-	}
-    else if (tgt.getAttribute("src") == tgt.getAttribute("srcX")) {
-        tgt.src = tgt.getAttribute("srcCheck");
-	}
-    else {
-        alert("There is no student assigned to this seat");
-    }
+        var tgt = byId(btnClickedID);
+        if (tgt.getAttribute("src") == tgt.getAttribute("srcCheck")){
+            tgt.src = tgt.getAttribute("srcX");
+            byId("AtndStud").value = "A" + tgt.getAttribute("assigned");
+            return true;
+	    }
+        else if (tgt.getAttribute("src") == tgt.getAttribute("srcX")) {
+            tgt.src = tgt.getAttribute("srcCheck");
+            byId("AtndStud").value = "P" + tgt.getAttribute("assigned");
+            return true;
+	    }
+        else {
+            alert("There is no student assigned to this seat");
+            return false;
+        }
   }
 
 
@@ -321,6 +334,9 @@ function ChangeRoomSize(rows, cols){
       if (modeButtonID == "EditRoom") {
           byId("btnAttend").disabled = true;
           byId("btnAssign").disabled = true;
+          byId("ChartName").readOnly = false;
+          byId("RoomRows").readOnly = false;
+          byId("RoomColumns").readOnly = false;
       }
       else if (modeButtonID == "btnAttend") {
           byId("EditRoom").disabled = true;
@@ -342,6 +358,9 @@ function ChangeRoomSize(rows, cols){
       if (modeButtonID == "EditRoom") {
           byId("btnAttend").disabled = false;
           byId("btnAssign").disabled = false;
+          byId("ChartName").readOnly = true;
+          byId("RoomRows").readOnly = true;
+          byId("RoomColumns").readOnly = true;
       }
       else if (modeButtonID == "btnAttend") {
           byId("EditRoom").disabled = false;
@@ -423,7 +442,20 @@ function ChangeRoomSize(rows, cols){
                           imagedir = "images/icon_png/MiscStudent.png";
                       }
                       byId(btnSeatID).setAttribute("srcPic", imagedir);
-                      byId(btnSeatID).src = byId(btnSeatID).getAttribute("srcPic");
+
+                      var absent = false;
+                      for (j = 0; j < byId("AbsentStuds").options.length; j++) {
+                          if (assigned == byId("AbsentStuds").options[j].text) {
+                              absent = true;
+                          }
+                      }
+
+                      if (absent) {
+                          byId(btnSeatID).src = byId(btnSeatID).getAttribute("srcX");
+                      }
+                      else {
+                          byId(btnSeatID).src = byId(btnSeatID).getAttribute("srcPic");
+                      }
 
                   }
               }
