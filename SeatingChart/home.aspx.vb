@@ -1,4 +1,6 @@
-﻿Option Explicit On
+﻿'This file contains the back end capability for the home page
+
+Option Explicit On
 Imports System.Data
 Imports System.Data.SqlClient
 Imports System
@@ -16,10 +18,7 @@ Partial Class home
     Sub Page_Load()
 
         If Page.IsPostBack = False Then
-
-            'Dim storedProfessorEmail As String = CType(Session.Item("storedProfessorEmail"), String)
-
-            'HiddenProfessorEmail.Text = storedProfessorEmail
+            'For future login implementation
             HiddenProfessorEmail.Text = "none@findlay.edu"
 
         End If
@@ -27,17 +26,15 @@ Partial Class home
     End Sub
 
     Protected Sub btnCreateChart_Click(sender As Object, e As EventArgs)
-
+        'For future login implementation, also sends user to the newChart page if the Create Chart button is pressed
         Session("storedProfessorEmail") = HiddenProfessorEmail.Text
-
         Response.Redirect("newChart.aspx")
 
     End Sub
 
     Protected Sub btnViewCharts_Click(sender As Object, e As EventArgs)
-
+        'For future login implementation, also sends user to the viewExisting page if the View Existing button is pressed
         Session("storedProfessorEmail") = HiddenProfessorEmail.Text
-
         Response.Redirect("viewExisting.aspx")
 
     End Sub
