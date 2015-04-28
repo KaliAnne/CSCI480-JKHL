@@ -13,6 +13,9 @@ Imports System.Web.UI.HtmlControls
 Partial Class index
     Inherits System.Web.UI.Page
 
+
+    'Dim index As String = -1
+
     'Loads all of the chart information based on the Chart selected
     Sub Page_Load()
         If Page.IsPostBack = False Then
@@ -100,6 +103,12 @@ Partial Class index
             cmdSeating.Connection.Dispose()
             'End pulling all of the student seating
 
+            'If SeatsInfo.Items.Count - 1 >= 0 Then
+
+            'index = 0
+
+            'End If
+
         End If
 
     End Sub
@@ -131,6 +140,9 @@ Partial Class index
         cmdUpdateChart.ExecuteNonQuery()
 
         cnUpdateChart.Close()
+
+        'Total.Text = SeatsInfo.Items.Count - 1
+       
 
     End Sub
 
@@ -280,18 +292,230 @@ Partial Class index
             SeatsInfo.Items.Add(AddStud.Text)
             AddStud.Text = ""
             RmvStud.Text = ""
+            SaveAsnSeat()
         ElseIf Not RmvStud.Text = "" Then
             SeatsInfo.Items.Remove(RmvStud.Text)
+            RemoveAsnSeat(RmvStud.Text)
             AddStud.Text = ""
             RmvStud.Text = ""
+
         Else
             Dim atndText As String = AtndStud.Text
             If atndText.Substring(0, 1) = "P" Then
-                AbsentStuds.Items.Remove(atndText.Substring(1, atndText.Length - 1))
+                AbsentStuds.Items.Remove(atndText.Substring(0, atndText.Length))
             Else
-                AbsentStuds.Items.Add(atndText.Substring(1, atndText.Length - 1))
+                AbsentStuds.Items.Add(atndText.Substring(0, atndText.Length))
             End If
         End If
+    End Sub
+
+    Protected Sub SaveAsnSeat()
+        For index As Integer = 0 To SeatsInfo.Items.Count - 1
+
+            'While index <= Total.Text And index >= 0
+
+            Dim seatEmail As String
+            Dim seatNumber As String
+            Dim seatName As String
+            Dim text As String = CStr(SeatsInfo.Items(index).ToString)
+
+            seatNumber = text.Substring(0, 4)
+            seatName = text.Substring(4, (text.Length - 4))
+
+            'Selects the student's email
+            Dim cnGetEmail As New SqlConnection
+
+            cnGetEmail.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                    & "User ID=480-JKHL;Password=1104ncory"
+
+            cnGetEmail.Open()
+
+            Dim cmdGetEmail As New SqlCommand
+
+            cmdGetEmail.CommandText = "" _
+                & "SELECT StudentEmail " _
+                & "FROM   STUDENT " _
+                & "WHERE  ChartID = @chartID " _
+                & "AND    Name = @getSeatName"
+
+            cmdGetEmail.Connection = cnGetEmail
+
+            Dim drGetEmail As SqlDataReader
+
+            cmdGetEmail.Parameters.AddWithValue("@chartID", HiddenChartID.Text)
+            cmdGetEmail.Parameters.AddWithValue("@getSeatName", seatName)
+
+            drGetEmail = cmdGetEmail.ExecuteReader()
+
+            drGetEmail.Read()
+
+            seatEmail = drGetEmail.Item("StudentEmail").ToString
+
+            drGetEmail.Close()
+
+            cnGetEmail.Close()
+            'End of selecting the student email
+
+            'Check if email is already in the database
+            Dim cnCheckEmail As New SqlConnection
+
+            cnCheckEmail.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                    & "User ID=480-JKHL;Password=1104ncory"
+
+            cnCheckEmail.Open()
+
+            Dim cmdCheckEmail As New SqlCommand
+
+            cmdCheckEmail.CommandText = "" _
+                & "SELECT     Name " _
+                & "FROM       STUDENT " _
+                & "INNER JOIN SEATS " _
+                & "ON         STUDENT.StudentEmail = SEATS.StudentEmail " _
+                & "WHERE      STUDENT.ChartID = @chartID " _
+                & "AND        STUDENT.StudentEmail = @studentEmail " _
+                & "AND        STUDENT.Name = @getName"
+
+            cmdCheckEmail.Connection = cnCheckEmail
+
+            Dim drCheckEmail As SqlDataReader
+
+            cmdCheckEmail.Parameters.AddWithValue("@chartID", HiddenChartID.Text)
+            cmdCheckEmail.Parameters.AddWithValue("@studentEmail", seatEmail)
+            cmdCheckEmail.Parameters.AddWithValue("@getName", seatName)
+
+            drCheckEmail = cmdCheckEmail.ExecuteReader()
+
+            drCheckEmail.Read()
+            'End of checking for an email
+
+            'If the student is already listed, then update that students seat number; otherwise, add the student to the seat
+            If (drCheckEmail.HasRows) Then
+
+                'Update student seat info
+                Dim cnUpdateStudent As New SqlConnection
+
+                cnUpdateStudent.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                        & "User ID=480-JKHL;Password=1104ncory"
+
+                Dim cmdUpdateStudent As New SqlCommand
+
+                cmdUpdateStudent.CommandText = "" _
+                    & "UPDATE SEATS " _
+                    & "SET    SeatNumber = @getSeat " _
+                    & "WHERE  ChartID = @getChartID " _
+                    & "AND    StudentEmail = @getEmail"
+
+                cmdUpdateStudent.Connection = cnUpdateStudent
+
+                cmdUpdateStudent.Parameters.AddWithValue("@getSeat", seatNumber)
+                cmdUpdateStudent.Parameters.AddWithValue("@getChartID", HiddenChartID.Text)
+                cmdUpdateStudent.Parameters.AddWithValue("@getEmail", seatEmail)
+
+                cnUpdateStudent.Open()
+
+                cmdUpdateStudent.ExecuteNonQuery()
+
+                cnUpdateStudent.Close()
+                'End updating student seat info
+
+            Else
+
+                'Begin inserting student seat information
+                Dim cnInsertStudent As New SqlConnection
+
+                cnInsertStudent.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                        & "User ID=480-JKHL;Password=1104ncory"
+
+                Dim cmdInsertStudent As New SqlCommand
+
+                cmdInsertStudent.CommandText = "" _
+                    & "INSERT INTO SEATS(ChartID, StudentEmail, SeatNumber) " _
+                    & "VALUES      ('" + HiddenChartID.Text + "','" + seatEmail + "','" + seatNumber + "');"
+
+                cmdInsertStudent.Connection = cnInsertStudent
+
+                cnInsertStudent.Open()
+
+                cmdInsertStudent.ExecuteNonQuery()
+
+                cnInsertStudent.Close()
+                'End inserting student seat information
+
+            End If
+
+            'index = index + 1
+
+            'SaveChart_Click(sender, e)
+
+            'End While
+        Next
+    End Sub
+
+    'student to remove is "0101Jacob Babione"
+    Sub RemoveAsnSeat(studentToRemove As String)
+
+        Dim seatEmail As String
+        Dim seatNumber As String
+        Dim seatName As String
+        Dim text As String = studentToRemove
+
+        seatNumber = text.Substring(0, 4)
+        seatName = text.Substring(4, (text.Length - 4))
+
+        'Selects the student's email
+        Dim cnGetEmail As New SqlConnection
+
+        cnGetEmail.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                & "User ID=480-JKHL;Password=1104ncory"
+
+        cnGetEmail.Open()
+
+        Dim cmdGetEmail As New SqlCommand
+
+        cmdGetEmail.CommandText = "" _
+            & "SELECT StudentEmail " _
+            & "FROM   STUDENT " _
+            & "WHERE  ChartID = @chartID " _
+            & "AND    Name = @getSeatName"
+
+        cmdGetEmail.Connection = cnGetEmail
+
+        Dim drGetEmail As SqlDataReader
+
+        cmdGetEmail.Parameters.AddWithValue("@chartID", HiddenChartID.Text)
+        cmdGetEmail.Parameters.AddWithValue("@getSeatName", seatName)
+
+        drGetEmail = cmdGetEmail.ExecuteReader()
+
+        drGetEmail.Read()
+
+        seatEmail = drGetEmail.Item("StudentEmail").ToString
+
+        drGetEmail.Close()
+
+        cnGetEmail.Close()
+        'End of selecting the student email
+
+        'Start deleting the student's seat assignment
+        Dim cmdDeleteStudent As SqlCommand = New SqlCommand("" _
+        & "DELETE " _
+        & "FROM   SEATS " _
+        & "WHERE  ChartID = @getChartID " _
+        & "AND    StudentEmail = @getEmail", _
+        New SqlConnection("Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+         & "User ID=480-JKHL;Password=1104ncory"))
+
+        cmdDeleteStudent.Parameters.AddWithValue("@getEmail", seatEmail)
+        cmdDeleteStudent.Parameters.AddWithValue("@getchartID", HiddenChartID.Text)
+
+        cmdDeleteStudent.Connection.Open()
+
+        cmdDeleteStudent.ExecuteNonQuery()
+
+        cmdDeleteStudent.Connection.Close()
+        cmdDeleteStudent.Connection.Dispose()
+        'End deleting student seat assignment
+
     End Sub
 
 End Class

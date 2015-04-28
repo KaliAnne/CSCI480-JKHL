@@ -16,7 +16,7 @@ Created and revised by JHKL 3/31/2015
       byId("AddStud").style.visibility = "hidden";
       byId("RmvStud").style.visibility = "hidden";
       byId("AtndStud").style.visibility = "hidden";
-      //byId("SeatsInfo").style.visibility = "hidden";  
+      byId("SeatsInfo").style.visibility = "hidden";  
       //byId("AbsentStuds").style.visibility = "hidden"; 
 
 	  var rows = byId("RoomRows").value;
@@ -420,6 +420,7 @@ function ChangeRoomSize(rows, cols){
       var optText = "";
       var imagedir = "";
       var seatList = byId("SeatsInfo");
+      var absText = "";
       for (r = 1; r < NUM_ROWS; r++) {
           for (c = 1; c < NUM_COLS; c++) {
               if (c < 10) {
@@ -445,7 +446,8 @@ function ChangeRoomSize(rows, cols){
 
                       var absent = false;
                       for (j = 0; j < byId("AbsentStuds").options.length; j++) {
-                          if (assigned == byId("AbsentStuds").options[j].text) {
+                          absText = byId("AbsentStuds").options[j].text;
+                          if (assigned == absText.substring(1, absText.length) && absText.substring(0, 1) == "A") {
                               absent = true;
                           }
                       }

@@ -92,6 +92,7 @@
                         <!--Hidden fields to store the IDs that are not needed to be seen by the user-->
                         <asp:TextBox runat="server" ID="HiddenChartID" Visible="false"></asp:TextBox>
                         <asp:TextBox runat="server" ID="HiddenProfessorEmail" Visible="false"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="Total"></asp:TextBox>
                         <asp:TextBox runat="server" ID="AddStud" ></asp:TextBox>
                         <asp:TextBox runat="server" ID="RmvStud" ></asp:TextBox>
                         <asp:TextBox runat="server" ID="AtndStud" ></asp:TextBox>
