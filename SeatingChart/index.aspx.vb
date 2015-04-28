@@ -454,15 +454,17 @@ Partial Class index
             AddStud.Text = ""
             RmvStud.Text = ""
             SaveAsnSeat()
+            Session("storedID") = HiddenChartID.Text
 
-
+            Response.Redirect("index.aspx")
         ElseIf Not RmvStud.Text = "" Then 'Handles removing the student from their seat in the database
             SeatsInfo.Items.Remove(RmvStud.Text)
             RemoveAsnSeat(RmvStud.Text)
             AddStud.Text = ""
             RmvStud.Text = ""
+            Session("storedID") = HiddenChartID.Text
 
-
+            Response.Redirect("index.aspx")
         Else 'Handles marking students as absent or present for the database 
             Dim atndText As String = AtndStud.Text
             If atndText.Substring(0, 1) = "P" Then
