@@ -105,7 +105,7 @@ Partial Class index
             'index = 0
 
             'End If
-
+            InitAttendance()
         End If
 
     End Sub
@@ -153,8 +153,6 @@ Partial Class index
 
             attenLetter = text.Substring(0, 1)
             seatName = text.Substring(1, (text.Length - 1))
-
-            Test.Text = seatName
 
             If attenLetter = "P" Then
 
@@ -468,8 +466,10 @@ Partial Class index
         Else 'Handles marking students as absent or present for the database 
             Dim atndText As String = AtndStud.Text
             If atndText.Substring(0, 1) = "P" Then
-                AbsentStuds.Items.Remove(atndText.Substring(0, atndText.Length))
+                AbsentStuds.Items.Remove("A" + atndText.Substring(1, atndText.Length - 1))
+                AbsentStuds.Items.Add(atndText.Substring(0, atndText.Length))
             Else
+                AbsentStuds.Items.Remove("P" + atndText.Substring(1, atndText.Length - 1))
                 AbsentStuds.Items.Add(atndText.Substring(0, atndText.Length))
             End If
         End If
@@ -684,6 +684,15 @@ Partial Class index
         cmdDeleteStudent.Connection.Dispose()
         'End deleting student seat assignment
 
+    End Sub
+
+    'Sets up the attendance dropdown with everyone as present
+    Protected Sub InitAttendance()
+        Dim seatText As String
+        For seatIndex As Integer = 0 To SeatsInfo.Items.Count - 1
+            seatText = SeatsInfo.Items(seatIndex).Text
+            AbsentStuds.Items.Add("P" + seatText.Substring(4, seatText.Length - 4))
+        Next
     End Sub
 
 End Class

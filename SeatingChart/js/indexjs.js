@@ -19,7 +19,7 @@ Created and revised by JHKL 4/28/2015
       byId("RmvStud").style.visibility = "hidden";
       byId("AtndStud").style.visibility = "hidden";
       byId("SeatsInfo").style.visibility = "hidden";  
-      //byId("AbsentStuds").style.visibility = "hidden"; 
+      byId("AbsentStuds").style.visibility = "hidden"; 
 
 	  var rows = byId("RoomRows").value;
 	  var cols = byId("RoomColumns").value;
@@ -119,12 +119,11 @@ Created and revised by JHKL 4/28/2015
   function AssignSeats(){
 	if (byId("btnAssign").innerHTML == "Assign Seats"){
 	    StartMode("btnAssign");
-		byId("btnAssign").innerHTML = "Exit Assignment Mode";
+	    byId("btnAssign").innerHTML = "Exit Assignment Mode";
 	}
 	else{
 		byId("btnAssign").innerHTML = "Assign Seats";
 		EndMode("btnAssign");
-		RemindToSave = true;
 	}
   }
   

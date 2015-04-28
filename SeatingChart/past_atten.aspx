@@ -88,9 +88,8 @@
             <section align="center" class="gridviewfullBox">
                 <!-- Start div -->
                 <asp:GridView runat="server" ID="AttendanceInfo" AutoGenerateColumns="False" GridLines="None" Height="93px" Width="240px">
-                    <!-- Start gridview to hold information from attendance table -->
+                    
                     <Columns>
-                        <!-- Data will populate in these columns-->
                         <asp:BoundField DataField="StudentEmail" HeaderText="Student Email" SortExpression="StudentEmail" ReadOnly="true" />
                         <asp:BoundField DataField="Date" HeaderText="Date" SortExpression="Date" ReadOnly="true" />
                         <asp:BoundField DataField="Present" HeaderText="Present" SortExpression="Present" ReadOnly="true"></asp:BoundField>
