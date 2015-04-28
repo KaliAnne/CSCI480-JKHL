@@ -269,6 +269,7 @@ Partial Class index
 
         Session("selectedStudent") = selectedStudent
         Session("storedID") = HiddenChartID.Text
+        Session("storedChartName") = ChartName.Text
 
         Response.Redirect("viewStudentInfo.aspx")
 

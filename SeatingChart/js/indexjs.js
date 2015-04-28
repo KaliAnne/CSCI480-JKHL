@@ -446,7 +446,7 @@ function ChangeRoomSize(rows, cols){
       var path = "";
       for (i = 0; i < studList.options.length; i++) {
           studentPics[i] = new Image()
-          path = "images/StudentPictures/" + byId("ChartName").value + "_" + studList.options[i].text + ".png";
+          path = "images/StudentPictures/" + byId("ChartName").value + "_" + studList.options[i].text + ".png#" + new Date().getTime();
           studentPics[i].src = path;
       }
   }

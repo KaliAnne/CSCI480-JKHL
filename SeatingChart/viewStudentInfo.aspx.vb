@@ -22,9 +22,12 @@ Partial Class viewStudentInfo
 
             Dim selectedStudent As String = CType(Session.Item("selectedStudent"), String)
             Dim storedID As String = CType(Session.Item("storedID"), String)
+            Dim storedChartName As String = CType(Session.Item("storedChartName"), String)
 
             HiddenStudentName.Text = selectedStudent
             HiddenChartID.Text = storedID
+
+            stuImage.ImageUrl = "images/StudentPictures/" + storedChartName + "_" + HiddenStudentName.Text + ".png"
 
             'Start pulling email for the chart
             Dim cnStudentInfo As New SqlConnection
@@ -37,7 +40,7 @@ Partial Class viewStudentInfo
             Dim cmdStudentInfo As New SqlCommand
 
             cmdStudentInfo.CommandText = "" _
-                & "SELECT Name, StudentEmail, Majors, Minors, Extracurriculars, StudentImage " _
+                & "SELECT Name, StudentEmail, Majors, Minors, Extracurriculars " _
                 & "FROM   STUDENT " _
                 & "WHERE  ChartID = @chartID " _
                 & "AND    Name = @studentName"
@@ -90,7 +93,7 @@ Partial Class viewStudentInfo
 
         cmdUpdateStudent.CommandText = "" _
             & "UPDATE STUDENT " _
-            & "SET    Majors = @getMajor, Minors = @getMinor, Extracurriculars = @getExtra, StudentImage = @getImage " _
+            & "SET    Majors = @getMajor, Minors = @getMinor, Extracurriculars = @getExtra " _
             & "WHERE  ChartID = @getChartID " _
             & "AND    StudentEmail = @getEmail"
 
@@ -99,10 +102,8 @@ Partial Class viewStudentInfo
         cmdUpdateStudent.Parameters.AddWithValue("@getMajor", stuMajor.Text)
         cmdUpdateStudent.Parameters.AddWithValue("@getMinor", stuMinor.Text)
         cmdUpdateStudent.Parameters.AddWithValue("@getExtra", stuExtra.Text)
-        cmdUpdateStudent.Parameters.AddWithValue("@getImage", stuPicture.FileName)
         cmdUpdateStudent.Parameters.AddWithValue("@getChartID", HiddenChartID.Text)
         cmdUpdateStudent.Parameters.AddWithValue("@getEmail", stuEmail.Text)
-        cmdUpdateStudent.Parameters.AddWithValue("@getImage", stuPicture.FileName)
 
         cnUpdateStudent.Open()
 
@@ -113,10 +114,20 @@ Partial Class viewStudentInfo
 
         'Sends the user back to the index page
         Session("storedID") = HiddenChartID.Text
-
+        SaveStudPic(stuName.Text)
         Response.Redirect("index.aspx")
         'End sending the user back to the index page
 
+    End Sub
+
+    Sub SaveStudPic(studname As String)
+        Dim chartname As String = CType(Session.Item("storedChartName"), String)
+        Dim Savepath As String = Server.MapPath("images/StudentPictures/") + chartname + "_" + studname + ".png"
+
+        If stuPicture.HasFile() Then
+            System.IO.File.Delete(Savepath)
+            stuPicture.PostedFile.SaveAs(Savepath)
+        End If
     End Sub
 
 End Class
