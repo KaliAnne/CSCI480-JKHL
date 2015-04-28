@@ -1,3 +1,6 @@
+'This page populates the past_atten page and contains the click event for the Show
+' Attendance button to display the student attendance information
+
 Option Explicit On
 Imports System.Data
 Imports System.Data.SqlClient
@@ -18,10 +21,11 @@ Partial Class past_atten
 
         If Not IsPostBack Then
 
+            'Pulls the chart ID passed from the index page
             Dim storedID As String = CType(Session.Item("storedID"), String)
             HiddenChartID.Text = storedID
 
-            'Start pulling information about the chart
+            'Start pulling the name of the chart from the ChartID from the previous page
             Dim cnChartName As New SqlConnection
 
             cnChartName.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
@@ -42,17 +46,13 @@ Partial Class past_atten
             cmdChartName.Parameters.AddWithValue("@chartID", storedID)
 
             drChartName = cmdChartName.ExecuteReader()
-
             drChartName.Read()
-
             ChartName.Text = drChartName.Item("Name")
-
             drChartName.Close()
-
             cnChartName.Close()
             'Finish pulling infomation about chart
 
-            'Start pulling information about the students
+            'Start pulling information about the students and populate drop down with their names
             Dim cmdStudents As SqlCommand = New SqlCommand("" _
                 & "SELECT Name " _
                 & "FROM   STUDENT " _
@@ -79,6 +79,8 @@ Partial Class past_atten
     End Sub
 
     Protected Sub ShowAtten_Click(sender As Object, e As EventArgs) Handles ShowAtten.Click
+        'Query using the student email and chart id
+        'to database to show the selected student's attendance in the grid view
         Dim cmdChartName As SqlCommand = New SqlCommand("" _
             & "SELECT StudentEmail, Date, Present " _
             & "FROM   ATTENDANCE " _
@@ -100,8 +102,7 @@ Partial Class past_atten
 
         cmdChartName.Connection.Close()
         cmdChartName.Connection.Dispose()
+        'Finish populating grid view with the information from the database
 
     End Sub
-
-
 End Class
