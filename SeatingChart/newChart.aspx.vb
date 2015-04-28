@@ -1,4 +1,6 @@
-﻿Option Explicit On
+﻿'This file is the backend implementation of the newChart page
+
+Option Explicit On
 Imports System.Data
 Imports System.Data.SqlClient
 Imports System
@@ -15,11 +17,10 @@ Partial Class newChart
     Inherits System.Web.UI.Page
 
     Sub Page_Load()
-
+        'Professor email is sent from the previous page
         If Page.IsPostBack = False Then
 
             Dim storedProfessorEmail As String = CType(Session.Item("storedProfessorEmail"), String)
-
             HiddenProfessorEmail.Text = storedProfessorEmail
 
         End If
@@ -27,7 +28,7 @@ Partial Class newChart
     End Sub
 
     Protected Sub btnSubmit_Click(sender As Object, e As EventArgs)
-
+        'Error checking for the new chart creation
         If (chartName.Text = String.Empty) Then
 
             ClientScript.RegisterStartupScript(GetType(Page), "", "alert('Name cannot be empty. Please give your chart a name.');", True)
