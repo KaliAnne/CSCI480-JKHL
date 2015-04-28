@@ -267,7 +267,8 @@ Partial Class index
         End If
 
     End Sub
-    
+
+    'Opens the past attendance page with the current chart ID
     Protected Sub btnViewPastAttendance_Click(sender As Object, e As EventArgs)
         Session("storedID") = HiddenChartID.Text
 
@@ -287,19 +288,25 @@ Partial Class index
 
     End Sub
 
+    'Handles assigning, unassigning, and 
     Protected Sub ManageStudSeat()
+
+        'Handles assigning the student to a seat and saving it to the database
         If Not AddStud.Text = "" Then
             SeatsInfo.Items.Add(AddStud.Text)
             AddStud.Text = ""
             RmvStud.Text = ""
             SaveAsnSeat()
-        ElseIf Not RmvStud.Text = "" Then
+
+
+        ElseIf Not RmvStud.Text = "" Then 'Handles removing the student from their seat in the database
             SeatsInfo.Items.Remove(RmvStud.Text)
             RemoveAsnSeat(RmvStud.Text)
             AddStud.Text = ""
             RmvStud.Text = ""
 
-        Else
+
+        Else 'Handles marking students as absent or present for the database 
             Dim atndText As String = AtndStud.Text
             If atndText.Substring(0, 1) = "P" Then
                 AbsentStuds.Items.Remove(atndText.Substring(0, atndText.Length))
@@ -307,8 +314,10 @@ Partial Class index
                 AbsentStuds.Items.Add(atndText.Substring(0, atndText.Length))
             End If
         End If
+
     End Sub
 
+    'Saves the newly assigned seat to the database
     Protected Sub SaveAsnSeat()
         For index As Integer = 0 To SeatsInfo.Items.Count - 1
 

@@ -1,6 +1,6 @@
 /*
-Iteration 1 code for seating chart application.
-Created and revised by JHKL 3/31/2015
+Iteration 3 code for seating chart application.
+Created and revised by JHKL 4/28/2015
  */
 
  //Initialize student list and load it into the dropdown of student names
@@ -9,7 +9,9 @@ Created and revised by JHKL 3/31/2015
 
 //Sets the size of the room when the page first opens
   function OnLoad() {
-      LoadStudPics();
+      LoadStudPics(); //Load all of the student pictures so that they are already in the page when used later
+
+      //Sets asp controls to read only or hidden as needed
       byId("ChartName").readOnly = true;
       byId("RoomRows").readOnly = true;
       byId("RoomColumns").readOnly = true;
@@ -21,8 +23,9 @@ Created and revised by JHKL 3/31/2015
 
 	  var rows = byId("RoomRows").value;
 	  var cols = byId("RoomColumns").value;
-	  ChangeRoomSize(rows, cols);
-	  LoadSeats();
+	  ChangeRoomSize(rows, cols); //Makes seats not within the rows/columns parameters hidden
+
+	  LoadSeats(); //Loads the assigned students
   }
   
   function byId(e){return document.getElementById(e);}
@@ -42,7 +45,7 @@ Created and revised by JHKL 3/31/2015
           return SeatAssignInfo(btnClickedID);
       }
 
-      //If no mode currently in use, the VB function is called for the student's informationw
+      //If no mode currently in use, the VB function is called for the student's information
       else {
           return false;
       }
@@ -53,10 +56,13 @@ Created and revised by JHKL 3/31/2015
       //if no student is assigned the seat and the user is assigning seats, requests the name of the student to put here
       if (byId("btnAssign").innerHTML != "Assign Seats") {
           if (byId(btnClickedID).getAttribute("assigned") == "") {
+
               var studList = byId("studentList");
-              var studentToAssign = studList.value;
-              var alreadyAssigned = false;
-              var seatList = byId("SeatsInfo");
+              var studentToAssign = studList.value; //Currently selected student
+              var alreadyAssigned = false;          //Presets that the student has not yet been assigned to a seat
+              var seatList = byId("SeatsInfo"); 
+
+              //Checks through the list of assigned seats to make sure the student isn't already assigned somewhere
               for (i = 0; i < seatList.options.length; i++) {
                   var optText = seatList.options[i].value;
                   if (optText.substring(4, optText.length) == studentToAssign) {
@@ -64,7 +70,10 @@ Created and revised by JHKL 3/31/2015
                   }
               }
 
+              //Assigns the student to the seat if not already assigned and a student is selected
               if (studentToAssign != "" && alreadyAssigned == false) {
+
+                  //Sets assigned and src to the 
                   byId(btnClickedID).setAttribute("assigned", studentToAssign);
                   byId(btnClickedID).setAttribute("srcPic", "images/icon_png/MiscStudent.png");
                   byId(btnClickedID).src = byId(btnClickedID).getAttribute("srcPic");
@@ -74,9 +83,13 @@ Created and revised by JHKL 3/31/2015
                   AddToSeatList(studentToAssign, btnClickedID.substring(7, 11));
                   return true;
               }
+              
+              //If the student is already assigned, displays an alert saying such
               else if (alreadyAssigned) {
                   alert(studentToAssign + " has already been assigned to a seat");
                   return false;
+
+              //If no student was selected, displays an alert asking for a student to be selected
               }
               else {
                   return false;
@@ -88,6 +101,8 @@ Created and revised by JHKL 3/31/2015
           else {
               var unassign = confirm("Would you like to remove " + byId(btnClickedID).getAttribute("assigned") + " from this seat?");
               if (unassign) {
+
+                  //Removes the student from the list of seats and sets the seat's properties to that of an empty seat
                   RemoveFromSeatList(byId(btnClickedID).getAttribute("assigned"), btnClickedID.substring(7, 11));
                   ResetSeat(btnClickedID);
                   alert("This seat is now available.");
@@ -194,7 +209,9 @@ function ChangeRoomSize(rows, cols){
 	for (i = 1; i < NUM_ROWS; i++){
 		strRow = i.toString();
 		for (j = 1; j < NUM_COLS; j++){
-			strCol = j.toString();
+		    strCol = j.toString();
+            
+            //Get button ID for the current button being checked
 			if (strCol < 10){
 				btnSeatID = "btnSeat0" + strRow + "0" + strCol;
 				lblSeatID = "lblSeat0" + strRow + "0" + strCol;				
@@ -204,6 +221,7 @@ function ChangeRoomSize(rows, cols){
 				lblSeatID = "lblSeat0" + strRow + strCol;	
 			}
 			
+            //Set button to hidden or visible depending on if its in the boundaries of the room
 			if (i <= rows && j <= cols){
 				byId(btnSeatID).style.visibility = "visible";
 				byId(lblSeatID).style.visibility = "visible";
@@ -229,13 +247,15 @@ function ChangeRoomSize(rows, cols){
     if (editBtn.value == "Exit Edit Mode") {
 		if (rows > 0 && rows < NUM_ROWS){
 		    if (cols > 0 && cols < NUM_COLS) {
+                //Change the size of the room 
 		        alert("Seats are deleted from the top and right; please reposition students if necessary.");
 			    ChangeRoomSize(rows, cols);
 			    RemindToSave = true;
 			    EndMode("EditRoom");
 				editBtn.value = "Edit Room";
 				
-			}
+		    }
+            //Sends alerts if the rows or columns are incorrect
 			else{
 				alert("There can only be up to 7 columns");
 			}
@@ -379,6 +399,7 @@ function ChangeRoomSize(rows, cols){
 
   var RemindToSave = false; //Is set to true if attendance is taken, the room size changes, or if a student is assigned to/removed from a seat, then is set back to false if saved
 
+//Reminds the user to save if they try to close without saving
   function OnClose() {
     if (RemindToSave) { return "Any unsaved data will be lost."; }
   }
@@ -395,21 +416,11 @@ function ChangeRoomSize(rows, cols){
   }
 
   function AddToSeatList(studname, studseat) {
-      //var opt = document.createElement("option");
-      //opt.text = studseat + studname;
-      //opt.value = studseat + studname;
-      //byId("SeatsInfo").options.add(opt);
       byId("AddStud").value = studseat + studname;
   }
 
+//Set up for the VB function to unassign the seat
   function RemoveFromSeatList(studname, studseat) {
-      //var seatList = byId("SeatsInfo");
-      //for (i = 0; i < seatList.options.length; i++) {
-      //    var optText = seatList.options[i].text;
-      //    if (optText.substring(0, 4) == studseat) {
-      //        seatList.remove(i);
-      //    }
-      //}
       byId("RmvStud").value = studseat + studname;
   }
 
