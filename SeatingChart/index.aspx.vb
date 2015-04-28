@@ -13,9 +13,6 @@ Imports System.Web.UI.HtmlControls
 Partial Class index
     Inherits System.Web.UI.Page
 
-
-    'Dim index As String = -1
-
     'Loads all of the chart information based on the Chart selected
     Sub Page_Load()
         If Page.IsPostBack = False Then
@@ -142,7 +139,169 @@ Partial Class index
         cnUpdateChart.Close()
 
         'Total.Text = SeatsInfo.Items.Count - 1
-       
+
+        'Save attendance
+        For index As Integer = 0 To AbsentStuds.Items.Count - 1
+
+            'While index <= Total.Text And index >= 0
+
+            Dim todayDate As String = Date.Now.ToString("MM/dd/yy")
+            Dim seatEmail As String
+            Dim attenLetter As String
+            Dim seatName As String
+            Dim text As String = CStr(AbsentStuds.Items(index).ToString)
+
+            attenLetter = text.Substring(0, 1)
+            seatName = text.Substring(1, (text.Length - 1))
+
+            Test.Text = seatName
+
+            If attenLetter = "P" Then
+
+                attenLetter = "Yes"
+
+            Else
+
+                attenLetter = "No"
+
+            End If
+
+            'Selects the student's email
+            Dim cnGetEmail As New SqlConnection
+
+            cnGetEmail.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                    & "User ID=480-JKHL;Password=1104ncory"
+
+            cnGetEmail.Open()
+
+            Dim cmdGetEmail As New SqlCommand
+
+            cmdGetEmail.CommandText = "" _
+                & "SELECT StudentEmail " _
+                & "FROM   STUDENT " _
+                & "WHERE  ChartID = @chartID " _
+                & "AND    Name = @getSeatName"
+
+            cmdGetEmail.Connection = cnGetEmail
+
+            Dim drGetEmail As SqlDataReader
+
+            cmdGetEmail.Parameters.AddWithValue("@chartID", HiddenChartID.Text)
+            cmdGetEmail.Parameters.AddWithValue("@getSeatName", seatName)
+
+            drGetEmail = cmdGetEmail.ExecuteReader()
+
+            drGetEmail.Read()
+
+            seatEmail = drGetEmail.Item("StudentEmail").ToString
+
+            drGetEmail.Close()
+
+            cnGetEmail.Close()
+            'End of selecting the student email
+
+
+
+
+
+
+            'Check if email is already in the database for that day
+            Dim cnCheckEmail As New SqlConnection
+
+            cnCheckEmail.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                    & "User ID=480-JKHL;Password=1104ncory"
+
+            cnCheckEmail.Open()
+
+            Dim cmdCheckEmail As New SqlCommand
+
+            cmdCheckEmail.CommandText = "" _
+                & "SELECT     Name " _
+                & "FROM       STUDENT " _
+                & "INNER JOIN ATTENDANCE " _
+                & "ON         STUDENT.StudentEmail = ATTENDANCE.StudentEmail " _
+                & "WHERE      STUDENT.ChartID = @chartID " _
+                & "AND        STUDENT.StudentEmail = @studentEmail " _
+                & "AND        STUDENT.Name = @getName " _
+                & "AND        ATTENDANCE.Date = @getDate"
+
+            cmdCheckEmail.Connection = cnCheckEmail
+
+            Dim drCheckEmail As SqlDataReader
+
+            cmdCheckEmail.Parameters.AddWithValue("@chartID", HiddenChartID.Text)
+            cmdCheckEmail.Parameters.AddWithValue("@studentEmail", seatEmail)
+            cmdCheckEmail.Parameters.AddWithValue("@getName", seatName)
+            cmdCheckEmail.Parameters.AddWithValue("@getDate", todayDate)
+
+            drCheckEmail = cmdCheckEmail.ExecuteReader()
+
+            drCheckEmail.Read()
+            'End of checking for an email for that day
+
+            'If the student is already listed for that day, update their attendance
+            If (drCheckEmail.HasRows) Then
+
+                'Update student seat info
+                Dim cnUpdateStudent As New SqlConnection
+
+                cnUpdateStudent.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                        & "User ID=480-JKHL;Password=1104ncory"
+
+                Dim cmdUpdateStudent As New SqlCommand
+
+                cmdUpdateStudent.CommandText = "" _
+                    & "UPDATE ATTENDANCE " _
+                    & "SET    Present = @getPresent " _
+                    & "WHERE  ChartID = @getChartID " _
+                    & "AND    StudentEmail = @getEmail " _
+                    & "AND    Date = @getDate"
+
+                cmdUpdateStudent.Connection = cnUpdateStudent
+                cmdUpdateStudent.Parameters.AddWithValue("@getPresent", attenLetter)
+                cmdUpdateStudent.Parameters.AddWithValue("@getChartID", HiddenChartID.Text)
+                cmdUpdateStudent.Parameters.AddWithValue("@getEmail", seatEmail)
+                cmdUpdateStudent.Parameters.AddWithValue("@getDate", todayDate)
+
+                cnUpdateStudent.Open()
+
+                cmdUpdateStudent.ExecuteNonQuery()
+
+                cnUpdateStudent.Close()
+                'End updating the student's attendance
+
+            Else
+
+                'Begin inserting student attendance
+                Dim cnInsertStudent As New SqlConnection
+
+                cnInsertStudent.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                        & "User ID=480-JKHL;Password=1104ncory"
+
+                Dim cmdInsertStudent As New SqlCommand
+
+                cmdInsertStudent.CommandText = "" _
+                    & "INSERT INTO ATTENDANCE(ChartID, StudentEmail, Date, Present) " _
+                    & "VALUES      ('" + HiddenChartID.Text + "','" + seatEmail + "','" + todayDate + "','" + attenLetter + "');"
+
+                cmdInsertStudent.Connection = cnInsertStudent
+
+                cnInsertStudent.Open()
+
+                cmdInsertStudent.ExecuteNonQuery()
+
+                cnInsertStudent.Close()
+                'End inserting student attendance
+
+            End If
+
+            'index = index + 1
+
+            'SaveChart_Click(sender, e)
+
+            'End While
+        Next
+        ''End 
 
     End Sub
 

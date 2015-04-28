@@ -96,6 +96,7 @@
                         <asp:TextBox runat="server" ID="AddStud" ></asp:TextBox>
                         <asp:TextBox runat="server" ID="RmvStud" ></asp:TextBox>
                         <asp:TextBox runat="server" ID="AtndStud" ></asp:TextBox>
+                        <asp:TextBox runat="server" ID="Test"></asp:TextBox>
 		                <br />
                         <asp:DropDownList runat="server" ID="SeatsInfo" AppendDataBoundItems="true">
                         </asp:DropDownList>
