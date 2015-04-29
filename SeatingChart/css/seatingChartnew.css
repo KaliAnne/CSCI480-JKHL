@@ -225,5 +225,9 @@ button.editBtn {
 {
     display:none;
 }
-
+@media only screen and (max-device-width : 1024px) {
+    body {
+        font-size: 200%;
+    }
+}
 /* foo; bar */

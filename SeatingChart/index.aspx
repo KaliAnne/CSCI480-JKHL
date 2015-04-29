@@ -10,6 +10,7 @@
     <!-- Start header -->
     <head runat="server" align="center">
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
 	    <title>Seating Chart Application</title>
 	    <link rel="shortcut icon" type="image/png" href="images/favicon/apple.png"/>
         <link rel="stylesheet"  href="css/seatingChartnew.css" />
