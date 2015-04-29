@@ -87,12 +87,13 @@
 
             <section align="center" class="gridviewfullBox">
                 <!-- Start div -->
-                <asp:GridView runat="server" ID="AttendanceInfo" AutoGenerateColumns="False" GridLines="None" Height="93px" Width="240px">
-                    
+                <asp:GridView runat="server" ID="AttendanceInfo" AutoGenerateColumns="False" GridLines="None" style="margin-left: 0px">
                     <Columns>
-                        <asp:BoundField DataField="StudentEmail" HeaderText="Student Email" SortExpression="StudentEmail" ReadOnly="true" />
-                        <asp:BoundField DataField="Date" HeaderText="Date" SortExpression="Date" ReadOnly="true" />
-                        <asp:BoundField DataField="Present" HeaderText="Present" SortExpression="Present" ReadOnly="true"></asp:BoundField>
+                        <asp:BoundField DataField="StudentEmail" HeaderText="Student Email" SortExpression="StudentEmail" ItemStyle-Width="50%" ReadOnly="true" >
+                        </asp:BoundField>
+                        <asp:BoundField DataField="Date" HeaderText="Date" SortExpression="Date" ItemStyle-Width="40%" ReadOnly="true" >
+                        </asp:BoundField>
+                        <asp:BoundField DataField="Present" HeaderText="Present" SortExpression="Present" ItemStyle-Width="20%" ReadOnly="true"></asp:BoundField>
                     </Columns>
                 </asp:GridView>
             </section>
