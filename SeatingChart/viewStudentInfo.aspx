@@ -38,7 +38,7 @@
 				<asp:TextBox runat="server" ID="stuExtra" /> 
 				<br>
 				Picture: <br> 
-                <asp:Image runat="server" ID="stuImage" Height="76px" Width="100px" />
+                <asp:Image runat="server" ID="stuImage" Height="175px" Width="200px" />
                 <asp:FileUpload ID="stuPicture" runat="server"/>
 				<br>
 				<br>
