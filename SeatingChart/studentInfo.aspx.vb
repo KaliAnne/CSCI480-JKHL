@@ -1,4 +1,6 @@
-﻿Option Explicit On
+﻿'This file is the back end for the student info page
+
+Option Explicit On
 Imports System.Data
 Imports System.Data.SqlClient
 Imports System
@@ -14,7 +16,7 @@ Partial Class studentInfo
     Inherits System.Web.UI.Page
 
     Sub Page_Load()
-
+        'Collect ChartID and name from the previous page
         Dim storedID As String = CType(Session.Item("storedID"), String)
         Dim storedChartName As String = CType(Session.Item("storedChartName"), String)
         HiddenChartID.Text = storedID
@@ -165,8 +167,11 @@ Partial Class studentInfo
     End Sub
 
     Sub SaveStudPic(studname As String)
+
+        'Where the picture will be saved
         Dim Savepath As String = Server.MapPath("images/StudentPictures/") + HiddenChartName.Text + "_" + studname + ".png"
 
+        'Save the picture
         If stuPicture.HasFile() Then
             stuPicture.PostedFile.SaveAs(Savepath)
         End If
