@@ -14,7 +14,7 @@
 	    <link rel="shortcut icon" type="image/png" href="images/favicon/apple.png"/>
         <link rel="stylesheet"  href="css/seatingChartnew.css" />
     </head>
-
+    
     <header>
         <nav id="nav">
             <ul>
@@ -26,7 +26,7 @@
         <br>
     </header>
 
-    <body align="center">
+    <body  align="center">
         <form runat="server">
             <asp:Button runat="server" ID="btnCreateChart" CssClass="homeBtns" Text="Create New Chart" OnClick="btnCreateChart_Click" />
             <asp:Button runat="server" ID="btnViewCharts" CssClass="homeBtns" Text="View Existing Chart" OnClick="btnViewCharts_Click" />

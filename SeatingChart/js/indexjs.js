@@ -15,11 +15,11 @@ Created and revised by JHKL 4/28/2015
       byId("ChartName").readOnly = true;
       byId("RoomRows").readOnly = true;
       byId("RoomColumns").readOnly = true;
-      byId("AddStud").style.visibility = "hidden";
-      byId("RmvStud").style.visibility = "hidden";
-      byId("AtndStud").style.visibility = "hidden";
-      byId("SeatsInfo").style.visibility = "hidden";  
-      byId("AbsentStuds").style.visibility = "hidden"; 
+      byId("AddStud").style.display = "none";
+      byId("RmvStud").style.display = "none";
+      byId("AtndStud").style.display = "none";
+      byId("SeatsInfo").style.display = "none";
+      byId("AbsentStuds").style.display = "none";
 
 	  var rows = byId("RoomRows").value;
 	  var cols = byId("RoomColumns").value;
@@ -92,8 +92,8 @@ Created and revised by JHKL 4/28/2015
               //If no student was selected, displays an alert asking for a student to be selected
               }
               else {
-                  return false;
                   alert("Please select a student from the list.");
+                  return false;
               }
           }
 
@@ -133,11 +133,13 @@ Created and revised by JHKL 4/28/2015
         if (tgt.getAttribute("src") == tgt.getAttribute("srcCheck")){
             tgt.src = tgt.getAttribute("srcX");
             byId("AtndStud").value = "A" + tgt.getAttribute("assigned");
+            RemindToSave = true;
             return true;
 	    }
         else if (tgt.getAttribute("src") == tgt.getAttribute("srcX")) {
             tgt.src = tgt.getAttribute("srcCheck");
             byId("AtndStud").value = "P" + tgt.getAttribute("assigned");
+            RemindToSave = true;
             return true;
 	    }
         else {
@@ -178,7 +180,6 @@ function toggleAttend(button_id) {
    else{
 		btnText.innerHTML = "Take Attendance";
 		EndMode("btnAttend");
-		RemindToSave = true;
 		for (i = 1; i < NUM_ROWS; i++) { 
 			strRow = i.toString();
 			for (j = 1; j < NUM_COLS; j++){
@@ -229,6 +230,12 @@ function ChangeRoomSize(rows, cols){
 				byId(btnSeatID).style.visibility = "hidden";
 				byId(lblSeatID).style.visibility = "hidden";
 			}
+		}
+		if (i > rows) {
+		    byId("Row" + i).style.display = "none";
+		}
+		else {
+		    byId("Row" + i).style.display = "block";
 		}
 	}
 }
