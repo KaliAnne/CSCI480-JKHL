@@ -1,4 +1,7 @@
-﻿Option Explicit On
+﻿'This file is the back end to our index page. It is the main part of the system
+' and allows for taking attendance, assigning seats, viewing student information etc.
+
+Option Explicit On
 Imports System.Data
 Imports System.Data.SqlClient
 Imports System
@@ -100,11 +103,6 @@ Partial Class index
             cmdSeating.Connection.Dispose()
             'End pulling all of the student seating
 
-            'If SeatsInfo.Items.Count - 1 >= 0 Then
-
-            'index = 0
-
-            'End If
             InitAttendance()
         End If
 
@@ -138,12 +136,8 @@ Partial Class index
 
         cnUpdateChart.Close()
 
-        'Total.Text = SeatsInfo.Items.Count - 1
-
         'Save attendance
         For index As Integer = 0 To AbsentStuds.Items.Count - 1
-
-            'While index <= Total.Text And index >= 0
 
             Dim todayDate As String = Date.Now.ToString("MM/dd/yy")
             Dim seatEmail As String
@@ -197,11 +191,6 @@ Partial Class index
 
             cnGetEmail.Close()
             'End of selecting the student email
-
-
-
-
-
 
             'Check if email is already in the database for that day
             Dim cnCheckEmail As New SqlConnection
@@ -292,15 +281,7 @@ Partial Class index
                 'End inserting student attendance
 
             End If
-
-            'index = index + 1
-
-            'SaveChart_Click(sender, e)
-
-            'End While
         Next
-        ''End 
-
     End Sub
 
     'Sets the Chart fields to false so that the changed items will be changed in the database
@@ -612,16 +593,11 @@ Partial Class index
                 'End inserting student seat information
 
             End If
-
-            'index = index + 1
-
-            'SaveChart_Click(sender, e)
-
-            'End While
         Next
     End Sub
 
-    'student to remove is "0101Jacob Babione"
+    'Example student to remove is "0101Jacob Babione" where 0101 is the seat number and the rest is
+    ' the student's name
     Sub RemoveAsnSeat(studentToRemove As String)
 
         Dim seatEmail As String
