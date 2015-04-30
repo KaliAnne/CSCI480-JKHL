@@ -24,8 +24,16 @@ Created and revised by JHKL 4/28/2015
 	  var rows = byId("RoomRows").value;
 	  var cols = byId("RoomColumns").value;
 	  ChangeRoomSize(rows, cols); //Makes seats not within the rows/columns parameters hidden
-
 	  LoadSeats(); //Loads the assigned students
+
+	  var curmode = sessionStorage.getItem("curmode");
+
+	  if (curmode == "btnAttend") {
+	      toggleAttend("btnAttend");
+	  }
+	  else if (curmode == "btnAssign") {
+	      AssignSeats();
+	  }
   }
   
   function byId(e){return document.getElementById(e);}
@@ -124,6 +132,7 @@ Created and revised by JHKL 4/28/2015
 	else{
 		byId("btnAssign").innerHTML = "Assign Seats";
 		EndMode("btnAssign");
+		RemindToSave = true;
 	}
   }
   
@@ -133,13 +142,13 @@ Created and revised by JHKL 4/28/2015
         if (tgt.getAttribute("src") == tgt.getAttribute("srcCheck")){
             tgt.src = tgt.getAttribute("srcX");
             byId("AtndStud").value = "A" + tgt.getAttribute("assigned");
-            RemindToSave = true;
+            
             return true;
 	    }
         else if (tgt.getAttribute("src") == tgt.getAttribute("srcX")) {
             tgt.src = tgt.getAttribute("srcCheck");
             byId("AtndStud").value = "P" + tgt.getAttribute("assigned");
-            RemindToSave = true;
+            
             return true;
 	    }
         else {
@@ -195,6 +204,7 @@ function toggleAttend(button_id) {
 				if (byId(seatID).getAttribute("src") == byId(seatID).getAttribute("srcCheck")) {
 				    byId(seatID).src = byId(seatID).getAttribute("srcPic");
 				}
+				RemindToSave = true;
 			}
 		}
   }
@@ -372,6 +382,7 @@ function ChangeRoomSize(rows, cols){
           byId("btnAttend").disabled = true;
           byId("EditRoom").disabled = true;
       }
+      sessionStorage.setItem("curmode", modeButtonID);
       byId("SaveChart").disabled = true;
       byId("btnViewPastAttendance").disabled = true;
       byId("btnAddStudent").disabled = true;
@@ -396,6 +407,7 @@ function ChangeRoomSize(rows, cols){
           byId("btnAttend").disabled = false;
           byId("EditRoom").disabled = false;
       }
+      sessionStorage.setItem("curmode", "none");
       byId("SaveChart").disabled = false;
       byId("btnViewPastAttendance").disabled = false;
       byId("btnAddStudent").disabled = false;
