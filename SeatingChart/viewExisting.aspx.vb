@@ -1,3 +1,6 @@
+'This file is the back end code to the viewExisting page and will display all
+' the user's existing charts
+
 Option Explicit On
 Imports System.Data
 Imports System.Data.SqlClient

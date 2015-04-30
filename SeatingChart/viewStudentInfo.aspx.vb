@@ -1,4 +1,6 @@
-﻿Option Explicit On
+﻿' This file contains the back end code for the view student info page
+
+Option Explicit On
 Imports System.Data
 Imports System.Data.SqlClient
 Imports System
@@ -14,7 +16,7 @@ Partial Class viewStudentInfo
     Inherits System.Web.UI.Page
 
     Sub Page_Load()
-
+        'Emphasize email and name as read only, by changing their colors
         stuEmail.ForeColor = System.Drawing.Color.Gray
         stuName.ForeColor = System.Drawing.Color.Gray
 
@@ -29,7 +31,7 @@ Partial Class viewStudentInfo
 
             stuImage.ImageUrl = "images/StudentPictures/" + storedChartName + "_" + HiddenStudentName.Text + ".png"
 
-            'Start pulling email for the chart
+            'Start pulling student information
             Dim cnStudentInfo As New SqlConnection
 
             cnStudentInfo.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
@@ -65,7 +67,7 @@ Partial Class viewStudentInfo
             drStudentInfo.Close()
 
             cnStudentInfo.Close()
-            'Finish pulling email for the chart
+            'Finish pulling student information
 
         End If
 
@@ -123,7 +125,7 @@ Partial Class viewStudentInfo
     Sub SaveStudPic(studname As String)
         Dim chartname As String = CType(Session.Item("storedChartName"), String)
         Dim Savepath As String = Server.MapPath("images/StudentPictures/") + chartname + "_" + studname + ".png"
-
+        'Allow the professor to replace the existing picture of the student
         If stuPicture.HasFile() Then
             System.IO.File.Delete(Savepath)
             stuPicture.PostedFile.SaveAs(Savepath)
