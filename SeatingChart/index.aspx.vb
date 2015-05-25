@@ -667,9 +667,85 @@ Partial Class index
     'Sets up the attendance dropdown with everyone as present
     Protected Sub InitAttendance()
         Dim seatText As String
+        Dim seatEmail As String
+        Dim presentChar As String = "P"
+        Dim todayDate As String = Date.Now.ToString("MM/dd/yy")
+
         For seatIndex As Integer = 0 To SeatsInfo.Items.Count - 1
             seatText = SeatsInfo.Items(seatIndex).Text
-            AbsentStuds.Items.Add("P" + seatText.Substring(4, seatText.Length - 4))
+
+            'Get student's Email
+            Dim cnGetEmail As New SqlConnection
+
+            cnGetEmail.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                    & "User ID=480-JKHL;Password=1104ncory"
+
+            cnGetEmail.Open()
+
+            Dim cmdGetEmail As New SqlCommand
+
+            cmdGetEmail.CommandText = "" _
+                & "SELECT StudentEmail " _
+                & "FROM   STUDENT " _
+                & "WHERE  ChartID = @chartID " _
+                & "AND    Name = @getSeatName"
+
+            cmdGetEmail.Connection = cnGetEmail
+
+            Dim drGetEmail As SqlDataReader
+
+            cmdGetEmail.Parameters.AddWithValue("@chartID", HiddenChartID.Text)
+            cmdGetEmail.Parameters.AddWithValue("@getSeatName", seatText.Substring(4, seatText.Length - 4))
+
+            drGetEmail = cmdGetEmail.ExecuteReader()
+
+            drGetEmail.Read()
+
+            seatEmail = drGetEmail.Item("StudentEmail").ToString
+
+            drGetEmail.Close()
+
+            cnGetEmail.Close()
+
+            'Get whether or not the student has been marked absent today
+            Dim cnCheckPresent As New SqlConnection
+
+            cnCheckPresent.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                    & "User ID=480-JKHL;Password=1104ncory"
+
+            cnCheckPresent.Open()
+
+            Dim cmdCheckPresent As New SqlCommand
+
+            cmdCheckPresent.CommandText = "" _
+                & "SELECT     Present " _
+                & "FROM       ATTENDANCE " _
+                & "INNER JOIN STUDENT " _
+                & "ON         ATTENDANCE.StudentEmail = STUDENT.StudentEmail " _
+                & "WHERE      ATTENDANCE.ChartID = @chartID " _
+                & "AND        ATTENDANCE.StudentEmail = @studentEmail " _
+                & "AND        ATTENDANCE.Present = @getPresent " _
+                & "AND        ATTENDANCE.Date = @getDate"
+
+            cmdCheckPresent.Connection = cnCheckPresent
+
+            Dim drCheckPresent As SqlDataReader
+
+            cmdCheckPresent.Parameters.AddWithValue("@chartID", HiddenChartID.Text)
+            cmdCheckPresent.Parameters.AddWithValue("@studentEmail", seatEmail)
+            cmdCheckPresent.Parameters.AddWithValue("@getPresent", "No")
+            cmdCheckPresent.Parameters.AddWithValue("@getDate", todayDate)
+
+            drCheckPresent = cmdCheckPresent.ExecuteReader()
+
+            drCheckPresent.Read()
+
+            If (drCheckPresent.HasRows) Then
+                presentChar = "A"
+            End If
+
+            AbsentStuds.Items.Add(presentChar + seatText.Substring(4, seatText.Length - 4))
+            presentChar = "P"
         Next
     End Sub
 
