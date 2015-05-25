@@ -19,22 +19,27 @@ Partial Class home
 
         If Page.IsPostBack = False Then
             'For future login implementation
-            HiddenProfessorEmail.Text = "none@findlay.edu"
-
+            Dim storedProfessorEmail As String = CType(Session.Item("storedProfessorEmail"), String)
+            If storedProfessorEmail = "" Then
+                lblLog.Text = "Not currently logged in."
+                btnViewCharts.Enabled = False
+                btnCreateChart.Enabled = False
+            End If
+            ProfessorEmail.Text = storedProfessorEmail
         End If
 
     End Sub
 
     Protected Sub btnCreateChart_Click(sender As Object, e As EventArgs)
         'For future login implementation, also sends user to the newChart page if the Create Chart button is pressed
-        Session("storedProfessorEmail") = HiddenProfessorEmail.Text
+        Session("storedProfessorEmail") = ProfessorEmail.Text
         Response.Redirect("newChart.aspx")
 
     End Sub
 
     Protected Sub btnViewCharts_Click(sender As Object, e As EventArgs)
         'For future login implementation, also sends user to the viewExisting page if the View Existing button is pressed
-        Session("storedProfessorEmail") = HiddenProfessorEmail.Text
+        Session("storedProfessorEmail") = ProfessorEmail.Text
         Response.Redirect("viewExisting.aspx")
 
     End Sub

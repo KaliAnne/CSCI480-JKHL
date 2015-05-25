@@ -1,4 +1,4 @@
-<%@ Page Language="VB" AutoEventWireup="true" CodeFile="home.aspx.vb" Inherits="home" %>
+<%@ Page Language="VB" AutoEventWireup="true" CodeFile="Login.aspx.vb" Inherits="home" %>
 
 <!-- Iteration 3 code for seating chart application. -->
 <!-- Created and revised by JHKL 4/29/2015 -->
@@ -14,6 +14,7 @@
     <title>Seating Chart Application</title>
     <link rel="shortcut icon" type="image/png" href="images/favicon/apple.png" />
     <link rel="stylesheet" href="css/seatingChartnew.css" />
+    <script src="js/Login.js"> </script>
 </head>
 
 <!--Start menu a the top of the page, home is the only option-->
@@ -29,15 +30,24 @@
 </header>
 
 <!--Display three option buttons, switch modes not implemented yet-->
-<body align="center">
+<body align="left" >
     <form runat="server">
-        <asp:Button runat="server" ID="btnCreateChart" CssClass="homeBtns" Text="Create New Chart" OnClick="btnCreateChart_Click" />
-        <asp:Button runat="server" ID="btnViewCharts" CssClass="homeBtns" Text="View Existing Chart" OnClick="btnViewCharts_Click" />
-        <button type="Button" id='btnLogin' class="homeBtns" onclick="location.href='Login.aspx'">Log In or Create User</button>
+        <asp:Label ID="lblWarning" runat="server" Text="" ForeColor="White"></asp:Label>
         <br />
         <br />
-        <asp:Label runat="server" ID="lblLog" Text="Logged in as " ForeColor="White"></asp:Label>
-        <asp:Label runat="server" ID="ProfessorEmail" ForeColor="White"></asp:Label>
+        <asp:Label ID="lblE" runat="server" Text="Email:  " ForeColor="White"></asp:Label>
+        <br />
+        <asp:TextBox ID="txtEmail" runat="server" ></asp:TextBox>
+        <br />
+        <br />
+        <asp:Label ID="lblP" runat="server" Text="Password:  " ForeColor="White"></asp:Label>
+        <br />
+        <asp:TextBox ID="txtPass" runat="server" TextMode="Password" ></asp:TextBox>
+        <br />
+        <br />
+        <asp:Button ID="btnLogin" CssClass="attenBtn" runat="server" Text="Log In" />
+        <button type="Button" class="attenBtn" onclick="location.href='newUser.aspx'">New User</button>
+      
     </form>
 </body>
 
