@@ -144,6 +144,7 @@ Partial Class index
             Dim attenLetter As String
             Dim seatName As String
             Dim text As String = CStr(AbsentStuds.Items(index).ToString)
+            Dim defaultComment As String = "None"
 
             attenLetter = text.Substring(0, 1)
             seatName = text.Substring(1, (text.Length - 1))
@@ -268,8 +269,8 @@ Partial Class index
                 Dim cmdInsertStudent As New SqlCommand
 
                 cmdInsertStudent.CommandText = "" _
-                    & "INSERT INTO ATTENDANCE(ChartID, StudentEmail, Date, Present) " _
-                    & "VALUES      ('" + HiddenChartID.Text + "','" + seatEmail + "','" + todayDate + "','" + attenLetter + "');"
+                    & "INSERT INTO ATTENDANCE(ChartID, StudentEmail, Date, Present, Comments) " _
+                    & "VALUES      ('" + HiddenChartID.Text + "','" + seatEmail + "','" + todayDate + "','" + attenLetter + "','" + defaultComment + "');"
 
                 cmdInsertStudent.Connection = cnInsertStudent
 

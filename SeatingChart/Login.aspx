@@ -29,7 +29,6 @@
     <br>
 </header>
 
-<!--Display three option buttons, switch modes not implemented yet-->
 <body align="left" >
     <form runat="server">
         <asp:Label ID="lblWarning" runat="server" Text="" ForeColor="White"></asp:Label>
@@ -43,6 +42,7 @@
         <asp:Label ID="lblP" runat="server" Text="Password:  " ForeColor="White"></asp:Label>
         <br />
         <asp:TextBox ID="txtPass" runat="server" TextMode="Password" ></asp:TextBox>
+        <asp:Button ID="btnForgot" runat="server" Text="Forgot password?" OnClick="SendEmail" />
         <br />
         <br />
         <asp:Button ID="btnLogin" CssClass="attenBtn" runat="server" Text="Log In" />

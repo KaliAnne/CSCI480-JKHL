@@ -56,14 +56,12 @@
                                         <asp:ListItem Text="(None)" Value=""></asp:ListItem>
                                     </asp:DropDownList>
                                 </fieldset>
-                                <p>
+                                <br />
                                     <!-- Display attendance info for the selected student-->
-                                    <asp:Button runat="server" ID="ShowAtten" Text="Show Attendance" Class="attenBtn" OnClick="ShowAtten_Click" />
-                                </p>
-                                <p>
+                                    <asp:Button runat="server" ID="ShowAtten" Text="Show Attendance" Class="attenBtn" OnClick="ShowAttend" />
                                     <!--Home button-->
                                     <button type="Button" class="attenBtn" onclick="location.href='home.aspx'">Home</button>
-                                </p>
+                                    <button type="Button" class="attenBtn" onclick="location.href='index.aspx'">Back to Chart</button>
                         </span></legend>
                     </fieldset>
                     <br />
@@ -88,13 +86,29 @@
 
             <section align="center" class="gridviewfullBox">
                 <!-- Start div -->
-                <asp:GridView runat="server" ID="AttendanceInfo" AutoGenerateColumns="False" GridLines="None" style="margin-left: 0px">
+                <asp:GridView runat="server" ID="AttendanceInfo" AutoGenerateColumns="False" GridLines="None" style="margin-left: 0px" >
                     <Columns>
-                        <asp:BoundField DataField="StudentEmail" HeaderText="Student Email" SortExpression="StudentEmail" ItemStyle-Width="50%" ReadOnly="true" >
+                        <asp:BoundField DataField="StudentEmail" HeaderText="Student Email" SortExpression="StudentEmail" ItemStyle-Width="30%" ReadOnly="true" >
+<ItemStyle Width="30%"></ItemStyle>
                         </asp:BoundField>
-                        <asp:BoundField DataField="Date" HeaderText="Date" SortExpression="Date" ItemStyle-Width="40%" ReadOnly="true" >
+                        <asp:BoundField DataField="Date" HeaderText="Date" SortExpression="Date" DataFormatString="{0:MM/dd/yyyy }" HtmlEncode="false" ItemStyle-Width="10%" ReadOnly="true" >
+<ItemStyle Width="10%"></ItemStyle>
                         </asp:BoundField>
-                        <asp:BoundField DataField="Present" HeaderText="Present" SortExpression="Present" ItemStyle-Width="20%" ReadOnly="true"></asp:BoundField>
+                        <asp:BoundField DataField="Present" HeaderText="Present" SortExpression="Present" ItemStyle-Width="10%" ReadOnly="true">
+<ItemStyle Width="10%"></ItemStyle>
+                        </asp:BoundField>
+                        <asp:BoundField DataField="Comments" HeaderText="Comment" SortExpression="Comments" ItemStyle-Width="40%" ReadOnly="false">
+<ItemStyle Width="40%"></ItemStyle>
+                        </asp:BoundField>
+                        <asp:TemplateField ItemStyle-Width="10%">
+                            <ItemTemplate>
+                                <asp:LinkButton Text="Edit" runat="server" CommandName="Edit" />
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:LinkButton Text="Update" runat="server" OnClick="OnUpdate" />
+                                <asp:LinkButton Text="Cancel" runat="server" OnClick="OnCancel" />
+                            </EditItemTemplate>
+                        </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
             </section>

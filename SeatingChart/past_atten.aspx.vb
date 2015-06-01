@@ -78,11 +78,11 @@ Partial Class past_atten
 
     End Sub
 
-    Protected Sub ShowAtten_Click(sender As Object, e As EventArgs) Handles ShowAtten.Click
+    Protected Sub ShowAttend() Handles ShowAtten.Click
         'Query using the student email and chart id
         'to database to show the selected student's attendance in the grid view
         Dim cmdChartName As SqlCommand = New SqlCommand("" _
-            & "SELECT StudentEmail, Date, Present " _
+            & "SELECT StudentEmail, Date, Present, Comments " _
             & "FROM   ATTENDANCE " _
             & "WHERE  ChartID = @getChartID " _
             & "AND    StudentEmail = (SELECT StudentEmail" _
@@ -105,4 +105,57 @@ Partial Class past_atten
         'Finish populating grid view with the information from the database
 
     End Sub
+
+    Protected Sub AttendanceInfo_RowEditing(sender As Object, e As GridViewEditEventArgs) Handles AttendanceInfo.RowEditing
+        AttendanceInfo.EditIndex = e.NewEditIndex
+        ShowAttend()
+    End Sub
+
+    Protected Sub OnUpdate(sender As Object, e As EventArgs)
+        Dim row As GridViewRow = TryCast(TryCast(sender, LinkButton).NamingContainer, GridViewRow)
+        Dim attendComment As String = TryCast(row.Cells(3).Controls(0), TextBox).Text
+
+        If attendComment = "" Then
+            attendComment = "None"
+        End If
+
+        'Update attendance comment
+        Dim cnUpdateStudent As New SqlConnection
+
+        cnUpdateStudent.ConnectionString = "Data Source=mars;Initial Catalog=480-AttendanceApp;" _
+                & "User ID=480-JKHL;Password=1104ncory"
+
+        Dim cmdUpdateStudent As New SqlCommand
+
+        cmdUpdateStudent.CommandText = "" _
+            & "UPDATE ATTENDANCE " _
+            & "SET    Comments = @getComment " _
+            & "WHERE  ChartID = @getChartID " _
+            & "AND    StudentEmail = @getEmail " _
+            & "AND    Present = @getPresent " _
+            & "AND    Date = @getDate"
+
+        cmdUpdateStudent.Connection = cnUpdateStudent
+        cmdUpdateStudent.Parameters.AddWithValue("@getPresent", row.Cells(2).Text)
+        cmdUpdateStudent.Parameters.AddWithValue("@getChartID", HiddenChartID.Text)
+        cmdUpdateStudent.Parameters.AddWithValue("@getEmail", row.Cells(0).Text)
+        cmdUpdateStudent.Parameters.AddWithValue("@getDate", row.Cells(1).Text)
+        cmdUpdateStudent.Parameters.AddWithValue("@getComment", attendComment)
+
+        cnUpdateStudent.Open()
+
+        cmdUpdateStudent.ExecuteNonQuery()
+
+        cnUpdateStudent.Close()
+        'End updating the student's attendance
+
+        AttendanceInfo.EditIndex = -1
+        ShowAttend()
+    End Sub
+
+    Protected Sub OnCancel(sender As Object, e As EventArgs)
+        AttendanceInfo.EditIndex = -1
+        ShowAttend()
+    End Sub
+
 End Class
